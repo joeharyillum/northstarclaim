@@ -20,3 +20,7 @@ export const authConfig = {
     },
     providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;
+
+export const baseAuthConfig = {
+    basePath: '/api/auth',
+} satisfies NextAuthConfig;

@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npx prisma generate && npm run build",
+  "framework": "nextjs",
+  "domains": [
+    "northstarclaim.com",
+    "www.northstarclaim.com"
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://www.northstarclaim.com",
+      "permanent": true
+    }
+  ]
+}
