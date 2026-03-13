@@ -4,12 +4,5 @@
   "domains": [
     "northstarclaim.com",
     "www.northstarclaim.com"
-  ],
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "https://www.northstarclaim.com",
-      "permanent": true
-    }
   ]
 }
