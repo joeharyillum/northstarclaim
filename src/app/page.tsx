@@ -36,16 +36,16 @@ export default function Home() {
           backgroundPosition: "center",
           zIndex: 0,
         }} />
-        {/* Dark Gradient Overlay */}
+        {/* Dark Gradient Overlay - Updated for Neon Theme */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "linear-gradient(180deg, rgba(4,8,19,0.72) 0%, rgba(4,8,19,0.88) 50%, rgba(4,8,19,0.97) 100%)",
+          background: "linear-gradient(180deg, rgba(10,14,39,0.75) 0%, rgba(10,14,39,0.85) 50%, rgba(10,14,39,0.95) 100%)",
           zIndex: 1,
         }} />
-        {/* Ambient Cyan Glow */}
+        {/* Neon Cyan + Hot Pink Glow */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "radial-gradient(ellipse at 30% 40%, rgba(0,242,255,0.06) 0%, transparent 60%)",
+          background: "radial-gradient(ellipse at 20% 30%, rgba(0, 212, 255, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(255, 26, 122, 0.08) 0%, transparent 50%)",
           zIndex: 2,
           animation: "pulse-glow 6s ease-in-out infinite",
         }} />
