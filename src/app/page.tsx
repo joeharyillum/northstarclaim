@@ -28,24 +28,23 @@ export default function Home() {
         background: "var(--bg-dark)"
       }}>
 
-        {/* Background Image — Futuristic Medical Lab */}
+        {/* Deep Neural Background — Pure Gradient, No Photos */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "url('/bg-doctors-business.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          background: "linear-gradient(135deg, #020818 0%, #0a0e27 30%, #0d1440 60%, #0a0e27 100%)",
           zIndex: 0,
         }} />
-        {/* Dark Gradient Overlay - Updated for Neon Theme */}
+        {/* Neon Grid Lines Overlay */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "linear-gradient(180deg, rgba(10,14,39,0.75) 0%, rgba(10,14,39,0.85) 50%, rgba(10,14,39,0.95) 100%)",
+          backgroundImage: "linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
           zIndex: 1,
         }} />
-        {/* Neon Cyan + Hot Pink Glow */}
+        {/* Neon Cyan + Hot Pink Glow Orbs */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "radial-gradient(ellipse at 20% 30%, rgba(0, 212, 255, 0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(255, 26, 122, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(120, 0, 255, 0.06) 0%, transparent 60%)",
+          background: "radial-gradient(ellipse at 15% 25%, rgba(0, 212, 255, 0.25) 0%, transparent 50%), radial-gradient(ellipse at 85% 75%, rgba(255, 26, 122, 0.18) 0%, transparent 50%), radial-gradient(ellipse at 50% 10%, rgba(120, 0, 255, 0.1) 0%, transparent 40%), radial-gradient(ellipse at 70% 40%, rgba(0, 240, 255, 0.08) 0%, transparent 35%)",
           zIndex: 2,
           animation: "pulse-glow 6s ease-in-out infinite",
         }} />
