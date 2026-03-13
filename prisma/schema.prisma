@@ -1,0 +1,216 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ----------------------------------------------------------------------------
+// 1. USER: Represents the Clinic Administrator or the Independent Biller
+// ----------------------------------------------------------------------------
+model User {
+  id              String        @id @default(uuid())
+  email           String        @unique
+  clinicName      String
+  stripeAccountId String?       // The Express Connect ID provisioned during onboarding
+  password        String?       // For credentials provider
+  name            String?       // Standard NextAuth field
+  image           String?       // Standard NextAuth field
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  // Relations
+  uploadBatches   UploadBatch[]
+  accounts        Account[]
+  sessions        Session[]
+}
+
+// ----------------------------------------------------------------------------
+// NextAuth / Auth.js standard models
+// ----------------------------------------------------------------------------
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ----------------------------------------------------------------------------
+// 2. UPLOAD BATCH: A group of claims uploaded together (e.g., a PDF ERN/EOB file)
+// ----------------------------------------------------------------------------
+model UploadBatch {
+  id        String      @id @default(uuid())
+  userId    String
+  fileName  String
+  status    String      @default("COMPLETED")
+  createdAt DateTime    @default(now())
+
+  // Relations
+  user      User        @relation(fields: [userId], references: [id])
+  claims    Claim[]
+
+  @@index([userId])
+}
+
+// ----------------------------------------------------------------------------
+// 2.5 PAYER: Insurance company routing data for Phase 20 (Fax/Mail)
+// ----------------------------------------------------------------------------
+model Payer {
+  id           String   @id @default(uuid())
+  name         String   @unique
+  faxNumber    String?
+  streetAddress String?
+  city         String?
+  state        String?
+  zip          String?
+  
+  // Intelligence Metrics
+  successRate  Float    @default(0.0)
+  totalClaims  Int      @default(0)
+
+  // Relations
+  claims       Claim[]
+}
+
+// ----------------------------------------------------------------------------
+// 3. CLAIM: The core medical claim data extracted by the OCR Engine
+// ----------------------------------------------------------------------------
+model Claim {
+  id           String      @id @default(uuid())
+  batchId      String
+  payerId      String?     // Linked to the routing database
+  patientId    String
+  cptCode      String
+  billedAmount Float
+  denialReason String
+  status       String      @default("PENDING_ANALYSIS")
+  createdAt    DateTime    @default(now())
+
+  // Relations
+  batch        UploadBatch @relation(fields: [batchId], references: [id])
+  payer        Payer?      @relation(fields: [payerId], references: [id])
+  appeal       Appeal?
+  negotiation  Negotiation?
+  invoice      Invoice?
+  dispatches   PhysicalDispatch[]
+
+  @@index([batchId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ----------------------------------------------------------------------------
+// 4.7 PHYSICAL DISPATCH: Tracking for Phase 20 (Fax/Mail)
+// ----------------------------------------------------------------------------
+model PhysicalDispatch {
+  id               String   @id @default(uuid())
+  claimId          String
+  userId           String
+  method           String   // FAX or MAIL
+  trackingId       String?
+  status           String   @default("PENDING") // PENDING, SENT, FAILED, DELIVERED
+  recipientAddress String
+  content          String   @db.Text
+  estDeliveryDate  DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  claim            Claim    @relation(fields: [claimId], references: [id])
+}
+
+// ----------------------------------------------------------------------------
+// 4. APPEAL: The legal document drafted by the Multi-Agent Engine
+// ----------------------------------------------------------------------------
+model Appeal {
+  id                    String   @id @default(uuid())
+  claimId               String   @unique
+  draftedLetter         String   @db.Text
+  clinicalJustification String   @db.Text
+  approvedByClinic      Boolean  @default(false)
+  generatedAt           DateTime @default(now())
+
+  // Relations
+  claim                 Claim    @relation(fields: [claimId], references: [id])
+
+  @@index([claimId])
+}
+
+// ----------------------------------------------------------------------------
+// 4.5 NEGOTIATION: Persistent state for Phase 30 "War Room" battles
+// ----------------------------------------------------------------------------
+model Negotiation {
+  id              String   @id @default(uuid())
+  claimId         String   @unique
+  status          String   @default("IDLE")
+  currentOffer    Float    @default(0)
+  minAcceptable   Float
+  offers          Json     // Array of offer amounts
+  transcript      Json     // Array of {speaker, text}
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  claim           Claim    @relation(fields: [claimId], references: [id])
+}
+
+// ----------------------------------------------------------------------------
+// 5. INVOICE: The Monetization object tracking the 15% SaaS fee & 50/50 split
+// ----------------------------------------------------------------------------
+model Invoice {
+  id               String        @id @default(uuid())
+  claimId          String        @unique
+  stripeInvoiceId  String?       @unique
+  amountEarned     Float
+  billerCommission Float
+  status           String        @default("PENDING")
+  createdAt        DateTime      @default(now())
+
+  // Relations
+  claim            Claim         @relation(fields: [claimId], references: [id])
+
+  @@index([claimId])
+  @@index([status])
+}
+// ----------------------------------------------------------------------------
+// 6. AUDIT LOG: HIPAA compliance tracking for data access events
+// ----------------------------------------------------------------------------
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  details   String   @db.Text
+  ipAddress String?
+  createdAt DateTime @default(now())
+}

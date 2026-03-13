@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northstar Claim AI — Recover Denied Medical Claims on Autopilot</title>
+    <meta name="description" content="AI-powered denied claim recovery for healthcare providers. We read denial letters, write clinical rebuttals, and resubmit — on autopilot. Pay only 30% of what we recover.">
+    <meta name="keywords" content="denied claims, medical claims recovery, AI healthcare, revenue cycle management, claim appeals, denied claim AI">
+    <meta property="og:title" content="Northstar Claim AI — Stop Losing Millions to Denied Claims">
+    <meta property="og:description" content="Our AI reads denial letters, writes clinical appeals, and resubmits — automatically. Zero upfront cost. You only pay when we recover money.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0a1128;
+            --bg-card: rgba(255,255,255,0.03);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --brand-blue: #3b82f6;
+            --brand-cyan: #00f2ff;
+            --brand-green: #10b981;
+            --brand-purple: #8b5cf6;
+            --radius: 16px;
+            --radius-full: 9999px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ═══════ NAVBAR ═══════ */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 16px 0;
+            background: rgba(2,6,23,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        .navbar .container {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.4rem; font-weight: 900; letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 0%, var(--brand-cyan) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;
+            font-weight: 500; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: white; }
+        .nav-cta {
+            background: var(--brand-blue) !important; color: white !important;
+            padding: 10px 24px !important; border-radius: var(--radius-full) !important;
+            font-weight: 600 !important; font-size: 0.85rem !important;
+            transition: all 0.3s !important; box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59,130,246,0.5); }
+
+        /* ═══════ HERO ═══════ */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 0 80px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 70% 60%, rgba(0,242,255,0.05) 0%, transparent 50%);
+            z-index: 0;
+        }
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            animation: grid-move 20s linear infinite;
+        }
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+        .hero-content { position: relative; z-index: 10; max-width: 800px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+            padding: 8px 20px; border-radius: var(--radius-full);
+            font-size: 0.75rem; font-weight: 700; color: var(--brand-green);
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 32px;
+        }
+        .hero-badge .pulse {
+            width: 8px; height: 8px; border-radius: 50%; background: var(--brand-green);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900;
+            line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 24px;
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, var(--brand-blue), var(--brand-cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--text-secondary);
+            margin-bottom: 40px; max-width: 600px; line-height: 1.7;
+        }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, var(--brand-blue), #2563eb);
+            color: white; padding: 18px 40px; border-radius: var(--radius-full);
+            font-weight: 700; font-size: 1.1rem; text-decoration: none;
+            border: none; cursor: pointer; transition: all 0.3s;
+            box-shadow: 0 10px 40px -10px rgba(59,130,246,0.5);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px -10px rgba(59,130,246,0.6);
+        }
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.03); color: white;
+            padding: 18px 40px; border-radius: var(--radius-full);
+            font-weight: 600; font-size: 1.1rem; text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+            transition: all 0.3s; backdrop-filter: blur(10px);
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .trust-bar {
+            display: flex; gap: 40px; flex-wrap: wrap;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: rgba(255,255,255,0.35);
+        }
+        .trust-bar span { display: flex; align-items: center; gap: 8px; }
+
+        /* ═══════ STATS ═══════ */
+        .stats {
+            padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+        }
+        .stat-card {
+            text-align: center; padding: 32px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        .stat-card:hover { border-color: rgba(59,130,246,0.2); transform: translateY(-4px); }
+        .stat-number {
+            font-size: 2.5rem; font-weight: 900; margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--text-secondary);
+        }
+
+        /* ═══════ HOW IT WORKS ═══════ */
+        .how-it-works { padding: 100px 0; }
+        .section-header {
+            text-align: center; max-width: 600px; margin: 0 auto 64px;
+        }
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+            margin-bottom: 16px; letter-spacing: -0.02em;
+        }
+        .section-header p { color: var(--text-secondary); font-size: 1.1rem; }
+        .steps-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+        }
+        .step-card {
+            padding: 40px 32px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+            position: relative; overflow: hidden; transition: all 0.3s;
+        }
+        .step-card:hover { border-color: rgba(59,130,246,0.2); transform: translateY(-6px); }
+        .step-number {
+            font-size: 4rem; font-weight: 900; color: rgba(59,130,246,0.1);
+            position: absolute; top: 16px; right: 24px; line-height: 1;
+        }
+        .step-icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 24px;
+        }
+        .step-card:nth-child(1) .step-icon { background: rgba(59,130,246,0.1); }
+        .step-card:nth-child(2) .step-icon { background: rgba(0,242,255,0.1); }
+        .step-card:nth-child(3) .step-icon { background: rgba(16,185,129,0.1); }
+        .step-card h3 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 700; }
+        .step-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
+
+        /* ═══════ PROBLEM / SOLUTION ═══════ */
+        .problem-section {
+            padding: 100px 0; background: var(--bg-secondary);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .problem-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+        }
+        .problem-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+        .problem-list li {
+            display: flex; gap: 16px; align-items: flex-start;
+            font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6;
+        }
+        .problem-list li .icon {
+            flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
+        }
+        .problem-panel h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800;
+            margin-bottom: 16px; letter-spacing: -0.02em;
+        }
+        .problem-panel > p { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 32px; }
+
+        .solution-highlight {
+            padding: 32px; border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(0,242,255,0.05));
+            border: 1px solid rgba(59,130,246,0.15);
+        }
+        .solution-highlight h3 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
+        .solution-highlight p { color: var(--text-secondary); }
+        .big-stat {
+            font-size: 3.5rem; font-weight: 900; margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--brand-green), var(--brand-cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* ═══════ PRICING ═══════ */
+        .pricing { padding: 100px 0; }
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+            max-width: 1000px; margin: 0 auto;
+        }
+        .price-card {
+            padding: 40px 32px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; transition: all 0.3s;
+        }
+        .price-card:hover { transform: translateY(-6px); }
+        .price-card.featured {
+            border-color: var(--brand-blue); position: relative;
+            background: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, var(--bg-card) 100%);
+        }
+        .price-card.featured::before {
+            content: 'RECOMMENDED'; position: absolute; top: -12px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--brand-blue); color: white;
+            padding: 4px 16px; border-radius: var(--radius-full);
+            font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+        }
+        .price-card h3 { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 16px; font-weight: 600; }
+        .price-amount {
+            font-size: 3rem; font-weight: 900; margin-bottom: 4px;
+        }
+        .price-sub { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 24px; }
+        .price-features {
+            list-style: none; flex-grow: 1; margin-bottom: 32px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .price-features li {
+            color: var(--text-secondary); font-size: 0.9rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .price-features li::before {
+            content: '✓'; color: var(--brand-green); font-weight: 700;
+        }
+        .price-card .btn-primary, .price-card .btn-outline { width: 100%; justify-content: center; }
+
+        /* ═══════ TESTIMONIAL ═══════ */
+        .testimonial {
+            padding: 100px 0; background: var(--bg-secondary);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .testimonial-card {
+            max-width: 700px; margin: 0 auto; text-align: center;
+            padding: 48px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .testimonial-card blockquote {
+            font-size: 1.25rem; font-style: italic; line-height: 1.7;
+            margin-bottom: 24px; color: var(--text-primary);
+        }
+        .testimonial-card .author { font-weight: 700; }
+        .testimonial-card .role { color: var(--text-secondary); font-size: 0.85rem; }
+
+        /* ═══════ SECURITY ═══════ */
+        .security { padding: 100px 0; }
+        .security-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .security-card {
+            padding: 32px; border-radius: var(--radius); text-align: center;
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        .security-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.1); }
+        .security-icon {
+            width: 64px; height: 64px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px; font-size: 1.5rem;
+        }
+        .security-card:nth-child(1) .security-icon { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
+        .security-card:nth-child(2) .security-icon { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); }
+        .security-card:nth-child(3) .security-icon { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2); }
+        .security-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .security-card p { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* ═══════ FINAL CTA ═══════ */
+        .final-cta {
+            padding: 120px 0; text-align: center; position: relative; overflow: hidden;
+        }
+        .final-cta::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(59,130,246,0.1) 0%, transparent 60%);
+        }
+        .final-cta .container { position: relative; z-index: 1; }
+        .final-cta h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
+            margin-bottom: 20px; letter-spacing: -0.03em;
+        }
+        .final-cta p {
+            color: var(--text-secondary); font-size: 1.2rem;
+            margin-bottom: 40px; max-width: 550px; margin-left: auto; margin-right: auto;
+        }
+        .final-cta .guarantee {
+            margin-top: 24px; font-size: 0.85rem; color: var(--text-secondary);
+        }
+
+        /* ═══════ FOOTER ═══════ */
+        .footer {
+            padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center; color: var(--text-secondary); font-size: 0.85rem;
+        }
+
+        /* ═══════ ANIMATIONS ═══════ */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+        .fade-in-delay-1 { animation-delay: 0.15s; }
+        .fade-in-delay-2 { animation-delay: 0.3s; }
+        .fade-in-delay-3 { animation-delay: 0.45s; }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ═══════ RESPONSIVE ═══════ */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid { grid-template-columns: 1fr; }
+            .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .security-grid { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; }
+            .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+            .trust-bar { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">⚡ Northstar Claim</a>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#security">Security</a>
+                <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" class="nav-cta">Start Free Pilot →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge fade-in">
+                    <span class="pulse"></span>
+                    AI-Powered • Zero Upfront Cost • HIPAA Compliant
+                </div>
+
+                <h1 class="fade-in fade-in-delay-1">
+                    Stop Losing Money to <span class="text-gradient">Denied Claims</span>
+                </h1>
+
+                <p class="fade-in fade-in-delay-2">
+                    Our AI reads denial letters, writes clinical rebuttals, and resubmits claims — on autopilot. 
+                    You only pay <strong style="color:white">30% of what we actually recover</strong>. If we recover nothing, you pay nothing.
+                </p>
+
+                <div class="hero-buttons fade-in fade-in-delay-3">
+                    <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" class="btn-primary">
+                        Start Free 48-Hour Pilot →
+                    </a>
+                    <a href="#how-it-works" class="btn-outline">See How It Works</a>
+                </div>
+
+                <div class="trust-bar fade-in fade-in-delay-3">
+                    <span>🛡️ HIPAA Compliant</span>
+                    <span>🧠 Zero-Touch AI</span>
+                    <span>💎 Performance-Based</span>
+                    <span>📋 BAA Ready</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" style="color:var(--brand-green)">94.2%</div>
+                    <div class="stat-label">Recovery Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color:var(--brand-cyan)">48hrs</div>
+                    <div class="stat-label">Average Recovery Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color:var(--brand-blue)">$0</div>
+                    <div class="stat-label">Upfront Cost</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color:var(--brand-purple)">5min</div>
+                    <div class="stat-label">Setup Time</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How <span class="text-gradient">It Works</span></h2>
+                <p>Three simple steps to start recovering your denied claims automatically.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">📤</div>
+                    <h3>Upload Your Denials</h3>
+                    <p>Securely send us your denied claim files or connect your billing system. We accept PDFs, EOBs, and all standard formats.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">🧠</div>
+                    <h3>AI Analyzes & Drafts</h3>
+                    <p>Our AI reads each denial, identifies the exact reason code, cross-references payer policies, and writes a clinically-accurate appeal letter.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">💰</div>
+                    <h3>Claims Get Paid</h3>
+                    <p>Appeals are submitted automatically. You receive recovered funds directly. We only bill 30% of what's successfully recovered.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM / SOLUTION -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-panel">
+                    <h2>The <span class="text-gradient">$262 Billion</span> Problem</h2>
+                    <p>US healthcare providers lose an estimated $262B annually to wrongful claim denials. Most never get appealed.</p>
+                    <ul class="problem-list">
+                        <li>
+                            <span class="icon" style="background:rgba(239,68,68,0.1)">❌</span>
+                            <span><strong style="color:white">65% of denied claims</strong> are never resubmitted — pure lost revenue sitting on the table</span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background:rgba(239,68,68,0.1)">❌</span>
+                            <span><strong style="color:white">Manual appeals take 45+ minutes</strong> each — your billing team can't keep up</span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background:rgba(239,68,68,0.1)">❌</span>
+                            <span><strong style="color:white">Payer rules change constantly</strong> — human billers miss updates, leading to repeat denials</span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background:rgba(16,185,129,0.1)">✅</span>
+                            <span><strong style="color:var(--brand-green)">Northstar AI</strong> handles all of this in seconds, 24/7, with zero human intervention</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="solution-highlight" style="margin-bottom:24px">
+                        <div class="big-stat">$0</div>
+                        <h3>Zero Risk to You</h3>
+                        <p>No setup fees, no monthly fees, no contracts. We only get paid when you get paid. Pure performance.</p>
+                    </div>
+                    <div class="solution-highlight">
+                        <div class="big-stat">30%</div>
+                        <h3>Success-Only Fee</h3>
+                        <p>We charge 30% of recovered revenue. If we recover $100K in denied claims, you keep $70K that was previously lost.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, <span class="text-gradient">Transparent</span> Pricing</h2>
+                <p>Choose the tier that matches your practice size. All plans include our AI recovery engine.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Starter</h3>
+                    <div class="price-amount">$99<span style="font-size:1rem;color:var(--text-secondary);font-weight:400">/mo</span></div>
+                    <div class="price-sub">+ 30% recovery fee</div>
+                    <ul class="price-features">
+                        <li>500 claims monitored</li>
+                        <li>AI-drafted appeals</li>
+                        <li>Standard support</li>
+                        <li>HIPAA compliant</li>
+                    </ul>
+                    <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" class="btn-outline" style="padding:14px 24px; font-size:0.95rem">Get Started</a>
+                </div>
+                <div class="price-card featured">
+                    <h3>Professional</h3>
+                    <div class="price-amount">$299<span style="font-size:1rem;color:var(--text-secondary);font-weight:400">/mo</span></div>
+                    <div class="price-sub">+ 30% recovery fee</div>
+                    <ul class="price-features">
+                        <li>5,000 claims monitored</li>
+                        <li>Advanced AI recovery</li>
+                        <li>Priority support</li>
+                        <li>HIPAA + BAA included</li>
+                        <li>Custom payer rules</li>
+                    </ul>
+                    <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" class="btn-primary" style="padding:14px 24px; font-size:0.95rem">Start Pro Pilot →</a>
+                </div>
+                <div class="price-card">
+                    <h3>Enterprise</h3>
+                    <div class="price-amount">Custom</div>
+                    <div class="price-sub">Volume-based pricing</div>
+                    <ul class="price-features">
+                        <li>Unlimited claims</li>
+                        <li>Dedicated AI engine</li>
+                        <li>White-label option</li>
+                        <li>SLA guarantee</li>
+                        <li>API access</li>
+                    </ul>
+                    <a href="mailto:team@northstarclaim.ai" class="btn-outline" style="padding:14px 24px; font-size:0.95rem">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="testimonial">
+        <div class="container">
+            <div class="testimonial-card">
+                <blockquote>
+                    "We routed our unresolved claim batches through Northstar and recovered significant stranded revenue within 48 hours. The clinical accuracy of the AI-generated appeals is unprecedented. It's become indispensable to our billing operations."
+                </blockquote>
+                <div class="author">Jonathan Davis</div>
+                <div class="role">Director of Revenue Cycle Management</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECURITY -->
+    <section class="security" id="security">
+        <div class="container">
+            <div class="section-header">
+                <h2>Enterprise-Grade <span class="text-gradient">Security</span></h2>
+                <p>Your data is protected by the same standards used by Fortune 500 health systems.</p>
+            </div>
+            <div class="security-grid">
+                <div class="security-card">
+                    <div class="security-icon">🛡️</div>
+                    <h3>HIPAA Compliant</h3>
+                    <p>End-to-end encryption for all Protected Health Information (PHI) data.</p>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">📋</div>
+                    <h3>BAA Ready</h3>
+                    <p>Signed Business Associate Agreement provided instantly for legal compliance.</p>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">🔒</div>
+                    <h3>SOC 2 Infrastructure</h3>
+                    <p>Built on SOC 2 certified cloud infrastructure with 99.99% uptime guarantee.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to <span class="text-gradient">Recover</span> Your Lost Revenue?</h2>
+            <p>Start your free 48-hour pilot today. No credit card required for the first scan. See results before you commit.</p>
+            <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" class="btn-primary" style="font-size:1.2rem; padding:20px 48px">
+                Start Free Pilot Now →
+            </a>
+            <div class="guarantee">🔒 30-day money-back guarantee • No long-term contracts • Cancel anytime</div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 Northstar Claim AI. All rights reserved. HIPAA Compliant • BAA Available</p>
+        </div>
+    </footer>
+
+    <!-- Scroll animations -->
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.step-card, .stat-card, .price-card, .security-card, .solution-highlight').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(2,6,23,0.95)';
+                navbar.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+            } else {
+                navbar.style.background = 'rgba(2,6,23,0.8)';
+                navbar.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+            }
+        });
+
+        // Smooth counter animation for stats
+        function animateValue(el, start, end, suffix, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(eased * (end - start) + start);
+                el.textContent = current + suffix;
+                if (progress < 1) window.requestAnimationFrame(step);
+            };
+            window.requestAnimationFrame(step);
+        }
+    </script>
+</body>
+</html>

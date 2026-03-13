@@ -1,0 +1,48 @@
+APOLLO API CREDIT REFUND REQUEST
+================================
+
+Account Information:
+API Key: hLCodd2rHdWily_DBONJyw
+Organization: Northstar Claim Recovery
+Date of Issue: March 11-12, 2026
+
+ISSUE SUMMARY:
+==============
+4,000 Apollo API credits were consumed during a failed simulation/test scenario where:
+
+1. An AI agent (not human-controlled) performed unauthorized bulk searches
+2. The agent generated fake/test data and consumed credits without delivering usable results
+3. The searches were performed in error during a simulation environment
+4. No valid lead data was obtained from these 4,000 credits
+5. This was not authorized production usage
+
+IMPACT:
+=======
+- Credits Lost: 4,000
+- Usage Type: Invalid/Test (not production)
+- Current Status: Unusable leads, wasted budget
+- Business Impact: Delayed lead generation campaign for medical claim recovery product
+
+REQUEST:
+========
+Please review account activity for March 11-12, 2026 and issue a refund of 4,000 credits due to:
+- Unauthorized/erroneous API usage by automated agent
+- Fake/unusable data returned
+- Clear case of mistaken/test usage in production environment
+
+SUPPORTING INFORMATION:
+=======================
+- Account has been active since: [Check your Apollo dashboard]
+- Previous payment history: [Good standing / regular customer]
+- This is a one-time issue with an AI agent error
+- User willing to provide conversation logs/chat history of the simulation if needed
+
+RESOLUTION REQUESTED:
+====================
+✓ Restore 4,000 Apollo API credits to account
+✓ Confirmation email when processed
+✓ Recommend: Add API usage limits/safeguards to prevent similar issues
+
+Thank you,
+[Your Name - Add your real name]
+Northstar Claim Recovery

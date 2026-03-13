@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+*.csv
+*.json
+!railway.json
+!package.json
+!package-lock.json
+!prisma/schema.prisma
+medical_whales_5000.csv
+leads_hyper_fast.csv
+pipeline_output.txt
+pipeline_output_utf8.txt
+the_11_whales.json
+build_output.txt
+dev_log.txt

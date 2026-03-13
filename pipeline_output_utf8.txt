@@ -1,0 +1,62 @@
+﻿[dotenv@17.3.1] injecting env (15) from .env -- tip: ­ƒøá´©Å  run anywhere with `dotenvx run -- yourcommand`
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  NORTHSTAR CLAIM ÔÇö ZERO-HUMAN PIPELINE v2
+  Mode: ­ƒö┤ LIVE (Real emails will be sent!)
+  Count: 11 leads/page ├ù 1 pages
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ PAGE 1 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+­ƒöì [APOLLO SEARCH] Page 1, requesting 11 leads...
+Ô£à [APOLLO SEARCH] Found 11 people (total available: 0)
+   1. Jaime ? | Director of Revenue Cycle Manager @ Synergy Billing | no email yet
+   2. Michael ? | Vice President Finance / CFO @ Parrish Medical Center | no email yet
+   3. Nick ? | CFO and EVP of Finance @ Avenue 360 Health and Wellness | no email yet
+   4. Bryan ? | Director Revenue Cycle @ Medical Center Health System | no email yet
+   5. Amanda ? | Chief Financial Officer @ SEYMOUR HOSPITAL | no email yet
+   6. Rhonda ? | Director of Revenue Cycle @ Graham Regional Medical Center | no email yet
+   7. Ryan ? | Chief Financial Officer @ Valor Healthcare | no email yet
+   8. Arthur ? | Chief Financial Officer @ Familia Health Clinic & Pharmacy | no email yet
+   9. Steve ? | Chief Financial Officer @ Medical Center Health System | no email yet
+   10. Anthony ? | Director Revenue Cycle Manager Services @ PwC | no email yet
+   11. Linda ? | Director Revenue Cycle @ Stephens Memorial Hospital | no email yet
+   ÔåÆ 0 already have emails
+   ÔåÆ 11 need enrichment via bulk_match
+
+­ƒö¼ [APOLLO ENRICH] Enriching 11 leads via bulk_match (batches of 10)...
+   Batch 1/2 (10 records)...
+node :    ÔÜá´©Å  Batch 1 failed (422): 
+{"error":"You have insufficient credits! \u003ca href
+='https://app.apollo.io/#/settings/plans/upgrade' 
+aria-onclick='close_alert'\u003eUpgrade your 
+plan\u003c/a\u003e to increase your number of lead 
+credits."}
+At line:1 char:1
++ node src/scripts/run-pipeline.js --live --count 11 
+> pipeline_output. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (   ÔÜá´ 
+   ©Å  Batc...lead credits."}:String) [], RemoteExc  
+  eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   Batch 2/2 (1 records)...
+   ÔÜá´©Å  Batch 2 failed (422): {"error":"You have 
+insufficient credits! \u003ca href='https://app.apoll
+o.io/#/settings/plans/upgrade' 
+aria-onclick='close_alert'\u003eUpgrade your 
+plan\u003c/a\u003e to increase your number of lead 
+credits."}
+Ô£à [APOLLO ENRICH] Total enriched: 0 profiles with emails
+
+­ƒôï [FINAL] 0 leads ready for outreach:
+ÔÜá´©Å  No leads with emails after enrichment. Continuing to next page...
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  PIPELINE COMPLETE
+  Total leads with emails: 0
+  Total pushed to Instantly: 0
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
