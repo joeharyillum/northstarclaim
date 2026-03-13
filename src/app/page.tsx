@@ -31,7 +31,7 @@ export default function Home() {
         {/* Neural Grid Background - Futuristic Command Center */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "linear-gradient(to bottom, rgba(2,6,23,0.3) 0%, rgba(2,6,23,0.9) 100%), url('/neural-grid-hero.png')",
+          backgroundImage: "linear-gradient(to bottom, rgba(2,6,23,0.3) 0%, rgba(2,6,23,0.9) 100%), url('/bg-hero.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.8,
