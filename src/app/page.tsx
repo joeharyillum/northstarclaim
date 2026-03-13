@@ -45,7 +45,7 @@ export default function Home() {
         {/* Neon Cyan + Hot Pink Glow */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "radial-gradient(ellipse at 20% 30%, rgba(0, 212, 255, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(255, 26, 122, 0.08) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 20% 30%, rgba(0, 212, 255, 0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(255, 26, 122, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(120, 0, 255, 0.06) 0%, transparent 60%)",
           zIndex: 2,
           animation: "pulse-glow 6s ease-in-out infinite",
         }} />
@@ -110,13 +110,13 @@ export default function Home() {
 
             <Link href="/free-scan" style={{
               display: "block", width: "100%",
-              background: "linear-gradient(135deg, #00f2ff 0%, #2563eb 100%)",
+              background: "linear-gradient(135deg, #00f2ff 0%, #ff1a7a 100%)",
               color: "white", padding: "1.25rem", borderRadius: "var(--radius-lg)",
               fontWeight: "900", fontSize: "1rem", textAlign: "center",
               textTransform: "uppercase", letterSpacing: "1px", textDecoration: "none",
-              boxShadow: "0 0 30px rgba(0,242,255,0.3)", marginBottom: "3rem",
+              boxShadow: "0 0 30px rgba(0,242,255,0.4), 0 0 60px rgba(255,26,122,0.2)", marginBottom: "3rem",
             }}>
-              Deploy First Node
+              Deploy Recovery Scan
             </Link>
 
             {/* Pricing Grid */}
@@ -218,8 +218,8 @@ export default function Home() {
             {/* MediClaim AI Branding + Web 4.0 */}
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-                <span style={{ fontSize: "1rem", fontWeight: "800", color: "white" }}>MediClaim AI</span>
-                <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)", fontWeight: "600" }}>Autonomous Invisible Proprietary Recovery.</span>
+                <span style={{ fontSize: "1rem", fontWeight: "800", color: "white" }}>NorthStar Claim</span>
+                <span style={{ fontSize: "0.7rem", color: "rgba(0,212,255,0.4)", fontWeight: "600" }}>Autonomous Recovery Engine — Zero Touch. Maximum Liquidity.</span>
               </div>
               <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap", alignItems: "center" }}>
                 {["Strategy", "Security", "Compliance"].map((item, i) => (
@@ -302,7 +302,7 @@ export default function Home() {
               <div style={{ background: "rgba(59, 130, 246, 0.1)", color: "var(--brand-primary)", display: "inline-block", padding: "0.6rem 1.5rem", borderRadius: "var(--radius-full)", fontWeight: "900", fontSize: "0.8rem", marginBottom: "2.5rem", textTransform: "uppercase", letterSpacing: "2px" }}>
                 The Revenue Guardian Alliance
               </div>
-              <h2 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginBottom: "2.5rem", lineHeight: "1.2" }}>Protect your <span className="text-gradient">Profit Rights</span></h2>
+              <h2 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginBottom: "2.5rem", lineHeight: "1.2" }}>Protect your <span className="text-gradient">Revenue Stream</span></h2>
               <p style={{ color: "var(--text-secondary)", fontSize: "1.5rem", marginBottom: "4rem", lineHeight: "1.6" }}>
                 We empower freelance billers and RCM agencies to recover 100% of what insurance companies owe clinics. Deploy our grid, win the appeals, and earn <strong style={{ color: 'var(--brand-accent)' }}>15% passive commission</strong> on every recovered dollar.
               </p>
@@ -319,7 +319,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <Button href="/signup" size="lg" style={{ borderRadius: "var(--radius-full)", padding: "1.5rem 4rem", fontSize: "1.25rem", boxShadow: "0 0 30px rgba(59, 130, 246, 0.4)" }}>Deploy Your Grid Now</Button>
+              <Button href="/signup" size="lg" style={{ borderRadius: "var(--radius-full)", padding: "1.5rem 4rem", fontSize: "1.25rem", background: "linear-gradient(135deg, #00f2ff, #ff1a7a)", boxShadow: "0 0 30px rgba(0,242,255,0.4), 0 0 60px rgba(255,26,122,0.2)" }}>Deploy Your Grid Now</Button>
             </div>
 
             <div>

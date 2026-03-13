@@ -34,12 +34,12 @@ export default function Navigation() {
 
                 {/* Logo */}
                 <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <span style={{ fontSize: "1.3rem", lineHeight: "1" }}>⚡</span>
+                    <span style={{ fontSize: "1.3rem", lineHeight: "1", filter: "drop-shadow(0 0 8px rgba(0,212,255,0.6))" }}>⚡</span>
                     <div>
                         <div style={{ fontSize: "1.1rem", fontWeight: "800", letterSpacing: "-0.03em", lineHeight: "1.2" }}>
-                            MediClaim <span className="text-gradient">AI</span>
+                            NORTHSTAR<span className="text-gradient">CLAIM</span>
                         </div>
-                        <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "2px", lineHeight: "1" }}>Autonomous Lattice</div>
+                        <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "rgba(0,212,255,0.5)", textTransform: "uppercase", letterSpacing: "2px", lineHeight: "1" }}>Autonomous Recovery Lattice</div>
                     </div>
                 </Link>
 
@@ -59,8 +59,8 @@ export default function Navigation() {
                     <Link href="/signup" style={{ background: "rgba(255,255,255,0.06)", color: "white", padding: "0.5rem 1rem", borderRadius: "6px", fontWeight: "700", fontSize: "0.7rem", textDecoration: "none", border: "1px solid rgba(255,255,255,0.1)", textTransform: "uppercase", letterSpacing: "1px" }}>
                         LOGIN
                     </Link>
-                    <Link href="/free-scan" style={{ background: "linear-gradient(135deg, #00f2ff, #2563eb)", color: "white", padding: "0.5rem 1.2rem", borderRadius: "6px", fontWeight: "800", fontSize: "0.7rem", textDecoration: "none", textTransform: "uppercase", letterSpacing: "1px", boxShadow: "0 0 20px rgba(0,242,255,0.25)" }}>
-                        Register Node
+                    <Link href="/free-scan" style={{ background: "linear-gradient(135deg, #00f2ff, #ff1a7a)", color: "white", padding: "0.5rem 1.2rem", borderRadius: "6px", fontWeight: "800", fontSize: "0.7rem", textDecoration: "none", textTransform: "uppercase", letterSpacing: "1px", boxShadow: "0 0 20px rgba(0,242,255,0.4), 0 0 40px rgba(255,26,122,0.2)" }}>
+                        Free Scan
                     </Link>
                 </div>
             </div>
