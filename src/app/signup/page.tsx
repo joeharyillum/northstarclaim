@@ -142,11 +142,17 @@ export default function SignupPage() {
                         To comply with HIPAA and process your claims for our performance-based partnership, please review and sign electronically.
                     </p>
 
-                    <div style={{ height: "200px", overflowY: "auto", background: "white", padding: "1rem", border: "1px solid rgba(0,0,0,0.1)", borderRadius: "var(--radius-md)", fontSize: "0.75rem", color: "var(--text-secondary)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
-                        <h4 style={{ color: "var(--text-primary)", marginBottom: "0.5rem" }}>BUSINESS ASSOCIATE AGREEMENT (BAA)</h4>
-                        This Business Associate Agreement ("Agreement") is entered into by and between MediClaim AI ("Business Associate") and the Clinic ("Covered Entity").<br /><br />
-                        1. Permitted Uses: Business Associate may use Protected Health Information (PHI) solely to perform claim recovery logic as authorized.<br />
-                        2. Performance Partnership: Covered Entity agrees to the tiered contingency payment model on successfully recovered capital...
+                    <div style={{ height: "250px", overflowY: "auto", background: "rgba(0,0,0,0.3)", padding: "1.5rem", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "var(--radius-md)", fontSize: "0.75rem", color: "var(--text-secondary)", marginBottom: "1.5rem", lineHeight: 1.7 }}>
+                        <h4 style={{ color: "var(--text-primary)", marginBottom: "1rem", fontSize: "0.9rem" }}>BUSINESS ASSOCIATE AGREEMENT (BAA) & PERFORMANCE PARTNERSHIP CONTRACT</h4>
+                        <p style={{ marginBottom: "0.75rem" }}>This Business Associate Agreement ("Agreement") is entered into by and between NorthStar Claim, operating as MediClaim AI ("Business Associate"), and the undersigned healthcare provider ("Covered Entity"), effective as of the date of electronic signature below.</p>
+                        <p style={{ marginBottom: "0.75rem" }}><strong style={{ color: "rgba(255,255,255,0.8)" }}>1. PERMITTED USES OF PHI:</strong> Business Associate may use Protected Health Information (PHI) solely to perform automated claim recovery, denial analysis, appeal generation, and payer negotiation services as authorized under this Agreement and in compliance with HIPAA (45 CFR Parts 160 and 164).</p>
+                        <p style={{ marginBottom: "0.75rem" }}><strong style={{ color: "rgba(255,255,255,0.8)" }}>2. PERFORMANCE PARTNERSHIP:</strong> Covered Entity agrees to the performance-based contingency payment model. Standard commission is 30% of net recovered revenue. No fees are charged on unsuccessful recovery attempts. Setup fees (if applicable per selected tier) are non-recurring.</p>
+                        <p style={{ marginBottom: "0.75rem" }}><strong style={{ color: "rgba(255,255,255,0.8)" }}>3. DATA SECURITY:</strong> Business Associate implements AES-256 encryption at rest, TLS 1.3 in transit, SOC 2 Type II certified infrastructure, and processes all data within HIPAA-compliant US-based data centers. Annual penetration testing and vulnerability assessments are conducted.</p>
+                        <p style={{ marginBottom: "0.75rem" }}><strong style={{ color: "rgba(255,255,255,0.8)" }}>4. AI AGENT DISCLOSURE (Web 4.0):</strong> Covered Entity acknowledges that claim analysis, appeal drafting, and initial payer negotiations are performed by autonomous AI agents. All agent actions are logged and auditable. Settlements exceeding $50,000 require human authorization.</p>
+                        <p style={{ marginBottom: "0.75rem" }}><strong style={{ color: "rgba(255,255,255,0.8)" }}>5. BREACH NOTIFICATION:</strong> In the event of a PHI breach, Business Associate will notify Covered Entity within 24 hours of discovery and comply with all HHS/OCR reporting obligations under the HITECH Act.</p>
+                        <p style={{ marginBottom: "0.75rem" }}><strong style={{ color: "rgba(255,255,255,0.8)" }}>6. TERM & TERMINATION:</strong> This Agreement remains in effect until terminated by either party with 30 days written notice. PHI is securely destroyed within 72 hours of termination per NIST SP 800-88 guidelines.</p>
+                        <p style={{ marginBottom: "0.75rem" }}><strong style={{ color: "rgba(255,255,255,0.8)" }}>7. INDEMNIFICATION:</strong> Each party agrees to indemnify the other against losses arising from the indemnifying party's breach of this Agreement or applicable law.</p>
+                        <p><strong style={{ color: "rgba(255,255,255,0.8)" }}>8. GOVERNING LAW:</strong> This Agreement shall be governed by the laws of the State of Delaware and applicable federal regulations including HIPAA, HITECH, the False Claims Act, and Anti-Kickback Statute.</p>
                     </div>
 
                     <label style={{ display: "flex", gap: "1rem", alignItems: "flex-start", cursor: "pointer", marginBottom: "2rem" }}>
@@ -157,7 +163,7 @@ export default function SignupPage() {
                             style={{ marginTop: "0.25rem", width: "20px", height: "20px" }}
                         />
                         <span style={{ fontSize: "0.875rem", fontWeight: "500", lineHeight: 1.5 }}>
-                            I am an authorized representative of the Clinic. I hereby sign the HIPAA Business Associate Agreement, the Performance Partnership Contract, and the Terms of Service.
+                            I am an authorized representative of the healthcare provider. I have read and agree to the Business Associate Agreement (BAA), Performance Partnership Contract, Web 4.0 AI Agent Disclosure, Terms of Service, and Privacy Policy. I acknowledge that AI agents will process PHI in accordance with HIPAA regulations.
                         </span>
                     </label>
 

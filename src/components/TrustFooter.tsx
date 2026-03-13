@@ -22,7 +22,7 @@ export default function TrustFooter() {
             {/* Testimonials */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", marginBottom: "4rem" }}>
                 {testimonials.map((t, idx) => (
-                    <div key={idx} className="glass-panel" style={{ padding: "1.5rem", background: "white" }}>
+                    <div key={idx} className="glass-panel" style={{ padding: "1.5rem" }}>
                         <div style={{ color: "var(--brand-accent)", marginBottom: "0.5rem" }}>{t.stars}</div>
                         <p style={{ fontSize: "0.95rem", fontStyle: "italic", marginBottom: "1rem", color: "var(--text-primary)" }}>"{t.text}"</p>
                         <div style={{ fontSize: "0.8rem", fontWeight: "700", color: "var(--text-secondary)" }}>— {t.author}</div>

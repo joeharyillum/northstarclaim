@@ -116,23 +116,33 @@ export default function AboutPage() {
                         {[
                             {
                                 title: "Data Integrity & HIPAA Compliance",
-                                text: "All data submitted to the recovery grid must be compliant with the Health Insurance Portability and Accountability Act. Modifying or falsifying diagnostic codes prior to neural ingestion will result in immediate API termination.",
+                                text: "All data submitted to the recovery grid must be compliant with the Health Insurance Portability and Accountability Act (HIPAA) as amended through 2026. All Protected Health Information (PHI) is encrypted at rest (AES-256) and in transit (TLS 1.3). Modifying or falsifying diagnostic codes prior to neural ingestion will result in immediate API key revocation and regulatory referral. Business Associate Agreements (BAAs) are executed digitally prior to any data processing.",
                                 icon: <Shield className="text-[#7B61FF]" />
                             },
                             {
-                                title: "Zero Fraud Tolerance",
-                                text: "The network audits claims to recover legally owed revenue. Any attempt to use the platform for upcoding, unbundling, or submitting phantom claims is strictly prohibited and flagged for regulatory review.",
+                                title: "Zero Fraud Tolerance & Compliance",
+                                text: "The network audits claims exclusively to recover legally owed revenue. Any attempt to use the platform for upcoding, unbundling, or submitting phantom claims is strictly prohibited and automatically flagged by our AI compliance layer. Violations are reported to the OIG (Office of Inspector General) and CMS. All recovery activities comply with the False Claims Act (31 U.S.C. \u00a7\u00a7 3729\u20133733), Anti-Kickback Statute, and Stark Law.",
                                 icon: <Lock className="text-[#7B61FF]" />
                             },
                             {
-                                title: "Commission Settlement Schedule",
-                                text: "Commissions are strictly calculated based on realized recoveries hitting the provider's corporate vault. Partners must keep Stripe or banking gateways synced. Withholding verified recovery payouts will initiate automatic legal escalation.",
+                                title: "Commission & Revenue Settlement Schedule",
+                                text: "Commissions are calculated solely on realized, verified recoveries deposited into the provider\u2019s designated financial account. Standard commission is 30% for direct clients and 15% for biller-referred partners. All payouts are processed via Stripe Connect with full audit trail. Partners must maintain active verified bank accounts or Stripe payment gateways. Withholding verified recovery payouts beyond 30 days will initiate automated legal escalation per the signed Performance Partnership Agreement.",
                                 icon: <Building className="text-[#7B61FF]" />
                             },
                             {
-                                title: "48-Hour SLA Acknowledgment",
-                                text: "Upon bulk PDF or API data submission, the Northstar engine promises a 48-hour processing window for initial analysis. Users must not interrupt or double-submit files during this active scanning phase.",
+                                title: "48-Hour SLA & Processing Guarantee",
+                                text: "Upon bulk PDF, CSV, or FHIR API data submission, the NorthStar engine guarantees a 48-hour initial analysis window. Users must not interrupt or double-submit files during active scanning. If initial analysis is not delivered within 48 hours, the setup fee (if applicable) is fully refundable. All processing occurs on HIPAA-compliant infrastructure (SOC 2 Type II certified) within US-based data centers.",
                                 icon: <Clock className="text-[#7B61FF]" />
+                            },
+                            {
+                                title: "Web 4.0 Autonomous Agent Disclosure",
+                                text: "NorthStar Claim operates as a Web 4.0 compliant autonomous agent platform. AI agents make decisions within defined parameters but all final settlement approvals above $50,000 require human authorization. Agent actions are fully auditable with immutable blockchain-anchored logs. The platform complies with emerging AI governance frameworks including the EU AI Act and proposed US AI regulatory standards.",
+                                icon: <Target className="text-[#7B61FF]" />
+                            },
+                            {
+                                title: "Termination & Data Retention Policy",
+                                text: "Either party may terminate the agreement with 30 days written notice. Upon termination, all PHI data is securely wiped within 72 hours per NIST SP 800-88 standards, with a Certificate of Destruction provided. Active claims in-process at time of termination will be completed, and any resulting recoveries will be subject to the agreed commission structure. Audit logs are retained for 7 years per HIPAA requirements.",
+                                icon: <Scale className="text-[#7B61FF]" />
                             }
                         ].map((rule, idx) => (
                             <div key={idx} className="p-8 bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all rounded-3xl group">
