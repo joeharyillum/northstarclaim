@@ -257,7 +257,7 @@ export default function WarRoomDashboard() {
                   {Array(12).fill(0).map((_, i) => (
                     <div
                       key={i}
-                      className={`h-8 flex-1 rounded transition-all duration-500 ${
+                      className={`h-8 rounded transition-all duration-500 ${
                         i < day.bars
                           ? 'bg-gradient-to-t from-emerald-600 to-teal-400'
                           : 'bg-gray-700/30'

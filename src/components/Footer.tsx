@@ -43,7 +43,7 @@ export default function Footer() {
                             <img src="/logo.png" alt="N" style={{ width: "24px" }} />
                         </div>
                         <span style={{ fontSize: "1.5rem", fontWeight: "900", color: "white", letterSpacing: "-0.04em" }}>
-                            NORTHSTAR<span className="text-gradient">CLAIM</span>
+                            Northstar <span className="text-gradient">Guardian</span>
                         </span>
                     </div>
                     <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: "1.7", marginBottom: "2.5rem", fontSize: "0.95rem", maxWidth: "400px" }}>

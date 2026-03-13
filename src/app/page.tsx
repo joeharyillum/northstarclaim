@@ -6,9 +6,9 @@ import { Metadata } from "next";
 import LiveRevenueTicker from "@/components/LiveRevenueTicker";
 
 export const metadata: Metadata = {
-  title: "NorthStar Claim | Autonomous AI Recovery Engine — Web 4.0 Lattice Platform",
+  title: "NorthStar Claim | AI Medical Claim Recovery — 94% Success Rate",
   description:
-    "The first truly agentic recovery engine for denied medical claims. 41 AI agents deploy autonomously with 94.2% success rate. Web 4.0 compliant. Zero upfront cost — performance-based recovery.",
+    "Stop losing money to denied insurance claims. NorthStar Claim's 41-agent AI recovers denied medical claims with 94% success rate. Zero upfront cost — pay only 30% on recovered revenue. Start your free scan today.",
   alternates: {
     canonical: "https://northstarclaim.com",
   },
@@ -28,25 +28,23 @@ export default function Home() {
         background: "var(--bg-dark)"
       }}>
 
-        {/* Deep Neural Background — Pure Gradient, No Photos */}
+        {/* Neural Grid Background - Futuristic Command Center */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "linear-gradient(135deg, #020818 0%, #0a0e27 30%, #0d1440 60%, #0a0e27 100%)",
+          backgroundImage: "linear-gradient(to bottom, rgba(2,6,23,0.3) 0%, rgba(2,6,23,0.9) 100%), url('/neural-grid-hero.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.8,
           zIndex: 0,
+          filter: "brightness(0.6) contrast(1.1)"
         }} />
-        {/* Neon Grid Lines Overlay */}
+
+        {/* Pulse Overlay */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+          background: "radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 70%)",
           zIndex: 1,
-        }} />
-        {/* Neon Cyan + Hot Pink Glow Orbs */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "radial-gradient(ellipse at 15% 25%, rgba(0, 212, 255, 0.25) 0%, transparent 50%), radial-gradient(ellipse at 85% 75%, rgba(255, 26, 122, 0.18) 0%, transparent 50%), radial-gradient(ellipse at 50% 10%, rgba(120, 0, 255, 0.1) 0%, transparent 40%), radial-gradient(ellipse at 70% 40%, rgba(0, 240, 255, 0.08) 0%, transparent 35%)",
-          zIndex: 2,
-          animation: "pulse-glow 6s ease-in-out infinite",
+          animation: "pulse-glow 4s ease-in-out infinite"
         }} />
 
 
@@ -62,169 +60,138 @@ export default function Home() {
               border: "1px solid rgba(255,255,255,0.05)",
               backdropFilter: "blur(20px)"
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 12px #10b981" }} />
-                <span style={{ fontSize: "0.7rem", fontWeight: "800", color: "#10b981", textTransform: "uppercase", letterSpacing: "2px" }}>Node 41: Active &amp; Protected</span>
-              </div>
-              <div style={{ width: "1px", height: "20px", background: "rgba(255,255,255,0.1)" }}></div>
               <LiveRevenueTicker label="System Value Recovered" />
+              <div style={{ width: "1px", height: "30px", background: "rgba(255,255,255,0.1)" }}></div>
+              <div>
+                <div style={{ fontSize: "0.6rem", fontWeight: "900", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "0.1rem" }}>
+                  PERFORMANCE-BASED RECOVERY
+                </div>
+                <div style={{ fontSize: "0.9rem", fontWeight: "bold", color: "white", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <div className="w-2 h-2 rounded-full bg-[#00f2ff] animate-pulse" style={{ boxShadow: "0 0 10px #00f2ff" }}></div>
+                  ACTIVE GRID
+                </div>
+              </div>
             </div>
           </div>
 
-          <div style={{ maxWidth: "900px", textAlign: "left" }} className="animate-fade-in">
+          <div style={{ maxWidth: "1200px", textAlign: "center", margin: "0 auto" }} className="animate-fade-in">
             <h1 style={{
-              fontSize: "clamp(2.5rem, 7vw, 5.5rem)", marginBottom: "1.5rem", color: "white", fontWeight: "900", lineHeight: "1.05",
+              fontSize: "clamp(2.2rem, 8vw, 6rem)", marginBottom: "1.5rem", color: "white", fontWeight: "900", lineHeight: "1",
               letterSpacing: "-0.04em", textTransform: "uppercase"
             }}>
-              Reclaim Liquidity.<br />
+              RECLAIM YOUR <br />
               <span style={{ 
-                background: "linear-gradient(135deg, #00f2ff, #ff007a)", 
+                background: "linear-gradient(to right, #00f2ff, #ff007a)", 
                 WebkitBackgroundClip: "text", 
                 WebkitTextFillColor: "transparent",
-                filter: "drop-shadow(0 0 25px rgba(0,242,255,0.4))"
-              }}>In total stealth.</span>
+                filter: "drop-shadow(0 0 20px rgba(255,0,122,0.4))"
+              }}>LIQUIDITY.</span>
             </h1>
 
             <p style={{
-              fontSize: "clamp(1rem, 2.2vw, 1.3rem)", color: "rgba(255,255,255,0.55)", maxWidth: "650px", marginBottom: "3rem", lineHeight: "1.7", fontWeight: "400"
+              fontSize: "clamp(1rem, 2.5vw, 1.25rem)", color: "rgba(255,255,255,0.6)", marginBottom: "3rem", maxWidth: "800px", margin: "0 auto 4rem", lineHeight: "1.6", fontWeight: "400"
             }}>
-              The first truly agentic recovery engine for denials.<br />
-              Upload claims, deploy agents, and watch liquidity return.
+              We only get paid when you do. Our model is built on shared success, aligning our autonomous agents with your practice's bottom line.
             </p>
 
-            {/* Initialize Ingress — Upload Zone */}
-            <div style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "2px dashed rgba(0,242,255,0.25)",
-              borderRadius: "var(--radius-xl)",
-              padding: "2.5rem",
-              textAlign: "center",
-              marginBottom: "2rem",
-              backdropFilter: "blur(10px)",
-            }}>
-              <div style={{ fontSize: "2.5rem", marginBottom: "1rem", opacity: 0.6 }}>⇧</div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: "800", marginBottom: "0.5rem", color: "white" }}>Initialize Ingress</h3>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem" }}>Drop your denied claims here or click to browse.</p>
-            </div>
-
-            <Link href="/free-scan" style={{
-              display: "block", width: "100%",
-              background: "linear-gradient(135deg, #00f2ff 0%, #ff1a7a 100%)",
-              color: "white", padding: "1.25rem", borderRadius: "var(--radius-lg)",
-              fontWeight: "900", fontSize: "1rem", textAlign: "center",
-              textTransform: "uppercase", letterSpacing: "1px", textDecoration: "none",
-              boxShadow: "0 0 30px rgba(0,242,255,0.4), 0 0 60px rgba(255,26,122,0.2)", marginBottom: "3rem",
-            }}>
-              Deploy Recovery Scan
-            </Link>
-
-            {/* Pricing Grid */}
+            {/* Pricing Grid - From Screenshot */}
             <div style={{ 
               display: "grid", 
               gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", 
-              gap: "1.5rem",
-              marginBottom: "4rem"
+              gap: "2rem",
+              marginBottom: "6rem"
             }}>
               {/* Guardian Pilot */}
-              <div className="glass-panel" style={{ padding: "2.5rem 2rem", textAlign: "left", display: "flex", flexDirection: "column" }}>
-                <div style={{ fontSize: "0.6rem", fontWeight: "800", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "0.75rem" }}>SETUP + RECOVERY PROTOCOL</div>
-                <h3 style={{ fontSize: "1.5rem", fontWeight: "800", marginBottom: "1.25rem" }}>Guardian Pilot</h3>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "0.25rem" }}><span style={{ fontSize: "2.75rem", fontWeight: "900", lineHeight: "1" }}>$2,500</span> <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", fontWeight: "700" }}>ONE-TIME</span></div>
+              <div className="glass-panel" style={{ padding: "3rem 2rem", textAlign: "left" }}>
+                <div style={{ fontSize: "0.65rem", fontWeight: "800", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "1.5rem" }}>SETUP + RECOVERY</div>
+                <h3 style={{ fontSize: "1.8rem", marginBottom: "1.5rem" }}>Guardian Pilot</h3>
+                <div style={{ fontSize: "3rem", fontWeight: "900", marginBottom: "0.5rem" }}>$2,500 <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>ONE-TIME</span></div>
                 <div style={{ fontSize: "0.85rem", fontWeight: "700", color: "var(--brand-primary)", marginBottom: "2rem" }}>30% <span style={{ opacity: 0.6 }}>COMMISSION</span></div>
                 
                 <div style={{ background: "rgba(59, 130, 246, 0.1)", padding: "1rem", borderRadius: "0.5rem", fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", marginBottom: "2rem", lineHeight: "1.4" }}>
                   AHA! PROTOCOL: MOST PRACTICES RECOVER THE $2,500 PILOT FEE WITHIN THE FIRST 48 HOURS OF AUTONOMOUS SCANNING.
                 </div>
 
-                <ul style={{ listStyle: "none", marginBottom: "2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", flexGrow: 1 }}>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Full Autonomous 48h Scan</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Adversarial Rebuttal Engine</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Direct FHIR API Integration</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Instant 30% Net-Win Billing</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Sentinel Security Monitoring</li>
+                <ul style={{ listStyle: "none", marginBottom: "2.5rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.8)" }}>
+                  <li style={{ marginBottom: "1rem" }}>✓ Full Autonomous 48h Scan</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Adversarial Rebuttal Engine</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Direct FHIR API Integration</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Instant 30% Net-Win Billing</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Sentinel Security Monitoring</li>
                 </ul>
-                <Button href="/signup" style={{ width: "100%", background: "linear-gradient(135deg, #00f2ff, #2563eb)", color: "white", padding: "1rem", borderRadius: "0.75rem", fontWeight: "800", border: "none", textTransform: "uppercase", fontSize: "0.75rem", letterSpacing: "1px" }}>ACTIVATE PILOT PROTOCOL</Button>
+                <Button href="/signup" style={{ width: "100%", background: "linear-gradient(to right, #00f2ff, #2563eb)", color: "white", padding: "1.25rem", borderRadius: "1rem", fontWeight: "900", border: "none" }}>ACTIVATE PILOT PROTOCOL</Button>
               </div>
 
               {/* Growth Lattice */}
-              <div className="glass-panel" style={{ padding: "2.5rem 2rem", textAlign: "left", display: "flex", flexDirection: "column", borderColor: "rgba(0, 242, 255, 0.25)" }}>
-                <div style={{ fontSize: "0.6rem", fontWeight: "800", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "0.75rem" }}>SCALED RECOVERY L.A.R</div>
-                <h3 style={{ fontSize: "1.5rem", fontWeight: "800", marginBottom: "1.25rem" }}>Growth Lattice</h3>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "0.25rem" }}><span style={{ fontSize: "2.75rem", fontWeight: "900", lineHeight: "1" }}>$7,500</span> <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", fontWeight: "700" }}>SETUP</span></div>
+              <div className="glass-panel" style={{ padding: "3rem 2rem", textAlign: "left", borderColor: "rgba(0, 242, 255, 0.3)" }}>
+                <div style={{ fontSize: "0.65rem", fontWeight: "800", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "1.5rem" }}>SCALED RECOVERY</div>
+                <h3 style={{ fontSize: "1.8rem", marginBottom: "1.5rem" }}>Growth Lattice</h3>
+                <div style={{ fontSize: "3rem", fontWeight: "900", marginBottom: "0.5rem" }}>$7,500 <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>SETUP</span></div>
                 <div style={{ fontSize: "0.85rem", fontWeight: "700", color: "var(--brand-primary)", marginBottom: "2rem" }}>20% <span style={{ opacity: 0.6 }}>COMMISSION</span></div>
                 
                 <div style={{ background: "rgba(0, 242, 255, 0.05)", padding: "1rem", borderRadius: "0.5rem", fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", marginBottom: "2rem", lineHeight: "1.4" }}>
                   LATTICE IMPACT: BY DROPPING TO 20%, HIGH-VOLUME FACILITIES SAVE AN AVERAGE OF $82K/MO VS TRADITIONAL BILLING.
                 </div>
 
-                <ul style={{ listStyle: "none", marginBottom: "2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", flexGrow: 1 }}>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Priority Agent Allocation</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Deep Payer Drift Analysis</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Unlimited Rebuttal Cycles</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Quarterly Revenue Audits</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Automated Payout Routing</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Dedicated Success Manager</li>
+                <ul style={{ listStyle: "none", marginBottom: "2.5rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.8)" }}>
+                  <li style={{ marginBottom: "1rem" }}>✓ Priority Agent Allocation</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Deep Payer Drift Analysis</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Unlimited Rebuttal Cycles</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Quarterly Revenue Audits</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Automated Payout Routing</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Dedicated Success Manager</li>
                 </ul>
-                <Button href="/signup" style={{ width: "100%", background: "linear-gradient(135deg, #00f2ff, #7000ff)", color: "white", padding: "1rem", borderRadius: "0.75rem", fontWeight: "800", border: "none", textTransform: "uppercase", fontSize: "0.75rem", letterSpacing: "1px" }}>SCALE RECOVERY PROTOCOL</Button>
+                <Button href="/signup" style={{ width: "100%", background: "linear-gradient(to right, #00f2ff, #7000ff)", color: "white", padding: "1.25rem", borderRadius: "1rem", fontWeight: "900", border: "none" }}>SCALE RECOVERY PROTOCOL</Button>
               </div>
 
               {/* Network Core */}
-              <div className="glass-panel" style={{ padding: "2.5rem 2rem", textAlign: "left", display: "flex", flexDirection: "column" }}>
-                <div style={{ fontSize: "0.6rem", fontWeight: "800", color: "rgba(255,0,122,0.7)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "0.75rem" }}>HOSPITAL NETWORKS</div>
-                <h3 style={{ fontSize: "1.5rem", fontWeight: "800", marginBottom: "1.25rem" }}>Network Core</h3>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "0.25rem" }}><span style={{ fontSize: "2.75rem", fontWeight: "900", lineHeight: "1" }}>Custom</span></div>
-                <div style={{ fontSize: "0.8rem", fontWeight: "700", color: "rgba(255,255,255,0.2)", marginBottom: "1.5rem" }}>—</div>
+              <div className="glass-panel" style={{ padding: "3rem 2rem", textAlign: "left" }}>
+                <div style={{ fontSize: "0.65rem", fontWeight: "800", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "1.5rem" }}>HOSPITAL NETWORKS</div>
+                <h3 style={{ fontSize: "1.8rem", marginBottom: "1.5rem" }}>Network Core</h3>
+                <div style={{ fontSize: "3rem", fontWeight: "900", marginBottom: "0.5rem" }}>Custom</div>
+                <div style={{ fontSize: "0.85rem", fontWeight: "700", color: "white", marginBottom: "2rem", opacity: 0.2 }}>-</div>
                 
                 <div style={{ background: "rgba(255, 255, 255, 0.03)", padding: "1rem", borderRadius: "0.5rem", fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", marginBottom: "2rem", lineHeight: "1.4" }}>
                   CORE EDGE: CUSTOM LLM TRAINING ENSURES ZERO-TOUCH RECOVERY ACROSS 50,000+ DAILY CLAIMS WITH 100% HIPAA ISOLATION.
                 </div>
 
-                <ul style={{ listStyle: "none", marginBottom: "2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", flexGrow: 1 }}>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Multi-Entity Revenue Sync</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Dedicated Cloud Tunnel</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Full Legal BAA Execution</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Custom LLM Denial Training</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Governance Council Voting</li>
-                  <li style={{ marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.75rem" }}><span style={{ color: "var(--brand-primary)" }}>✓</span> Whitelabel Portal Access</li>
+                <ul style={{ listStyle: "none", marginBottom: "2.5rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.8)" }}>
+                  <li style={{ marginBottom: "1rem" }}>✓ Multi-Entity Revenue Sync</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Dedicated Cloud Tunnel</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Full Legal BAA Execution</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Custom LLM Denial Training</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Governance Council Voting</li>
+                  <li style={{ marginBottom: "1rem" }}>✓ Whitelabel Portal Access</li>
                 </ul>
-                <Button href="/contact" style={{ width: "100%", background: "rgba(255,255,255,0.04)", color: "white", padding: "1rem", borderRadius: "0.75rem", fontWeight: "800", border: "1px solid rgba(255,255,255,0.1)", textTransform: "uppercase", fontSize: "0.75rem", letterSpacing: "1px" }}>CONTACT PROTOCOL ADMIN</Button>
+                <Button href="/contact" style={{ width: "100%", background: "rgba(255,255,255,0.05)", color: "white", padding: "1.25rem", borderRadius: "1rem", fontWeight: "900", border: "1px solid rgba(255,255,255,0.1)" }}>CONTACT PROTOCOL ADMIN</Button>
               </div>
             </div>
 
-            {/* Stats Grid */}
+            {/* Bottom Stats Grid */}
             <div style={{ 
               display: "grid", 
-              gridTemplateColumns: "repeat(4, 1fr)", 
-              gap: "1px",
-              background: "rgba(255,255,255,0.05)",
-              borderRadius: "var(--radius-xl)",
-              overflow: "hidden",
-              marginBottom: "3rem"
+              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", 
+              gap: "2rem",
+              padding: "3rem",
+              background: "rgba(255,255,255,0.02)",
+              borderRadius: "2rem",
+              border: "1px solid rgba(255,255,255,0.05)"
             }}>
-              {[
-                { value: "94%", label: "Recovery" },
-                { value: "256KB", label: "Encryption" },
-                { value: "41", label: "AI Nodes" },
-                { value: "0s", label: "Latency" },
-              ].map((stat, i) => (
-                <div key={i} style={{ background: "rgba(4,8,19,0.8)", padding: "1.5rem 1rem", textAlign: "center" }}>
-                  <div style={{ fontSize: "1.6rem", fontWeight: "900", color: "white", lineHeight: "1" }}>{stat.value}</div>
-                  <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "2px", marginTop: "0.5rem", fontWeight: "700" }}>{stat.label}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* MediClaim AI Branding + Web 4.0 */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-                <span style={{ fontSize: "1rem", fontWeight: "800", color: "white" }}>NorthStar Claim</span>
-                <span style={{ fontSize: "0.7rem", color: "rgba(0,212,255,0.4)", fontWeight: "600" }}>Autonomous Recovery Engine — Zero Touch. Maximum Liquidity.</span>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "1.5rem", fontWeight: "900", color: "white" }}>94.2%</div>
+                <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "2px", marginTop: "0.5rem" }}>RECOVERY RATE</div>
               </div>
-              <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap", alignItems: "center" }}>
-                {["Strategy", "Security", "Compliance"].map((item, i) => (
-                  <span key={i} style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)", fontWeight: "700", textTransform: "uppercase", letterSpacing: "1px" }}>{item}</span>
-                ))}
-                <span style={{ fontSize: "0.65rem", color: "#00f2ff", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", background: "rgba(0,242,255,0.1)", padding: "0.3rem 0.85rem", borderRadius: "var(--radius-full)", border: "1px solid rgba(0,242,255,0.2)" }}>Web 4.0 Compatible</span>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "1.5rem", fontWeight: "900", color: "white" }}>45m</div>
+                <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "2px", marginTop: "0.5rem" }}>AVG. EXTRACTION</div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "1.5rem", fontWeight: "900", color: "white" }}>$0</div>
+                <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "2px", marginTop: "0.5rem" }}>UPFRONT COST</div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "1.5rem", fontWeight: "900", color: "white" }}>15M+</div>
+                <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "2px", marginTop: "0.5rem" }}>NEURAL NODES ONLINE</div>
               </div>
             </div>
 
@@ -296,12 +263,12 @@ export default function Home() {
       {/* B2B2B Partner "Trojan Horse" Section */}
       <section className="section-padding" style={{ position: "relative" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "clamp(2rem, 5vw, 6rem)", alignItems: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "10rem", alignItems: "center" }}>
             <div className="animate-fade-in">
               <div style={{ background: "rgba(59, 130, 246, 0.1)", color: "var(--brand-primary)", display: "inline-block", padding: "0.6rem 1.5rem", borderRadius: "var(--radius-full)", fontWeight: "900", fontSize: "0.8rem", marginBottom: "2.5rem", textTransform: "uppercase", letterSpacing: "2px" }}>
                 The Revenue Guardian Alliance
               </div>
-              <h2 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginBottom: "2.5rem", lineHeight: "1.2" }}>Protect your <span className="text-gradient">Revenue Stream</span></h2>
+              <h2 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginBottom: "2.5rem", lineHeight: "1.2" }}>Protect your <span className="text-gradient">Profit Rights</span></h2>
               <p style={{ color: "var(--text-secondary)", fontSize: "1.5rem", marginBottom: "4rem", lineHeight: "1.6" }}>
                 We empower freelance billers and RCM agencies to recover 100% of what insurance companies owe clinics. Deploy our grid, win the appeals, and earn <strong style={{ color: 'var(--brand-accent)' }}>15% passive commission</strong> on every recovered dollar.
               </p>
@@ -318,7 +285,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <Button href="/signup" size="lg" style={{ borderRadius: "var(--radius-full)", padding: "1.5rem 4rem", fontSize: "1.25rem", background: "linear-gradient(135deg, #00f2ff, #ff1a7a)", boxShadow: "0 0 30px rgba(0,242,255,0.4), 0 0 60px rgba(255,26,122,0.2)" }}>Deploy Your Grid Now</Button>
+              <Button href="/signup" size="lg" style={{ borderRadius: "var(--radius-full)", padding: "1.5rem 4rem", fontSize: "1.25rem", boxShadow: "0 0 30px rgba(59, 130, 246, 0.4)" }}>Deploy Your Grid Now</Button>
             </div>
 
             <div>
@@ -420,8 +387,8 @@ export default function Home() {
                   <img src="/logo.png" alt="Web3 Seal" style={{ width: "32px", height: "32px", objectFit: "contain" }} />
                 </div>
               </div>
-              <h3 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>Web 4.0 Vaults</h3>
-              <p style={{ color: "var(--text-secondary)" }}>Next-gen agentic payout infrastructure with blockchain-verified audit logs and AI-orchestrated settlement routing.</p>
+              <h3 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>Web3 Vaults</h3>
+              <p style={{ color: "var(--text-secondary)" }}>Optional payouts via crypto and secure blockchain-verified audit logs.</p>
             </div>
           </div>
         </div>
@@ -466,7 +433,7 @@ export default function Home() {
                 <li>✓ Custom Integration (EHR)</li>
                 <li>✓ Dedicated Neural Node</li>
                 <li>✓ Volume-Based Split</li>
-                <li>✓ Web 4.0/Crypto Payouts</li>
+                <li>✓ Web3/Crypto Payouts</li>
               </ul>
               <SubscriptionButton tier="enterprise" label="Contact Sales" variant="outline" style={{ width: "100%" }} />
             </div>
