@@ -6,6 +6,7 @@ node_modules
 !railway.json
 !package.json
 !package-lock.json
+!tsconfig.json
 !prisma/schema.prisma
 medical_whales_5000.csv
 leads_hyper_fast.csv
