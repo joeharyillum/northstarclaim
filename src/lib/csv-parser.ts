@@ -3,20 +3,50 @@ export interface RawLead {
     [key: string]: string;
 }
 
+function parseCsvLine(line: string): string[] {
+    const fields: string[] = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (inQuotes) {
+            if (ch === '"' && line[i + 1] === '"') {
+                current += '"';
+                i++;
+            } else if (ch === '"') {
+                inQuotes = false;
+            } else {
+                current += ch;
+            }
+        } else {
+            if (ch === '"') {
+                inQuotes = true;
+            } else if (ch === ',') {
+                fields.push(current.trim());
+                current = '';
+            } else {
+                current += ch;
+            }
+        }
+    }
+    fields.push(current.trim());
+    return fields;
+}
+
 export function parseLeads(csvContent: string): RawLead[] {
     try {
         const lines = csvContent.split(/\r?\n/).filter(line => line.trim() !== '');
         if (lines.length < 2) return [];
 
-        const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+        const headers = parseCsvLine(lines[0]);
         const results: RawLead[] = [];
 
         for (let i = 1; i < lines.length; i++) {
-            const currentLine = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-            if (currentLine.length === headers.length) {
+            const values = parseCsvLine(lines[i]);
+            if (values.length === headers.length) {
                 const row: RawLead = {};
                 headers.forEach((header, index) => {
-                    row[header] = currentLine[index];
+                    row[header] = values[index];
                 });
                 results.push(row);
             }

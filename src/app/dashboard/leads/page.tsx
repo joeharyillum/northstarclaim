@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLeadStore } from '@/store/useLeadStore';
 import { parseLeads, generateLeadId } from '@/lib/csv-parser';
 import { generateLeads } from '@/lib/lead-generator';
@@ -21,8 +21,31 @@ import {
     Sparkles,
     CreditCard,
     Trash2,
+    Upload,
+    Send,
+    Database,
 } from 'lucide-react';
 import LiveActivityFeed from '@/components/LiveActivityFeed';
+
+interface DbLead {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    company: string;
+    title: string;
+    city: string;
+    state: string;
+    source: string;
+    status: string;
+    createdAt: string;
+}
+
+interface DbStats {
+    total: number;
+    contacted: number;
+    pending: number;
+}
 
 export default function DashboardLeads() {
     const { leads, stats, addLeads, clearLeads } = useLeadStore();
@@ -30,8 +53,28 @@ export default function DashboardLeads() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [stripeBalance, setStripeBalance] = useState<number | null>(null);
     const [isGenerating, setIsGenerating] = useState(false);
+    const [dbLeads, setDbLeads] = useState<DbLead[]>([]);
+    const [dbStats, setDbStats] = useState<DbStats>({ total: 0, contacted: 0, pending: 0 });
+    const [pushStatus, setPushStatus] = useState<string | null>(null);
 
-    React.useEffect(() => {
+    // Fetch DB leads on mount
+    useEffect(() => {
+        const fetchDbLeads = async () => {
+            try {
+                const res = await fetch('/api/leads/ingest');
+                if (res.ok) {
+                    const data = await res.json();
+                    setDbLeads(data.leads || []);
+                    setDbStats(data.stats || { total: 0, contacted: 0, pending: 0 });
+                }
+            } catch {}
+        };
+        fetchDbLeads();
+        const interval = setInterval(fetchDbLeads, 30000);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
         const fetchBalance = async () => {
             try {
                 const res = await fetch('/api/stripe/balance');
@@ -73,30 +116,96 @@ export default function DashboardLeads() {
         setIsGenerating(false);
     };
 
-    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        setIsProcessing(true);
         const reader = new FileReader();
-        reader.onload = (event) => {
+        reader.onload = async (event) => {
             const content = event.target?.result as string;
             const rawLeads = parseLeads(content);
 
+            // Save to DB via API
+            try {
+                const apiLeads = rawLeads.map(rl => ({
+                    email: rl.Email || rl.email,
+                    firstName: rl.FirstName || rl.firstName || rl.first_name || rl.First || '',
+                    lastName: rl.LastName || rl.lastName || rl.last_name || rl.Last || '',
+                    company: rl.CompanyName || rl.Company || rl.company || rl.company_name || '',
+                    title: rl.Title || rl.title || '',
+                    city: rl.City || rl.city || '',
+                    state: rl.State || rl.state || '',
+                    source: 'csv',
+                }));
+
+                const res = await fetch('/api/leads/ingest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ leads: apiLeads }),
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    setPushStatus(`✅ Imported ${data.inserted} leads (${data.skipped} skipped)`);
+                    // Refresh DB leads
+                    const refreshRes = await fetch('/api/leads/ingest');
+                    if (refreshRes.ok) {
+                        const refreshData = await refreshRes.json();
+                        setDbLeads(refreshData.leads || []);
+                        setDbStats(refreshData.stats || { total: 0, contacted: 0, pending: 0 });
+                    }
+                } else {
+                    setPushStatus('❌ Import failed — check auth');
+                }
+            } catch {
+                setPushStatus('❌ Import failed — network error');
+            }
+
+            // Also add to local store for immediate display
             const formattedLeads = rawLeads.map(rl => ({
                 id: generateLeadId(),
-                name: rl.name || rl.full_name || rl.First + ' ' + rl.Last,
+                name: rl.name || rl.full_name || (rl.FirstName || rl.First || '') + ' ' + (rl.LastName || rl.Last || ''),
                 email: rl.email || rl.Email,
-                company: rl.company || rl.Company,
-                industry: rl.industry || rl.Industry,
-                location: rl.location || rl.Location,
+                company: rl.company || rl.Company || rl.CompanyName,
+                industry: rl.industry || rl.Industry || 'Healthcare',
+                location: rl.location || rl.Location || ((rl.City || rl.city || '') + ', ' + (rl.State || rl.state || '')),
                 metadata: rl,
                 status: 'new' as const,
                 createdAt: Date.now()
             }));
-
             addLeads(formattedLeads);
+            setIsProcessing(false);
         };
         reader.readAsText(file);
+    };
+
+    const handlePushToCampaign = async () => {
+        setIsProcessing(true);
+        setPushStatus('Pushing leads to Instantly.ai campaign...');
+        try {
+            const res = await fetch('/api/leads/push', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ limit: 500 }),
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setPushStatus(`✅ Pushed ${data.pushed} leads to campaign! (${data.skipped} skipped)`);
+                // Refresh
+                const refreshRes = await fetch('/api/leads/ingest');
+                if (refreshRes.ok) {
+                    const refreshData = await refreshRes.json();
+                    setDbLeads(refreshData.leads || []);
+                    setDbStats(refreshData.stats || { total: 0, contacted: 0, pending: 0 });
+                }
+            } else {
+                setPushStatus('❌ Push failed — check Instantly.ai config');
+            }
+        } catch {
+            setPushStatus('❌ Push failed — network error');
+        }
+        setIsProcessing(false);
     };
 
     const statusColors: Record<string, { bg: string; text: string }> = {
@@ -109,6 +218,9 @@ export default function DashboardLeads() {
         failed: { bg: "rgba(239,68,68,0.1)", text: "#ef4444" },
     };
 
+    const totalLeads = dbStats.total || stats.total;
+    const totalContacted = dbStats.contacted || stats.contacted;
+
     return (
         <div style={{ maxWidth: "1200px" }}>
             {/* Header */}
@@ -120,14 +232,19 @@ export default function DashboardLeads() {
                 <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
                     Generate, personalize, and launch outreach campaigns.
                 </p>
+                {pushStatus && (
+                    <p style={{ color: pushStatus.startsWith('✅') ? '#10b981' : pushStatus.startsWith('❌') ? '#ef4444' : '#eab308', fontSize: "0.85rem", fontWeight: "600", marginTop: "0.5rem" }}>
+                        {pushStatus}
+                    </p>
+                )}
             </div>
 
             {/* Stat Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
                 {[
-                    { label: "Total Leads", value: stats.total.toLocaleString(), icon: Users, color: "#a855f7" },
-                    { label: "Contacted", value: stats.contacted.toLocaleString(), icon: CheckCircle2, color: "#f59e0b" },
-                    { label: "Est. Commissions", value: `$${(stats.total * 450 * 0.15).toLocaleString(undefined, { maximumFractionDigits: 0 })}`, icon: TrendingUp, color: "#3b82f6" },
+                    { label: "Total Leads", value: totalLeads.toLocaleString(), icon: Users, color: "#a855f7" },
+                    { label: "Contacted", value: totalContacted.toLocaleString(), icon: CheckCircle2, color: "#f59e0b" },
+                    { label: "Est. Commissions", value: `$${(totalLeads * 450 * 0.15).toLocaleString(undefined, { maximumFractionDigits: 0 })}`, icon: TrendingUp, color: "#3b82f6" },
                     { label: "Stripe Revenue", value: stripeBalance !== null ? `$${stripeBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "Syncing...", icon: CreditCard, color: "#10b981" },
                 ].map((m) => {
                     const Icon = m.icon;
@@ -242,24 +359,30 @@ export default function DashboardLeads() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {leads.slice(0, 10).map((lead) => {
-                                    const st = statusColors[lead.status] || statusColors.new;
+                                {(dbLeads.length > 0 ? dbLeads.slice(0, 20) : leads.slice(0, 10)).map((lead: any) => {
+                                    const isDb = 'firstName' in lead;
+                                    const name = isDb ? `${lead.firstName} ${lead.lastName}` : (lead.name || 'Unknown');
+                                    const email = lead.email || '';
+                                    const company = isDb ? lead.company : (lead.company || '');
+                                    const industry = isDb ? (lead.title || lead.industry) : (lead.industry || '');
+                                    const status = lead.status || 'new';
+                                    const st = statusColors[status] || statusColors.new;
                                     return (
                                         <tr key={lead.id} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
                                             <td style={{ padding: "0.625rem 1rem" }}>
-                                                <div style={{ fontSize: "0.85rem", fontWeight: "600" }}>{lead.name || 'Unknown'}</div>
-                                                <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{lead.email}</div>
+                                                <div style={{ fontSize: "0.85rem", fontWeight: "600" }}>{name}</div>
+                                                <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{email}</div>
                                             </td>
                                             <td style={{ padding: "0.625rem 1rem" }}>
                                                 <span style={{
                                                     fontSize: "0.6rem", fontWeight: "600", padding: "0.125rem 0.5rem",
                                                     borderRadius: "var(--radius-full)", background: st.bg, color: st.text,
                                                     textTransform: "uppercase", letterSpacing: "0.03em",
-                                                }}>{lead.status}</span>
+                                                }}>{status}</span>
                                             </td>
                                             <td style={{ padding: "0.625rem 1rem" }}>
-                                                <div style={{ fontSize: "0.85rem" }}>{lead.company}</div>
-                                                <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{lead.industry}</div>
+                                                <div style={{ fontSize: "0.85rem" }}>{company}</div>
+                                                <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{industry}</div>
                                             </td>
                                             <td style={{ padding: "0.625rem 1rem" }}>
                                                 <MoreVertical size={14} style={{ color: "var(--text-muted)", cursor: "pointer" }} />
@@ -267,7 +390,7 @@ export default function DashboardLeads() {
                                         </tr>
                                     );
                                 })}
-                                {leads.length === 0 && (
+                                {leads.length === 0 && dbLeads.length === 0 && (
                                     <tr>
                                         <td colSpan={4} style={{ padding: "3rem 1rem", textAlign: "center", color: "var(--text-muted)", fontSize: "0.85rem" }}>
                                             No leads yet. Import a CSV or generate leads to get started.
@@ -284,6 +407,7 @@ export default function DashboardLeads() {
                     <h2 style={{ fontSize: "1rem", fontWeight: "600" }}>Quick Actions</h2>
 
                     {[
+                        { label: "Push to Campaign", desc: `Send ${dbStats.pending || 0} leads to Instantly.ai`, icon: Send, color: "#10b981", onClick: handlePushToCampaign },
                         { label: "Bulk Personalize", desc: "AI-research all new leads", icon: Zap, color: "#eab308", onClick: handleBulkPersonalize },
                         { label: "Launch Campaign", desc: "Send follow-up outreach", icon: Mail, color: "#6366f1", onClick: handleRunCampaign },
                         { label: "Clear Leads", desc: "Remove all local data", icon: Trash2, color: "#ef4444", onClick: clearLeads },

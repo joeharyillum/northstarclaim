@@ -214,3 +214,31 @@ model AuditLog {
   ipAddress String?
   createdAt DateTime @default(now())
 }
+
+// ----------------------------------------------------------------------------
+// 7. LEAD: Outreach leads from Apollo, CSV imports, or manual entry
+// ----------------------------------------------------------------------------
+model Lead {
+  id          String   @id @default(uuid())
+  email       String
+  firstName   String
+  lastName    String
+  company     String
+  title       String   @default("")
+  city        String   @default("")
+  state       String   @default("")
+  phone       String   @default("")
+  industry    String   @default("Healthcare")
+  source      String   @default("csv")          // csv, apollo, manual
+  status      String   @default("new")          // new, contacted, replied, converted, failed
+  campaignId  String?                            // Instantly.ai campaign ID if pushed
+  pushedAt    DateTime?                          // When pushed to Instantly
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([email])
+  @@index([status])
+  @@index([source])
+  @@index([state])
+  @@index([createdAt])
+}
