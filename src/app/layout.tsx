@@ -71,9 +71,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://northstarclaim.com",
   },
-  verification: {
-    google: "ADD_YOUR_GOOGLE_VERIFICATION_CODE",
-  },
+  verification: {},
 };
 
 export default function RootLayout({
@@ -102,12 +100,6 @@ export default function RootLayout({
                 priceCurrency: "USD",
                 description:
                   "$2,500 pilot fee. 30% success commission — pay only when claims are recovered.",
-              },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.8",
-                ratingCount: "47",
-                bestRating: "5",
               },
               provider: {
                 "@type": "Organization",

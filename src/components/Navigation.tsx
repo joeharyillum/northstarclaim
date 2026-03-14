@@ -50,7 +50,7 @@ export default function Navigation() {
 
                 {/* CTA */}
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <Link href="/login" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem" }}>Sign In</Link>
+                    <Link href="/signup" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem" }}>Sign In</Link>
                     <Link href="/free-scan" style={{ 
                         background: "var(--brand-primary)", 
                         color: "var(--bg-primary)", 

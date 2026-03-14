@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Button from './Button';
 
 interface SubscriptionButtonProps {
-    tier: 'starter' | 'professional' | 'enterprise';
+    tier: 'guardian-pilot' | 'growth-lattice' | 'network-core';
     label?: string;
     variant?: 'primary' | 'outline' | 'glass';
     style?: React.CSSProperties;
@@ -21,7 +21,7 @@ export default function SubscriptionButton({
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubscribe = async () => {
-        if (tier === 'enterprise') {
+        if (tier === 'network-core') {
             window.location.href = 'mailto:sales@northstarclaim.com';
             return;
         }

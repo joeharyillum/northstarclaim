@@ -8,7 +8,7 @@ export const maxDuration = 60;
 
 // Initialize OpenAI. It expects process.env.OPENAI_API_KEY to be set.
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY || "mock-key",
+    apiKey: process.env.OPENAI_API_KEY || "",
 });
 
 export async function POST(request: Request) {

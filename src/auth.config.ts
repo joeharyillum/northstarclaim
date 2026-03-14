@@ -23,4 +23,5 @@ export const authConfig = {
 
 export const baseAuthConfig = {
     basePath: '/api/auth',
+    providers: [],
 } satisfies NextAuthConfig;

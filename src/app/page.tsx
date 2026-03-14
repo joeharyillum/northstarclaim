@@ -1,6 +1,4 @@
 import Button from "@/components/Button";
-import SubscriptionButton from "@/components/SubscriptionButton";
-import FeatureCard from "@/components/FeatureCard";
 import Link from "next/link";
 import { Metadata } from "next";
 import LiveRevenueTicker from "@/components/LiveRevenueTicker";
@@ -91,7 +89,7 @@ export default function Home() {
             <p style={{
               fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "var(--text-secondary)", marginBottom: "3rem", maxWidth: "700px", margin: "0 auto 3rem", lineHeight: "1.7"
             }}>
-              US healthcare providers lose $262 billion annually to preventable denials. Our autonomous AI engine recovers denied claims within 48 hours. Pay only a 30% commission on recovered revenue—zero upfront cost.
+              US healthcare providers lose $262 billion annually to preventable denials. Our autonomous AI engine recovers denied claims within 48 hours. Start with a $2,500 pilot — pay 30% only on recovered revenue.
             </p>
             
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>

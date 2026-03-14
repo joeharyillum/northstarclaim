@@ -93,10 +93,11 @@ export default function FreeScanPage() {
                         </p>
 
                         <div style={{ background: "rgba(16, 185, 129, 0.1)", border: "1px solid rgba(16, 185, 129, 0.2)", borderRadius: "var(--radius-lg)", padding: "3rem", margin: "0 auto 3rem", display: "inline-block" }}>
-                            <div style={{ fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "1px", color: "var(--brand-accent)", fontWeight: "700", marginBottom: "0.5rem" }}>Estimated Recoverable Amount</div>
+                            <div style={{ fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "1px", color: "var(--brand-accent)", fontWeight: "700", marginBottom: "0.5rem" }}>Industry Average Recoverable Revenue</div>
                             <div style={{ fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: "800", color: "var(--text-primary)", lineHeight: 1 }}>
-                                $182,450<span style={{ fontSize: "2rem" }}>.00</span>
+                                $50K–$200K<span style={{ fontSize: "1.5rem" }}>/yr</span>
                             </div>
+                            <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginTop: "0.75rem" }}>Based on practice size and denial volume</p>
                         </div>
 
                         <p style={{ fontSize: "1.125rem", marginBottom: "2rem", maxWidth: "500px", margin: "0 auto 2rem" }}>

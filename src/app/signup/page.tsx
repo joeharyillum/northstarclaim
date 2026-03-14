@@ -144,7 +144,7 @@ export default function SignupPage() {
 
                     <div style={{ height: "200px", overflowY: "auto", background: "white", padding: "1rem", border: "1px solid rgba(0,0,0,0.1)", borderRadius: "var(--radius-md)", fontSize: "0.75rem", color: "var(--text-secondary)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
                         <h4 style={{ color: "var(--text-primary)", marginBottom: "0.5rem" }}>BUSINESS ASSOCIATE AGREEMENT (BAA)</h4>
-                        This Business Associate Agreement ("Agreement") is entered into by and between MediClaim AI ("Business Associate") and the Clinic ("Covered Entity").<br /><br />
+                        This Business Associate Agreement ("Agreement") is entered into by and between NorthStar Claim ("Business Associate") and the Clinic ("Covered Entity").<br /><br />
                         1. Permitted Uses: Business Associate may use Protected Health Information (PHI) solely to perform claim recovery logic as authorized.<br />
                         2. Performance Partnership: Covered Entity agrees to the tiered contingency payment model on successfully recovered capital...
                     </div>

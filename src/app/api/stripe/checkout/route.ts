@@ -25,12 +25,12 @@ export async function POST(req: Request) {
         let amount = 0;
         let name = '';
 
-        if (tier === 'starter') {
-            amount = 9900; // $99.00
-            name = 'Starter Tier - Northstar Claim';
-        } else if (tier === 'professional') {
-            amount = 29900; // $299.00
-            name = 'Professional Tier - Northstar Claim';
+        if (tier === 'guardian-pilot') {
+            amount = 250000; // $2,500.00
+            name = 'Guardian Pilot - Northstar Claim';
+        } else if (tier === 'growth-lattice') {
+            amount = 750000; // $7,500.00
+            name = 'Growth Lattice - Northstar Claim';
         } else {
             return new NextResponse('Invalid tier', { status: 400 });
         }
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Payment system not configured' }, { status: 503 });
         }
 
-        const session = await stripe.checkout.sessions.create({
+        const checkoutSession = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
                 {
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
             cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing`,
         });
 
-        return NextResponse.json({ url: session.url });
+        return NextResponse.json({ url: checkoutSession.url });
     } catch (error) {
         console.error('Stripe checkout error:', error);
         return NextResponse.json({ error: 'Checkout failed' }, { status: 500 });
