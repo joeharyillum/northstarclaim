@@ -120,30 +120,8 @@ You must respond in strict JSON format with ONLY these keys:
                 id: `CLM-${Math.floor(Math.random() * 100000)}`,
                 ...aiData
             };
-
-            console.log("🏢 Agent 8: Enterprise Data Synthesizer mapping batch metadata...");
-            await new Promise(resolve => setTimeout(resolve, 600));
-
-            console.log("🏢 Agent 9: Payer Contract Negotiator scanning fee schedules...");
-            await new Promise(resolve => setTimeout(resolve, 600));
-
-            console.log("🏢 Agent 10: Actuarial Forecaster calculating probability of overturn...");
-            await new Promise(resolve => setTimeout(resolve, 600));
-
-            console.log("🏢 Agent 11: Executive Reporting Agent generated ROI summary.");
-            await new Promise(resolve => setTimeout(resolve, 600));
         } else {
-            // Mock fallback if user hasn't added API Key
-            extractedClaim = {
-                id: `CLM-${Math.floor(Math.random() * 100000)}`,
-                patientId: `PT-${Math.floor(Math.random() * 10000)}`,
-                dateOfService: "2023-10-14",
-                procedureCode: "93010",
-                modifier: "59",
-                billedAmount: 450.00,
-                denialReasonCode: "CO-16",
-                extractedTextRaw: "DENIED. PROCEDURE 93010 UNBUNDLED. PAYMENT INCLUDED IN PRIMARY PROCEDURE."
-            };
+            return NextResponse.json({ error: 'OpenAI API key is not configured. Contact support.' }, { status: 503 });
         }
 
         // 4. Persistence: Auto-Save to Prisma

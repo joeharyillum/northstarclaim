@@ -6,9 +6,9 @@ import { Metadata } from "next";
 import LiveRevenueTicker from "@/components/LiveRevenueTicker";
 
 export const metadata: Metadata = {
-  title: "NorthStar Claim | AI Medical Claim Recovery — 94% Success Rate",
+  title: "NorthStar Claim | AI Medical Claim Recovery — $2,500 Pilot",
   description:
-    "Stop losing money to denied insurance claims. NorthStar Claim's 41-agent AI recovers denied medical claims with 94% success rate. Zero upfront cost — pay only 30% on recovered revenue. Start your free scan today.",
+    "Stop losing money to denied insurance claims. NorthStar Claim's AI recovers denied medical claims with a 35–40% success rate. Start with a $2,500 pilot — pay 30% commission only on recovered revenue.",
   alternates: {
     canonical: "https://northstarclaim.com",
   },
@@ -91,15 +91,15 @@ export default function Home() {
             <p style={{
               fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "var(--text-secondary)", marginBottom: "3rem", maxWidth: "700px", margin: "0 auto 3rem", lineHeight: "1.7"
             }}>
-              Our 41-agent AI recovers denied medical claims with a 94% success rate. Zero upfront cost—pay only a 30% commission on recovered revenue.
+              US healthcare providers lose $262 billion annually to preventable denials. Our autonomous AI engine recovers denied claims within 48 hours. Pay only a 30% commission on recovered revenue—zero upfront cost.
             </p>
             
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
-                <Button href="/free-scan" size="lg" variant="primary" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
-                    Start Free Scan
+                <Button href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" size="lg" variant="primary" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
+                    Start Pilot — $2,500
                 </Button>
-                <Button href="/about" size="lg" variant="outline" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
-                    Learn More
+                <Button href="/pricing" size="lg" variant="outline" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
+                    View Pricing
                 </Button>
             </div>
           </div>
@@ -135,9 +135,9 @@ export default function Home() {
 
                 {/* Side Card: Success Rate */}
                 <div className="glass-panel p-8 flex flex-col justify-center items-center text-center">
-                    <div className="text-6xl font-bold text-cyan-400" style={{ fontSize: '4rem', color: 'var(--brand-accent)'}}>94.2%</div>
+                    <div className="text-6xl font-bold text-cyan-400" style={{ fontSize: '4rem', color: 'var(--brand-accent)'}}>35–40%</div>
                     <div className="text-sm font-bold uppercase text-slate-300 mt-2">Recovery Success Rate</div>
-                    <p className="text-xs text-slate-500 mt-2">Our AI's proprietary adversarial rebuttal engine achieves industry-leading results.</p>
+                    <p className="text-xs text-slate-500 mt-2">Our AI cross-references payer guidelines to recover denied claims at scale.</p>
                 </div>
 
                 {/* Bottom Card 1: Automation */}
@@ -155,7 +155,7 @@ export default function Home() {
                 {/* Bottom Card 3: Pricing */}
                 <div className="glass-panel p-8">
                     <h3 className="text-xl font-bold mb-2">Performance-Based</h3>
-                    <p className="text-sm text-slate-400">You only pay when we win. Our 30% commission model means we're fully aligned with your success.</p>
+                    <p className="text-sm text-slate-400">$2,500 pilot or $7,500 Growth Lattice. 30% commission — you pay only when we recover your revenue.</p>
                 </div>
             </div>
         </div>
@@ -166,9 +166,9 @@ export default function Home() {
         <div className="container">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(2rem, 5vw, 5rem)", alignItems: "center" }}>
             <div className="animate-fade-in">
-              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "2rem", lineHeight: "1.1" }}>Watch the <span className="text-gradient">Aha! Moment</span></h2>
+              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "2rem", lineHeight: "1.1" }}>See the <span className="text-gradient">Recovery Engine</span></h2>
               <p style={{ color: "var(--text-secondary)", fontSize: "clamp(1rem, 2.5vw, 1.1rem)", marginBottom: "3rem", lineHeight: "1.7" }}>
-                Our proprietary recovery grid identifies hidden millions in under 60 seconds. Witness the transformation of "Lost Revenue" into "Liquid Capital."
+                Upload denied claims, our AI cross-references CMS guidelines and payer policies, drafts legally-sound appeals, and submits — all within 48 hours.
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                 <div style={{ display: "flex", gap: "1.5rem", alignItems: 'center' }}>
@@ -218,10 +218,10 @@ export default function Home() {
            
           <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", marginBottom: "1.5rem", fontWeight: "700" }}>Ready to Reclaim Your Revenue?</h2>
           <p style={{ color: "var(--text-secondary)", fontSize: "1.1rem", marginBottom: "3rem", maxWidth: "600px", margin: "0 auto 3rem" }}>
-            Deploy our recovery engine in minutes. There's no upfront cost, no risk, and no reason to leave money on the table.
+            Start with a 500-claim pilot for $2,500. See exactly how much recoverable revenue is sitting in your denial backlog.
           </p>
-          <Button href="/signup" size="lg" variant="primary" style={{ background: "white", color: "var(--bg-dark)", padding: "1.25rem 3rem", borderRadius: "var(--radius-full)", fontWeight: "700" }}>
-            Activate Your AI Team
+          <Button href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" size="lg" variant="primary" style={{ background: "white", color: "var(--bg-dark)", padding: "1.25rem 3rem", borderRadius: "var(--radius-full)", fontWeight: "700" }}>
+            Start Your Pilot — $2,500
           </Button>
         </div>
       </section>

@@ -62,7 +62,7 @@ export default function AboutPage() {
                                 "A+ Rating & Vertically Integrated Audit Nodes",
                                 "Deployed across leading US Clinical Networks",
                                 "HIPAA Compliant & Covered under comprehensive BAAs",
-                                "94.2% Success Rate on Target Claim Recoveries"
+                                "35–40% Recovery Success Rate on Denied Claims"
                             ].map((item, i) => (
                                 <li key={i} className="flex items-start gap-3 text-slate-300">
                                     <CheckCircle2 size={20} className="text-emerald-400 shrink-0 mt-0.5" />

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | NorthStar Claim",
   },
   description:
-    "NorthStar Claim uses 41-agent AI to recover denied medical insurance claims with a 94% success rate. Zero upfront cost — clinics only pay 30% on recovered revenue. Trusted by healthcare providers nationwide.",
+    "NorthStar Claim uses AI to recover denied medical insurance claims with a 35–40% success rate. Zero upfront cost — clinics pay $2,500 pilot or 30% on recovered revenue. Trusted by healthcare providers nationwide.",
   keywords: [
     "medical claim recovery",
     "denied claim appeals",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "NorthStar Claim",
     title: "NorthStar Claim | #1 AI Medical Claim Recovery Platform",
     description:
-      "Recover denied medical claims automatically with 94% success rate. Zero upfront cost — pay only when we win. Trusted by 500+ clinics.",
+      "Recover denied medical claims automatically with 35–40% success rate. $2,500 pilot or 30% commission — pay only when we win.",
     images: [
       {
         url: "/og-image.png",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "NorthStar Claim | #1 AI Medical Claim Recovery",
     description:
-      "Recover denied claims with 94% AI success rate. Zero upfront cost.",
+      "Recover denied claims with AI. $2,500 pilot, 30% commission.",
     images: ["/og-image.png"],
   },
   alternates: {
@@ -95,18 +95,18 @@ export default function RootLayout({
               operatingSystem: "Web",
               url: "https://northstarclaim.com",
               description:
-                "AI-powered medical claim recovery platform that automatically appeals denied insurance claims with a 94% success rate.",
+                "AI-powered medical claim recovery platform that automatically appeals denied insurance claims with a 35–40% success rate.",
               offers: {
                 "@type": "Offer",
-                price: "0",
+                price: "2500",
                 priceCurrency: "USD",
                 description:
-                  "Zero upfront cost. 30% success fee — pay only when claims are recovered.",
+                  "$2,500 pilot fee. 30% success commission — pay only when claims are recovered.",
               },
               aggregateRating: {
                 "@type": "AggregateRating",
-                ratingValue: "4.9",
-                ratingCount: "127",
+                ratingValue: "4.8",
+                ratingCount: "47",
                 bestRating: "5",
               },
               provider: {
@@ -136,7 +136,7 @@ export default function RootLayout({
                   name: "How much does NorthStar Claim cost?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "NorthStar Claim has zero upfront cost. We charge a 30% success fee only on recovered claims — if we don't recover money, you don't pay anything.",
+                    text: "NorthStar Claim has a $2,500 one-time pilot fee that covers AI analysis of up to 500 claims. After that, we charge a 30% success fee only on recovered claims. The Growth Lattice tier is $7,500 with a reduced 20% commission for higher volume.",
                   },
                 },
                 {
@@ -144,7 +144,7 @@ export default function RootLayout({
                   name: "What is the success rate for denied claim appeals?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "NorthStar Claim achieves a 94.2% success rate on denied medical insurance claim appeals using our proprietary 41-agent AI system.",
+                    text: "NorthStar Claim achieves a 35–40% recovery success rate on denied medical insurance claim appeals using our AI-powered analysis and appeal generation system.",
                   },
                 },
                 {

@@ -3,7 +3,7 @@ import FeatureCard from "@/components/FeatureCard";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "How MediClaim AI Works | Features",
+    title: "How It Works | NorthStar Claim",
 };
 
 export default function FeaturesPage() {
@@ -48,8 +48,8 @@ export default function FeaturesPage() {
 
             <section className="section-padding" style={{ background: "var(--bg-primary)" }}>
                 <div className="container text-center">
-                    <h2 style={{ fontSize: "2rem", marginBottom: "3rem" }}>Ready to let our systems handle your billing errors?</h2>
-                    <Button href="/free-scan" size="lg">Initiate Sandbox Analysis</Button>
+                    <h2 style={{ fontSize: "2rem", marginBottom: "3rem" }}>Ready to recover your denied revenue?</h2>
+                    <Button href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" size="lg">Start Pilot — $2,500</Button>
                 </div>
             </section>
         </>
