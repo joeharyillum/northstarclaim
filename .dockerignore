@@ -1,0 +1,8 @@
+node_modules
+.next
+.git
+*.md
+build-*.txt
+railway-deploy*.txt
+.DS_Store
+.env*
