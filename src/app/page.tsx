@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Stop losing money to denied insurance claims. NorthStar Claim's AI recovers denied medical claims with a 35–40% success rate. Start with a $2,500 pilot — pay 30% commission only on recovered revenue.",
   alternates: {
-    canonical: "https://northstarclaim.com",
+    canonical: "https://northstarmedic.com",
   },
 };
 
@@ -102,8 +102,22 @@ export default function Home() {
       </section>
 
       {/* BENTO GRID SECTION */}
-      <section className="section-padding" style={{ background: "var(--bg-primary)", position: "relative", borderTop: "1px solid var(--border-subtle)" }}>
-        <div className="container">
+      <section className="section-padding" style={{ background: "var(--bg-primary)", position: "relative", borderTop: "1px solid var(--border-subtle)", overflow: "hidden" }}>
+        {/* Background Image */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          backgroundImage: "url('/bg-doctors-nurses.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: 0,
+          filter: "brightness(0.15) contrast(1.1) saturate(0.7)",
+        }} />
+        <div style={{
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          background: "linear-gradient(to bottom, var(--bg-primary) 0%, rgba(2,6,23,0.85) 30%, rgba(2,6,23,0.85) 70%, var(--bg-primary) 100%)",
+          zIndex: 1
+        }} />
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
             <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 4rem" }}>
               <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1.5rem", lineHeight: "1.2" }}>The <span className="text-gradient">NorthStar</span> Advantage</h2>
               <p style={{ color: "var(--text-secondary)", fontSize: "1.125rem" }}>
@@ -156,8 +170,22 @@ export default function Home() {
       </section>
 
       {/* Video Section */}
-      <section className="section-padding" style={{ position: "relative" }}>
-        <div className="container">
+      <section className="section-padding" style={{ position: "relative", overflow: "hidden" }}>
+        {/* Background Image */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          backgroundImage: "url('/data-dashboard-hero.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: 0,
+          filter: "brightness(0.12) contrast(1.2) saturate(0.6)",
+        }} />
+        <div style={{
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          background: "linear-gradient(135deg, rgba(2,6,23,0.9) 0%, rgba(15,23,42,0.85) 50%, rgba(2,6,23,0.9) 100%)",
+          zIndex: 1
+        }} />
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(2rem, 5vw, 5rem)", alignItems: "center" }}>
             <div className="animate-fade-in">
               <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "2rem", lineHeight: "1.1" }}>See the <span className="text-gradient">Recovery Engine</span></h2>
@@ -205,8 +233,22 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-padding" style={{ background: "var(--bg-secondary)", color: "white", textAlign: "center", borderTop: '1px solid var(--border-subtle)' }}>
-        <div className="container" style={{ position: "relative" }}>
+      <section className="section-padding" style={{ background: "var(--bg-secondary)", color: "white", textAlign: "center", borderTop: '1px solid var(--border-subtle)', position: "relative", overflow: "hidden" }}>
+        {/* Background Image */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          backgroundImage: "url('/bg-hero.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: 0,
+          filter: "brightness(0.2) contrast(1.1) saturate(0.8)",
+        }} />
+        <div style={{
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          background: "linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(2,6,23,0.8) 50%, rgba(15,23,42,0.95) 100%)",
+          zIndex: 1
+        }} />
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
            {/* Decorative Grid Lines */}
            <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "100%", height: "1px", background: "linear-gradient(to right, transparent, var(--brand-primary), transparent)", opacity: 0.2 }}></div>
            

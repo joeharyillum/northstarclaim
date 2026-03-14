@@ -1,0 +1,60 @@
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.6min
+  Skipping validation of types
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/30) ...
+  Generating static pages using 1 worker (7/30) 
+  Generating static pages using 1 worker (14/30) 
+  Generating static pages using 1 worker (22/30) 
+✓ Generating static pages using 1 worker (30/30) in 8.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/analyze
+├ ƒ /api/auth/[...nextauth]
+├ ƒ /api/auth/register
+├ ƒ /api/auth/signout
+├ ƒ /api/chat
+├ ƒ /api/generate-appeal
+├ ƒ /api/ingest
+├ ƒ /api/leads/ingest
+├ ƒ /api/leads/push
+├ ƒ /api/negotiate
+├ ƒ /api/pipeline/run
+├ ƒ /api/stripe/balance
+├ ƒ /api/stripe/checkout
+├ ƒ /api/stripe/invoice
+├ ƒ /api/stripe/onboard
+├ ƒ /api/stripe/payout
+├ ƒ /api/system/stats
+├ ƒ /api/webhook/instantly
+├ ƒ /dashboard
+├ ○ /dashboard/command
+├ ƒ /dashboard/invoices
+├ ○ /dashboard/leads
+├ ƒ /dashboard/negotiate
+├ ƒ /dashboard/review
+├ ○ /dashboard/settlements
+├ ○ /dashboard/upload
+├ ○ /dashboard/wallet
+├ ○ /dashboard/war-room
+├ ○ /features
+├ ○ /free-scan
+├ ○ /pricing
+├ ○ /robots.txt
+├ ○ /signup
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
