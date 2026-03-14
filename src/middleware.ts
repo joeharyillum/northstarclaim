@@ -19,16 +19,29 @@ export default auth((req) => {
     const isApiRoute = nextUrl.pathname.startsWith('/api');
     const isWebhookRoute = nextUrl.pathname.startsWith('/api/webhook');
 
+    // Admin-only routes (founder role required)
+    const isAdminRoute = [
+        '/dashboard/war-room',
+        '/dashboard/leads',
+    ].some(p => nextUrl.pathname.startsWith(p));
+
+    // Admin-only API routes
+    const isAdminApiRoute = [
+        '/api/system/stats',
+        '/api/leads',
+        '/api/pipeline',
+    ].some(p => nextUrl.pathname.startsWith(p));
+
     // Public pages — no auth required
     const isPublicRoute = [
-        '/', '/signup', '/login', '/features', '/pricing', '/free-scan', '/about',
+        '/', '/signup', '/login', '/features', '/pricing', '/free-scan', '/about', '/baa',
         '/robots.txt', '/sitemap.xml',
     ].includes(nextUrl.pathname);
 
     // Public API routes — no auth required
     const isPublicApiRoute = [
         '/api/auth',
-        '/api/system/stats',
+        '/api/chat',
         '/api/stripe/checkout',
     ].some(p => nextUrl.pathname.startsWith(p));
 
@@ -50,6 +63,30 @@ export default auth((req) => {
     // 2. Protect dashboard pages
     if (nextUrl.pathname.startsWith('/dashboard') && !isLoggedIn) {
         return Response.redirect(new URL('/signup', nextUrl));
+    }
+
+    // 2a. BAA gate — logged-in users must have signed BAA to access dashboard
+    if (nextUrl.pathname.startsWith('/dashboard') && isLoggedIn) {
+        const baaSignedAt = req.auth?.user?.baaSignedAt;
+        if (!baaSignedAt) {
+            return Response.redirect(new URL('/baa', nextUrl));
+        }
+    }
+
+    // 2b. Protect admin-only dashboard pages (founder role required)
+    if (isAdminRoute && isLoggedIn) {
+        const role = req.auth?.user?.role;
+        if (role !== 'founder') {
+            return Response.redirect(new URL('/dashboard', nextUrl));
+        }
+    }
+
+    // 2c. Protect admin-only API routes
+    if (isAdminApiRoute && isLoggedIn) {
+        const role = req.auth?.user?.role;
+        if (role !== 'founder') {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+        }
     }
 
     // 3. Redirect logged-in users away from signup

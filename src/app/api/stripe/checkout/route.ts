@@ -4,7 +4,7 @@ import { auth } from '@/auth';
 import { checkRateLimit } from '@/lib/security';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2023-10-16' as any,
+    apiVersion: '2025-04-30.basil' as Stripe.LatestApiVersion,
 });
 
 export async function POST(req: Request) {
@@ -27,10 +27,10 @@ export async function POST(req: Request) {
 
         if (tier === 'guardian-pilot') {
             amount = 250000; // $2,500.00
-            name = 'Guardian Pilot - Northstar Claim';
+            name = 'Guardian Pilot - NorthStar Medic';
         } else if (tier === 'growth-lattice') {
             amount = 750000; // $7,500.00
-            name = 'Growth Lattice - Northstar Claim';
+            name = 'Growth Lattice - NorthStar Medic';
         } else {
             return new NextResponse('Invalid tier', { status: 400 });
         }

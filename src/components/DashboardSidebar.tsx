@@ -2,9 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function DashboardSidebar() {
     const pathname = usePathname();
+    const { data: session } = useSession();
+    const role = session?.user?.role || "client";
+    const isFounder = role === "founder";
+    const userName = session?.user?.name || "User";
+    const initials = userName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
 
     const mainLinks = [
         { name: "Overview", href: "/dashboard", icon: "📊" },
@@ -14,8 +20,10 @@ export default function DashboardSidebar() {
     ];
 
     const businessLinks = [
-        { name: "War Room", href: "/dashboard/war-room", icon: "🎯" },
-        { name: "Lead Engine", href: "/dashboard/leads", icon: "🚀" },
+        ...(isFounder ? [
+            { name: "War Room", href: "/dashboard/war-room", icon: "🎯" },
+            { name: "Lead Engine", href: "/dashboard/leads", icon: "🚀" },
+        ] : []),
         { name: "Wallet", href: "/dashboard/wallet", icon: "💰" },
     ];
 
@@ -195,7 +203,7 @@ export default function DashboardSidebar() {
                         fontSize: "0.75rem",
                         flexShrink: 0,
                     }}>
-                        OP
+                        {initials}
                     </div>
                     <div style={{ overflow: "hidden" }}>
                         <div style={{
@@ -206,14 +214,14 @@ export default function DashboardSidebar() {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                         }}>
-                            Operator
+                            {userName}
                         </div>
                         <div style={{
                             fontSize: "0.7rem",
-                            color: "var(--text-muted)",
+                            color: isFounder ? "var(--brand-accent)" : "var(--text-muted)",
                             lineHeight: 1.3,
                         }}>
-                            Admin Access
+                            {isFounder ? "Founder" : "Client"}
                         </div>
                     </div>
                 </div>

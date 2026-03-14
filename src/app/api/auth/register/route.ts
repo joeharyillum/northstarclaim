@@ -11,10 +11,14 @@ export async function POST(req: Request) {
     }
 
     try {
-        const { email, password, clinicName } = await req.json();
+        const { email, password, clinicName, baaAccepted } = await req.json();
 
         if (!email || !password || !clinicName) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+        }
+
+        if (!baaAccepted) {
+            return NextResponse.json({ error: "BAA agreement must be accepted" }, { status: 400 });
         }
 
         // Validate email format
@@ -42,12 +46,29 @@ export async function POST(req: Request) {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // First user gets founder role automatically
+        const userCount = await prisma.user.count();
+        const assignedRole = userCount === 0 ? 'founder' : 'client';
+
         const user = await prisma.user.create({
             data: {
                 email,
                 password: hashedPassword,
                 clinicName,
+                role: assignedRole,
+                baaSignedAt: new Date(),
+                baaSignedIp: ip !== 'unknown' ? ip : null,
             }
+        });
+
+        // Log BAA signing for HIPAA compliance
+        await prisma.auditLog.create({
+            data: {
+                userId: user.id,
+                action: 'BAA_SIGNED_AT_REGISTRATION',
+                details: `BAA electronically signed by ${email} for clinic ${clinicName}. Role: ${assignedRole}`,
+                ipAddress: ip !== 'unknown' ? ip : null,
+            },
         });
 
         return NextResponse.json({

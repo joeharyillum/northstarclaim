@@ -2,6 +2,7 @@ import DashboardSidebar from "@/components/DashboardSidebar";
 import DashboardTopNav from "@/components/DashboardTopNav";
 import TrustFooter from "@/components/TrustFooter";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import Providers from "@/components/Providers";
 
 export default function DashboardLayout({
     children,
@@ -9,32 +10,34 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div style={{
-            display: "flex",
-            minHeight: "100vh",
-            background: "var(--bg-primary)",
-        }}>
-            <DashboardSidebar />
+        <Providers>
             <div style={{
-                flex: 1,
-                marginLeft: "var(--sidebar-width)",
                 display: "flex",
-                flexDirection: "column",
                 minHeight: "100vh",
+                background: "var(--bg-primary)",
             }}>
-                <DashboardTopNav />
-                <main style={{
-                    padding: "1.5rem 2rem",
+                <DashboardSidebar />
+                <div style={{
                     flex: 1,
-                    overflowY: "auto",
-                    overflowX: "hidden",
+                    marginLeft: "var(--sidebar-width)",
+                    display: "flex",
+                    flexDirection: "column",
+                    minHeight: "100vh",
                 }}>
-                    <ErrorBoundary>
-                        {children}
-                    </ErrorBoundary>
-                    <TrustFooter />
-                </main>
+                    <DashboardTopNav />
+                    <main style={{
+                        padding: "1.5rem 2rem",
+                        flex: 1,
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                    }}>
+                        <ErrorBoundary>
+                            {children}
+                        </ErrorBoundary>
+                        <TrustFooter />
+                    </main>
+                </div>
             </div>
-        </div>
+        </Providers>
     );
 }

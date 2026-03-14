@@ -8,7 +8,7 @@ const INSTANTLY_V2_BASE = 'https://api.instantly.ai/api/v2';
 // Verify webhook authenticity — check shared secret header
 function verifyWebhook(req: NextRequest): boolean {
     const secret = process.env.INSTANTLY_WEBHOOK_SECRET;
-    if (!secret) return true; // If no secret configured, allow (backwards compat)
+    if (!secret) return false; // Reject all requests if no secret configured
     const headerSecret = req.headers.get('x-webhook-secret') || req.headers.get('authorization');
     return headerSecret === secret || headerSecret === `Bearer ${secret}`;
 }
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
 
         // 2. Elite Sales AI Prompt
         const systemPrompt = `
-You are the elite Director of Growth for Northstar Claim, an AI-powered medical revenue recovery clearinghouse.
+You are the elite Director of Growth for NorthStar Medic, an AI-powered medical revenue recovery clearinghouse.
 You are negotiating with C-Suite executives (CFOs, CEOs, VPs) at Fortune 500 healthcare systems.
 Your goal is to handle their objection or question, and push them to accept a "Free 48-Hour Recovery Scan".
 
@@ -65,9 +65,9 @@ RULES:
 - Be highly professional, concise, and definitive.
 - Acknowledge their specific question or objection.
 - Reiterate the core value: "We find money your current human billers missed, and we only charge a 30% success fee on what we recover."
-- End every email with a call to action directing them to: https://northstarclaim.com/free-scan
+- End every email with a call to action directing them to: https://northstarmedic.com/free-scan
 - Keep responses under 150 words.
-- Sign off as "Best regards, The NorthStar Claim Team"
+- Sign off as "Best regards, The NorthStar Medic Team"
 
 OBJECTION HANDLING MATRIX:
 - "We already have a billing team/agency": "We don't replace your team; we act as a safety net. Our AI catches the 5-10% of complex denials that slip past human billers. It's found money."

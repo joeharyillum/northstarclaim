@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Button from "./Button";
 import { useState } from "react";
 
@@ -10,7 +11,12 @@ const handleSignOut = async () => {
 
 export default function DashboardTopNav() {
     const pathname = usePathname();
+    const { data: session } = useSession();
     const [isExporting, setIsExporting] = useState(false);
+
+    const userName = session?.user?.name || "User";
+    const role = session?.user?.role || "client";
+    const initials = userName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
 
     const getPageTitle = () => {
         if (pathname === "/dashboard") return "Overview";
@@ -112,10 +118,10 @@ export default function DashboardTopNav() {
                         fontWeight: "700",
                         fontSize: "0.7rem",
                     }}>
-                        AH
+                        {initials}
                     </div>
                     <div style={{ lineHeight: 1.3 }}>
-                        <div style={{ fontSize: "0.8rem", fontWeight: "600" }}>Admin</div>
+                        <div style={{ fontSize: "0.8rem", fontWeight: "600" }}>{userName}</div>
                     </div>
                     <button
                         onClick={handleSignOut}

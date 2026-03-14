@@ -20,6 +20,8 @@ model User {
   password        String?       // For credentials provider
   name            String?       // Standard NextAuth field
   image           String?       // Standard NextAuth field
+  baaSignedAt     DateTime?     // When the BAA was electronically signed
+  baaSignedIp     String?       // IP address at time of BAA signing
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   

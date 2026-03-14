@@ -92,10 +92,24 @@ export async function POST(req: Request) {
             }, { status: 503 });
         }
 
+        // Sanitize messages: only allow user and assistant roles, strip any injected system prompts
+        const sanitizedMessages = Array.isArray(messages)
+            ? messages
+                .filter((m: { role: string }) => m.role === 'user' || m.role === 'assistant')
+                .map((m: { role: string; content: unknown }) => ({
+                    role: m.role,
+                    content: typeof m.content === 'string' ? m.content.slice(0, 4000) : '',
+                }))
+            : [];
+
+        if (sanitizedMessages.length === 0) {
+            return NextResponse.json({ error: 'Invalid messages' }, { status: 400 });
+        }
+
         const result = streamText({
             model: openai('gpt-4o'),
             system: SYSTEM_PROMPT,
-            messages,
+            messages: sanitizedMessages,
         });
 
         return result.toUIMessageStreamResponse();

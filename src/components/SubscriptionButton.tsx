@@ -22,7 +22,7 @@ export default function SubscriptionButton({
 
     const handleSubscribe = async () => {
         if (tier === 'network-core') {
-            window.location.href = 'mailto:sales@northstarclaim.com';
+            window.location.href = 'mailto:sales@northstarmedic.com';
             return;
         }
 
