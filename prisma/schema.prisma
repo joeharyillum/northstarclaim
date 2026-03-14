@@ -15,6 +15,7 @@ model User {
   id              String        @id @default(uuid())
   email           String        @unique
   clinicName      String
+  role            String        @default("client") // founder, client, viewer
   stripeAccountId String?       // The Express Connect ID provisioned during onboarding
   password        String?       // For credentials provider
   name            String?       // Standard NextAuth field

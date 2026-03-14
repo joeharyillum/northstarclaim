@@ -32,6 +32,7 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
                     email: user.email,
                     name: user.clinicName,
                     stripeAccountId: user.stripeAccountId,
+                    role: (user as any).role || 'client',
                 };
             },
         }),
@@ -41,6 +42,7 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
             if (user) {
                 token.id = user.id;
                 token.stripeAccountId = user.stripeAccountId;
+                token.role = (user as any).role || 'client';
             }
             return token;
         },
@@ -48,6 +50,7 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
             if (token && session.user) {
                 session.user.id = token.id as string;
                 session.user.stripeAccountId = token.stripeAccountId as string;
+                (session.user as any).role = token.role as string;
             }
             return session;
         },

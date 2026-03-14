@@ -23,29 +23,25 @@ export default function Home() {
         display: "flex",
         alignItems: "center",
         padding: "8rem 0",
-        background: "var(--bg-dark)"
+        background: "#000"
       }}>
 
-        {/* Neural Grid Background - Futuristic Command Center */}
+        {/* Background Image - Medical Professionals + AI */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "linear-gradient(to bottom, rgba(2, 6, 23, 0) 0%, var(--bg-primary) 100%), url('/bg-grid.svg')",
+          backgroundImage: "url('/bg-doctors-business.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 0.5,
+          backgroundPosition: "center top",
           zIndex: 0,
-          filter: "brightness(0.8) contrast(1.2)",
-          transform: "scale(1.1)"
+          filter: "brightness(0.35) contrast(1.1) saturate(0.9)",
+          transform: "scale(1.05)"
         }} />
 
-        {/* Aurora Glow */}
+        {/* Dark gradient overlay for text readability */}
         <div style={{
-          position: "absolute", top: "50%", left: "50%",
-          width: "1200px", height: "1200px",
-          transform: "translate(-50%, -50%)",
-          background: "radial-gradient(circle at center, hsla(198, 93%, 62%, 0.15) 0%, transparent 40%)",
-          zIndex: 1,
-          animation: "pulse-glow 8s ease-in-out infinite"
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(2,6,23,0.7) 50%, var(--bg-primary) 100%)",
+          zIndex: 1
         }} />
 
 
@@ -71,7 +67,7 @@ export default function Home() {
                 textTransform: "uppercase"
               }}>System Status</span>
               <span style={{ color: "var(--text-secondary)", fontSize: "0.8rem", fontWeight: "500" }}>All Agents Operational</span>
-               <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" style={{ boxShadow: "0 0 10px #22c55e" }}></div>
+               <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
             </div>
           </div>
 
@@ -188,7 +184,7 @@ export default function Home() {
 
             <div className="glass-panel" style={{
               padding: "0.5rem",
-              boxShadow: "var(--shadow-glow)",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)",
               border: "1px solid var(--border-active)",
               overflow: "hidden",
               position: "relative"
