@@ -46,9 +46,9 @@ export async function POST(req: Request) {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // First user gets founder role automatically
+        // First user gets admin role automatically
         const userCount = await prisma.user.count();
-        const assignedRole = userCount === 0 ? 'founder' : 'client';
+        const assignedRole = userCount === 0 ? 'admin' : 'client';
 
         const user = await prisma.user.create({
             data: {

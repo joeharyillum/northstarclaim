@@ -8,7 +8,7 @@ export default function DashboardSidebar() {
     const pathname = usePathname();
     const { data: session } = useSession();
     const role = session?.user?.role || "client";
-    const isFounder = role === "founder";
+    const isAdmin = role === "admin";
     const userName = session?.user?.name || "User";
     const initials = userName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
 
@@ -20,7 +20,7 @@ export default function DashboardSidebar() {
     ];
 
     const businessLinks = [
-        ...(isFounder ? [
+        ...(isAdmin ? [
             { name: "War Room", href: "/dashboard/war-room", icon: "🎯" },
             { name: "Lead Engine", href: "/dashboard/leads", icon: "🚀" },
         ] : []),
@@ -218,10 +218,10 @@ export default function DashboardSidebar() {
                         </div>
                         <div style={{
                             fontSize: "0.7rem",
-                            color: isFounder ? "var(--brand-accent)" : "var(--text-muted)",
+                            color: isAdmin ? "var(--brand-accent)" : "var(--text-muted)",
                             lineHeight: 1.3,
                         }}>
-                            {isFounder ? "Founder" : "Client"}
+                            {isAdmin ? "Admin" : "Client"}
                         </div>
                     </div>
                 </div>

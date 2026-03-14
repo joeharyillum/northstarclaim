@@ -19,7 +19,7 @@ export default auth((req) => {
     const isApiRoute = nextUrl.pathname.startsWith('/api');
     const isWebhookRoute = nextUrl.pathname.startsWith('/api/webhook');
 
-    // Admin-only routes (founder role required)
+    // Admin-only routes (admin role required)
     const isAdminRoute = [
         '/dashboard/war-room',
         '/dashboard/leads',
@@ -73,10 +73,10 @@ export default auth((req) => {
         }
     }
 
-    // 2b. Protect admin-only dashboard pages (founder role required)
+    // 2b. Protect admin-only dashboard pages (admin role required)
     if (isAdminRoute && isLoggedIn) {
         const role = req.auth?.user?.role;
-        if (role !== 'founder') {
+        if (role !== 'admin') {
             return Response.redirect(new URL('/dashboard', nextUrl));
         }
     }
@@ -84,7 +84,7 @@ export default auth((req) => {
     // 2c. Protect admin-only API routes
     if (isAdminApiRoute && isLoggedIn) {
         const role = req.auth?.user?.role;
-        if (role !== 'founder') {
+        if (role !== 'admin') {
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
         }
     }
