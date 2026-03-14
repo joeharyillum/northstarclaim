@@ -7,6 +7,15 @@ COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 RUN npm ci
 
+# Build-time env vars (injected by Railway)
+ARG STRIPE_SECRET_KEY
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_APP_URL
+ARG AUTH_SECRET
+ARG AUTH_TRUST_HOST
+ARG OPENAI_API_KEY
+ARG NEXTAUTH_URL
+
 # Copy source and build
 COPY . .
 RUN npx prisma generate
