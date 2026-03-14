@@ -15,7 +15,6 @@
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/client": "^5.22.0",
     "@tailwindcss/postcss": "^4.2.1",
-    "@vercel/blob": "^2.3.0",
     "ai": "^6.0.97",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.3.1",

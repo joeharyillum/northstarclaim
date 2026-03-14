@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { put } from '@vercel/blob';
+import { writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 import OpenAI from 'openai';
 import { auth } from '@/auth';
 import { checkRateLimit } from '@/lib/security';
@@ -33,13 +34,16 @@ export async function POST(request: Request) {
 
         const fileBuffer = Buffer.from(await file.arrayBuffer());
 
-        // --- ENTERPRISE SECURITY: VERCEL BLOB STORAGE ---
-        // Instead of keeping local files, we securely vault the PDF into Vercel Blob.
-        const blob = await put(`claims/${file.name}`, file, {
-            access: 'private' // Store is configured for private access for HIPAA compliance
-        });
+        // --- ENTERPRISE SECURITY: LOCAL VAULT STORAGE ---
+        // Securely vault the PDF into persistent storage (Railway volume)
+        const uploadsDir = path.join(process.cwd(), 'uploads', 'claims');
+        await mkdir(uploadsDir, { recursive: true });
+        const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const vaultPath = path.join(uploadsDir, `${Date.now()}-${safeFileName}`);
+        await writeFile(vaultPath, fileBuffer);
+        const vaultUrl = `/uploads/claims/${path.basename(vaultPath)}`;
 
-        console.log("🔒 Document Vaulted Securely:", blob.url);
+        console.log("🔒 Document Vaulted Securely:", vaultUrl);
 
         // 1. Process File based on type
         let textData = '';
@@ -170,7 +174,7 @@ You must respond in strict JSON format with ONLY these keys:
             success: true,
             batchId: batch.id,
             claimId: claim.id,
-            vaultUrl: blob.url,
+            vaultUrl,
             analysis: extractedClaim
         });
 
