@@ -9,15 +9,30 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div style={{ display: "flex", minHeight: "100vh", background: "var(--bg-primary)" }}>
+        <div style={{
+            display: "flex",
+            minHeight: "100vh",
+            background: "var(--bg-primary)",
+        }}>
             <DashboardSidebar />
-            <div style={{ flex: 1, marginLeft: "280px", display: "flex", flexDirection: "column" }}>
+            <div style={{
+                flex: 1,
+                marginLeft: "var(--sidebar-width)",
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+            }}>
                 <DashboardTopNav />
-                <main style={{ padding: "2rem", flex: 1, overflowY: "auto" }}>
+                <main style={{
+                    padding: "1.5rem 2rem",
+                    flex: 1,
+                    overflowY: "auto",
+                    overflowX: "hidden",
+                }}>
                     <ErrorBoundary>
                         {children}
-                        <TrustFooter />
                     </ErrorBoundary>
+                    <TrustFooter />
                 </main>
             </div>
         </div>

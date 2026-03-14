@@ -36,7 +36,7 @@ export default function LiveRevenueTicker({ style, label }: LiveRevenueTickerPro
         };
 
         fetchStats();
-        const interval = setInterval(fetchStats, 10000); // Poll every 10s for live feel
+        const interval = setInterval(fetchStats, 30000); // Poll every 30s
         return () => clearInterval(interval);
     }, []);
 
@@ -78,79 +78,59 @@ export default function LiveRevenueTicker({ style, label }: LiveRevenueTickerPro
 
     return (
         <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
-                {/* Visual heartbeat synced with system loaded state */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.375rem" }}>
                 <div style={{
-                    width: "12px",
-                    height: "12px",
+                    width: "8px",
+                    height: "8px",
                     backgroundColor: displayValue !== null ? "#10b981" : "#f59e0b",
                     borderRadius: "50%",
-                    boxShadow: displayValue !== null ? "0 0 10px #10b981, 0 0 20px rgba(16,185,129,0.4)" : "0 0 10px #f59e0b, 0 0 20px rgba(245,158,11,0.4)",
-                    animation: displayValue !== null ? "pulseBlinkGreen 1.5s ease-in-out infinite" : "pulseBlinkAmber 1s ease-in-out infinite"
+                    boxShadow: displayValue !== null ? "0 0 8px rgba(16,185,129,0.4)" : "0 0 8px rgba(245,158,11,0.4)",
                 }} />
-                <div style={{ fontSize: "0.8rem", fontWeight: "900", color: "#00f2ff", textTransform: "uppercase", letterSpacing: "3px" }}>
-                    {label || "System-Wide Revenue Tracked"}
+                <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    {label || "Total Revenue Tracked"}
                 </div>
             </div>
             <div style={{
-                fontSize: "3.5rem",
-                fontWeight: "900",
+                fontSize: "2rem",
+                fontWeight: "800",
                 color: "white",
-                fontFamily: "var(--font-mono), 'Courier New', monospace",
-                fontStyle: "italic",
-                lineHeight: 1,
-                textShadow: "0 4px 15px rgba(0,0,0,0.9)"
+                letterSpacing: "-0.02em",
+                lineHeight: 1.1,
             }}>
                 {displayValue !== null
                     ? `$${formatCurrency(displayValue)}`
-                    : <span style={{ animation: "pulseBlink 1s infinite", color: "#00f2ff" }}>$LOADING LIVE DATA...</span>
+                    : <span style={{ color: "var(--brand-primary)", fontSize: "1rem" }}>Loading...</span>
                 }
             </div>
 
-            {/* Live breakdown sub-indicators */}
             {breakdown && (
-                <div style={{ display: "flex", gap: "1.5rem", marginTop: "0.75rem" }}>
+                <div style={{ display: "flex", gap: "1.25rem", marginTop: "0.625rem" }}>
                     <div>
-                        <div style={{ fontSize: "0.6rem", fontWeight: "900", color: "#10b981", textTransform: "uppercase", letterSpacing: "2px" }}>
-                            Stripe Live
+                        <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "#10b981", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                            Stripe Balance
                         </div>
-                        <div style={{ fontSize: "1rem", fontWeight: "800", color: "rgba(255,255,255,0.8)", textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+                        <div style={{ fontSize: "0.9rem", fontWeight: "700", color: "rgba(255,255,255,0.8)" }}>
                             ${formatCurrency(breakdown.stripeBalance)}
                         </div>
                     </div>
                     <div>
-                        <div style={{ fontSize: "0.6rem", fontWeight: "900", color: "#3b82f6", textTransform: "uppercase", letterSpacing: "2px" }}>
+                        <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "#3b82f6", textTransform: "uppercase", letterSpacing: "0.04em" }}>
                             Recovered
                         </div>
-                        <div style={{ fontSize: "1rem", fontWeight: "800", color: "rgba(255,255,255,0.8)", textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+                        <div style={{ fontSize: "0.9rem", fontWeight: "700", color: "rgba(255,255,255,0.8)" }}>
                             ${formatCurrency(breakdown.paidRevenue)}
                         </div>
                     </div>
                     <div>
-                        <div style={{ fontSize: "0.6rem", fontWeight: "900", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "2px" }}>
+                        <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.04em" }}>
                             Pipeline
                         </div>
-                        <div style={{ fontSize: "1rem", fontWeight: "800", color: "rgba(255,255,255,0.8)", textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+                        <div style={{ fontSize: "0.9rem", fontWeight: "700", color: "rgba(255,255,255,0.8)" }}>
                             ${formatCurrency(breakdown.pipelineRevenue)}
                         </div>
                     </div>
                 </div>
             )}
-
-            {/* Neural Heartbeat Animations */}
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                @keyframes pulseBlinkGreen {
-                    0% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px #10b981, 0 0 20px rgba(16,185,129,0.4); }
-                    50% { opacity: 0.3; transform: scale(1.2); box-shadow: 0 0 20px #10b981, 0 0 40px rgba(16,185,129,0.6); }
-                    100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px #10b981, 0 0 20px rgba(16,185,129,0.4); }
-                }
-                @keyframes pulseBlinkAmber {
-                    0% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px #f59e0b, 0 0 20px rgba(245,158,11,0.4); }
-                    50% { opacity: 0.3; transform: scale(1.2); box-shadow: 0 0 20px #f59e0b, 0 0 40px rgba(245,158,11,0.6); }
-                    100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px #f59e0b, 0 0 20px rgba(245,158,11,0.4); }
-                }
-            ` }} />
         </div>
     );
 }

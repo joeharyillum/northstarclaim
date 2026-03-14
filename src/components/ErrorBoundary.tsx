@@ -20,7 +20,7 @@ class ErrorBoundary extends Component<Props, State> {
     }
 
     public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        console.error('[NEURAL GRID ERROR]:', error, errorInfo);
+        console.error('[System Error]:', error, errorInfo);
     }
 
     public render() {
@@ -34,24 +34,25 @@ class ErrorBoundary extends Component<Props, State> {
                     borderRadius: 'var(--radius-lg)',
                     marginTop: '2rem'
                 }}>
-                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🧠⚡</div>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: 'var(--brand-alert)' }}>Neural Army Interrupted</h2>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
-                        One of the 41 agents encountered a synchronization lag. The Command Center is automatically rebooting this sector.
+                    <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>⚠️</div>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: '#ef4444' }}>Something Went Wrong</h2>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.85rem' }}>
+                        An unexpected error occurred. Our system is recovering automatically.
                     </p>
                     <button
                         onClick={() => this.setState({ hasError: false })}
                         style={{
                             background: 'var(--brand-primary)',
-                            color: 'white',
+                            color: '#040813',
                             border: 'none',
-                            padding: '0.75rem 1.5rem',
+                            padding: '0.5rem 1.25rem',
                             borderRadius: 'var(--radius-md)',
                             cursor: 'pointer',
-                            fontWeight: '600'
+                            fontWeight: '600',
+                            fontSize: '0.85rem'
                         }}
                     >
-                        Re-Sync Neural Grid
+                        Retry
                     </button>
                 </div>
             );

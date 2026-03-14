@@ -26,7 +26,7 @@ export default function LiveBalance() {
     }, []);
 
     return (
-        <div style={{ fontSize: "2.5rem", fontWeight: "700" }}>
+        <div style={{ fontSize: "1.75rem", fontWeight: "800", letterSpacing: "-0.02em" }}>
             {balance !== null ? `$${balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "Syncing..."}
         </div>
     );

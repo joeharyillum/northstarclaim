@@ -235,10 +235,11 @@ export default function Home() {
               <div style={{ position: "relative", overflow: "hidden", borderRadius: "1rem", paddingBottom: "56.25%", height: 0 }}>
                 {/* High-speed Vimeo / Iframe Embed Placeholder */}
                 <iframe
-                  src="https://player.vimeo.com/video/824804225?autoplay=1&loop=1&muted=1&background=1"
+                  src="https://player.vimeo.com/video/824804225?autoplay=0&loop=1&muted=1&background=1"
                   style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
-                  allow="autoplay; fullscreen; picture-in-picture"
+                  allow="fullscreen; picture-in-picture"
                   allowFullScreen
+                  loading="lazy"
                 ></iframe>
 
                 <div style={{

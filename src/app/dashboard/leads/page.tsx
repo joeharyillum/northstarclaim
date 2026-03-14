@@ -9,7 +9,6 @@ import { bulkPersonalize } from '@/lib/personalization';
 import { runMassCampaign } from '@/lib/outreach';
 import {
     Plus,
-    Upload,
     Zap,
     Users,
     Mail,
@@ -20,19 +19,17 @@ import {
     Filter,
     MoreVertical,
     Sparkles,
-    CreditCard
+    CreditCard,
+    Trash2,
 } from 'lucide-react';
-import { motion } from 'framer-motion';
 import LiveActivityFeed from '@/components/LiveActivityFeed';
 
 export default function DashboardLeads() {
     const { leads, stats, addLeads, clearLeads } = useLeadStore();
-    const [isImporting, setIsImporting] = useState(false);
     const [showGenerator, setShowGenerator] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [stripeBalance, setStripeBalance] = useState<number | null>(null);
-    const [isDeploying, setIsDeploying] = useState(false);
-    const [deployStep, setDeployStep] = useState("");
+    const [isGenerating, setIsGenerating] = useState(false);
 
     React.useEffect(() => {
         const fetchBalance = async () => {
@@ -49,7 +46,6 @@ export default function DashboardLeads() {
             }
         };
         fetchBalance();
-        // Poll every 30 seconds for live feel
         const interval = setInterval(fetchBalance, 30000);
         return () => clearInterval(interval);
     }, []);
@@ -66,41 +62,21 @@ export default function DashboardLeads() {
         setIsProcessing(false);
     };
 
-    const handleAutoDeploy = async () => {
-        setIsDeploying(true);
-        setDeployStep("Activating Texas Scraper Nodes...");
-        await new Promise(r => setTimeout(r, 1200));
-
-        setDeployStep("Infiltrating Houston Methodist Registry...");
-        await new Promise(r => setTimeout(r, 1800));
-
-        setDeployStep("Bypassing Texas Gatekeepers (Clay.ai)...");
-        await new Promise(r => setTimeout(r, 1500));
-
-        setDeployStep("Generating 50,000 Neural Pitches...");
-        await new Promise(r => setTimeout(r, 2000));
-
-        // Actually generate 50k leads for the user
+    const handleQuickGenerate = async () => {
+        setIsGenerating(true);
         const newLeads = generateLeads({
             industry: 'Healthcare',
             location: 'Texas',
-            count: 50000
+            count: 500
         });
         addLeads(newLeads);
-
-        setDeployStep("Pushing to Dallas Sending Clusters...");
-        await new Promise(r => setTimeout(r, 1500));
-
-        setIsDeploying(false);
-        setDeployStep("");
-        // No need to show generator, we already did the work
+        setIsGenerating(false);
     };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        setIsImporting(true);
         const reader = new FileReader();
         reader.onload = (event) => {
             const content = event.target?.result as string;
@@ -119,249 +95,250 @@ export default function DashboardLeads() {
             }));
 
             addLeads(formattedLeads);
-            setIsImporting(false);
         };
         reader.readAsText(file);
     };
 
+    const statusColors: Record<string, { bg: string; text: string }> = {
+        new: { bg: "rgba(148,163,184,0.1)", text: "#94a3b8" },
+        enriching: { bg: "rgba(234,179,8,0.1)", text: "#eab308" },
+        enriched: { bg: "rgba(59,130,246,0.1)", text: "#3b82f6" },
+        personalizing: { bg: "rgba(168,85,247,0.1)", text: "#a855f7" },
+        personalized: { bg: "rgba(99,102,241,0.1)", text: "#6366f1" },
+        contacted: { bg: "rgba(16,185,129,0.1)", text: "#10b981" },
+        failed: { bg: "rgba(239,68,68,0.1)", text: "#ef4444" },
+    };
+
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div style={{ marginBottom: "2rem" }}>
-                <h1 style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "0.5rem" }}>Lead Machine</h1>
-                <p style={{ color: "var(--text-secondary)" }}>Generate, personalize, and launch high-volume outreach campaigns autonomously.</p>
+        <div style={{ maxWidth: "1200px" }}>
+            {/* Header */}
+            <div style={{ marginBottom: "1.5rem" }}>
+                <h1 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "0.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <Users size={20} style={{ color: "var(--brand-primary)" }} />
+                    Lead <span className="text-gradient">Engine</span>
+                </h1>
+                <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
+                    Generate, personalize, and launch outreach campaigns.
+                </p>
             </div>
 
-            {/* Hero Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <StatCard title="Total Leads Built" value={stats.total.toLocaleString()} icon={<Users className="w-5 h-5" />} trend="+12%" color="purple" />
-                <StatCard title="Outreach Executed" value={stats.contacted.toLocaleString()} icon={<CheckCircle2 className="w-5 h-5" />} trend="85% Valid" color="orange" />
-                <StatCard title="Potential Commissions" value={`$${(stats.total * 450 * 0.15).toLocaleString(undefined, { maximumFractionDigits: 0 })}`} icon={<TrendingUp className="w-5 h-5" />} trend="15% Passive" color="blue" />
-                <StatCard
-                    title="Live Stripe Revenue"
-                    value={stripeBalance !== null ? `$${stripeBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "Syncing..."}
-                    icon={<CreditCard className="w-5 h-5" />}
-                    trend="STRIPE CONNECTED"
-                    color="green"
-                />
+            {/* Stat Cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
+                {[
+                    { label: "Total Leads", value: stats.total.toLocaleString(), icon: Users, color: "#a855f7" },
+                    { label: "Contacted", value: stats.contacted.toLocaleString(), icon: CheckCircle2, color: "#f59e0b" },
+                    { label: "Est. Commissions", value: `$${(stats.total * 450 * 0.15).toLocaleString(undefined, { maximumFractionDigits: 0 })}`, icon: TrendingUp, color: "#3b82f6" },
+                    { label: "Stripe Revenue", value: stripeBalance !== null ? `$${stripeBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "Syncing...", icon: CreditCard, color: "#10b981" },
+                ].map((m) => {
+                    const Icon = m.icon;
+                    return (
+                        <div key={m.label} style={{
+                            background: "var(--bg-card)",
+                            border: "1px solid var(--border-subtle)",
+                            borderRadius: "var(--radius-xl)",
+                            padding: "1.25rem",
+                        }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                                <Icon size={14} style={{ color: m.color }} />
+                                <span style={{ fontSize: "0.65rem", fontWeight: "600", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>{m.label}</span>
+                            </div>
+                            <div style={{ fontSize: "1.5rem", fontWeight: "800", letterSpacing: "-0.02em" }}>{m.value}</div>
+                        </div>
+                    );
+                })}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Main Pipeline */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold flex items-center gap-2">
-                            <BarChart3 className="w-5 h-5 text-indigo-400" />
+            {/* Main Grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: "1.5rem" }}>
+                {/* Pipeline Table */}
+                <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                        <h2 style={{ fontSize: "1rem", fontWeight: "600", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                            <BarChart3 size={16} style={{ color: "#6366f1" }} />
                             Lead Pipeline
                         </h2>
-                        <div className="flex items-center gap-2">
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
                             <button
-                                onClick={handleAutoDeploy}
-                                disabled={isDeploying}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-lg text-white ${isDeploying ? 'bg-emerald-800' : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/20 animate-pulse'}`}
+                                onClick={handleQuickGenerate}
+                                disabled={isGenerating}
+                                style={{
+                                    display: "flex", alignItems: "center", gap: "0.375rem",
+                                    padding: "0.375rem 0.75rem", borderRadius: "var(--radius-md)",
+                                    background: "rgba(16, 185, 129, 0.1)", border: "1px solid rgba(16, 185, 129, 0.2)",
+                                    color: "#10b981", fontSize: "0.75rem", fontWeight: "600", cursor: "pointer",
+                                }}
                             >
-                                <Zap className={`w-4 h-4 ${isDeploying ? 'animate-spin' : ''}`} />
-                                {isDeploying ? deployStep : "Auto Leads Deploy"}
+                                <Zap size={12} /> {isGenerating ? "Generating..." : "Quick Generate"}
                             </button>
                             <button
                                 onClick={() => setShowGenerator(true)}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-sm font-semibold transition-all shadow-lg shadow-indigo-500/20"
+                                style={{
+                                    display: "flex", alignItems: "center", gap: "0.375rem",
+                                    padding: "0.375rem 0.75rem", borderRadius: "var(--radius-md)",
+                                    background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15))",
+                                    border: "1px solid rgba(99,102,241,0.2)",
+                                    color: "#818cf8", fontSize: "0.75rem", fontWeight: "600", cursor: "pointer",
+                                }}
                             >
-                                <Sparkles className="w-4 h-4" />
-                                Generate Leads
+                                <Sparkles size={12} /> Generate Leads
                             </button>
                             <button
                                 onClick={() => document.getElementById('csv-upload')?.click()}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-all"
+                                style={{
+                                    display: "flex", alignItems: "center", gap: "0.375rem",
+                                    padding: "0.375rem 0.75rem", borderRadius: "var(--radius-md)",
+                                    background: "rgba(255,255,255,0.03)", border: "1px solid var(--border-subtle)",
+                                    color: "var(--text-secondary)", fontSize: "0.75rem", fontWeight: "600", cursor: "pointer",
+                                }}
                             >
-                                <Plus className="w-4 h-4" />
-                                Import CSV
+                                <Plus size={12} /> Import CSV
                             </button>
                             <input
                                 id="csv-upload"
                                 type="file"
                                 accept=".csv"
-                                className="hidden"
+                                style={{ display: "none" }}
                                 onChange={handleFileUpload}
                             />
                         </div>
                     </div>
 
-                    <div className="glass rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                        <div className="p-4 border-b border-white/5 flex items-center justify-between bg-white/5">
-                            <div className="relative flex-1 max-w-sm">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                                <input
-                                    type="text"
-                                    placeholder="Search leads..."
-                                    className="w-full pl-10 pr-4 py-2 bg-slate-900/50 border border-white/5 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                                    style={{ background: "rgba(0,0,0,0.2)" }}
-                                />
-                            </div>
-                            <button className="p-2 hover:bg-white/5 rounded-lg transition-colors text-slate-400">
-                                <Filter className="w-4 h-4" />
-                            </button>
+                    <div style={{
+                        background: "var(--bg-card)",
+                        border: "1px solid var(--border-subtle)",
+                        borderRadius: "var(--radius-xl)",
+                        overflow: "hidden",
+                    }}>
+                        {/* Search Bar */}
+                        <div style={{
+                            padding: "0.75rem 1rem",
+                            borderBottom: "1px solid var(--border-subtle)",
+                            display: "flex", alignItems: "center", gap: "0.5rem",
+                            background: "rgba(255,255,255,0.02)",
+                        }}>
+                            <Search size={14} style={{ color: "var(--text-muted)" }} />
+                            <input
+                                type="text"
+                                placeholder="Search leads..."
+                                style={{
+                                    flex: 1, background: "transparent", border: "none", outline: "none",
+                                    fontSize: "0.8rem", color: "var(--text-primary)",
+                                }}
+                            />
+                            <Filter size={14} style={{ color: "var(--text-muted)", cursor: "pointer" }} />
                         </div>
 
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left text-sm">
-                                <thead>
-                                    <tr className="border-b border-white/5 text-slate-400 font-medium" style={{ background: "rgba(0,0,0,0.2)" }}>
-                                        <th className="px-6 py-4">Lead</th>
-                                        <th className="px-6 py-4">Status</th>
-                                        <th className="px-6 py-4">Company</th>
-                                        <th className="px-6 py-4">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-white/5">
-                                    {leads.slice(0, 10).map((lead) => (
-                                        <motion.tr
-                                            key={lead.id}
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            className="hover:bg-white/[0.02] transition-colors group"
-                                        >
-                                            <td className="px-6 py-4">
-                                                <div className="flex flex-col">
-                                                    <span className="font-semibold text-slate-200">{lead.name || 'Unknown'}</span>
-                                                    <span className="text-xs text-slate-500">{lead.email}</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <StatusBadge status={lead.status} />
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex flex-col">
-                                                    <span className="text-slate-300">{lead.company}</span>
-                                                    <span className="text-xs text-slate-500">{lead.industry}</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <button className="p-2 hover:bg-white/5 rounded-md text-slate-500 group-hover:text-slate-200 transition-colors">
-                                                    <MoreVertical className="w-4 h-4" />
-                                                </button>
-                                            </td>
-                                        </motion.tr>
+                        {/* Table */}
+                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                            <thead>
+                                <tr style={{ borderBottom: "1px solid var(--border-subtle)", background: "rgba(0,0,0,0.15)" }}>
+                                    {["Lead", "Status", "Company", ""].map(h => (
+                                        <th key={h} style={{
+                                            padding: "0.625rem 1rem", textAlign: "left",
+                                            fontSize: "0.65rem", fontWeight: "600", color: "var(--text-muted)",
+                                            textTransform: "uppercase", letterSpacing: "0.04em",
+                                        }}>{h}</th>
                                     ))}
-                                    {leads.length === 0 && (
-                                        <tr>
-                                            <td colSpan={4} className="px-6 py-12 text-center text-slate-500 italic">
-                                                No leads imported yet. Start by uploading a CSV.
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {leads.slice(0, 10).map((lead) => {
+                                    const st = statusColors[lead.status] || statusColors.new;
+                                    return (
+                                        <tr key={lead.id} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                                            <td style={{ padding: "0.625rem 1rem" }}>
+                                                <div style={{ fontSize: "0.85rem", fontWeight: "600" }}>{lead.name || 'Unknown'}</div>
+                                                <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{lead.email}</div>
+                                            </td>
+                                            <td style={{ padding: "0.625rem 1rem" }}>
+                                                <span style={{
+                                                    fontSize: "0.6rem", fontWeight: "600", padding: "0.125rem 0.5rem",
+                                                    borderRadius: "var(--radius-full)", background: st.bg, color: st.text,
+                                                    textTransform: "uppercase", letterSpacing: "0.03em",
+                                                }}>{lead.status}</span>
+                                            </td>
+                                            <td style={{ padding: "0.625rem 1rem" }}>
+                                                <div style={{ fontSize: "0.85rem" }}>{lead.company}</div>
+                                                <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{lead.industry}</div>
+                                            </td>
+                                            <td style={{ padding: "0.625rem 1rem" }}>
+                                                <MoreVertical size={14} style={{ color: "var(--text-muted)", cursor: "pointer" }} />
                                             </td>
                                         </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                                    );
+                                })}
+                                {leads.length === 0 && (
+                                    <tr>
+                                        <td colSpan={4} style={{ padding: "3rem 1rem", textAlign: "center", color: "var(--text-muted)", fontSize: "0.85rem" }}>
+                                            No leads yet. Import a CSV or generate leads to get started.
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                {/* Action Sidebar */}
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold">Quick Actions</h2>
-                    <div className="space-y-4">
-                        <ActionCard
-                            title="Bulk Personalize"
-                            desc="Research all new leads using AI"
-                            icon={<Zap className={`w-5 h-5 ${isProcessing ? 'animate-spin' : 'text-yellow-400'}`} />}
-                            onClick={handleBulkPersonalize}
-                            disabled={isProcessing}
-                        />
-                        <ActionCard
-                            title="Launch Campaign"
-                            desc="Send follow-up outreach"
-                            icon={<Mail className={`w-5 h-5 ${isProcessing ? 'animate-bounce' : 'text-indigo-400'}`} />}
-                            onClick={handleRunCampaign}
-                            disabled={isProcessing}
-                        />
-                        <ActionCard
-                            title="Clear Database"
-                            desc="Wipe all local lead data"
-                            icon={<TrendingUp className="w-5 h-5 text-red-500" />}
-                            variant="danger"
-                            onClick={clearLeads}
-                        />
+                {/* Sidebar */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    <h2 style={{ fontSize: "1rem", fontWeight: "600" }}>Quick Actions</h2>
+
+                    {[
+                        { label: "Bulk Personalize", desc: "AI-research all new leads", icon: Zap, color: "#eab308", onClick: handleBulkPersonalize },
+                        { label: "Launch Campaign", desc: "Send follow-up outreach", icon: Mail, color: "#6366f1", onClick: handleRunCampaign },
+                        { label: "Clear Leads", desc: "Remove all local data", icon: Trash2, color: "#ef4444", onClick: clearLeads },
+                    ].map((action) => {
+                        const Icon = action.icon;
+                        return (
+                            <button
+                                key={action.label}
+                                onClick={action.onClick}
+                                disabled={isProcessing}
+                                style={{
+                                    width: "100%", display: "flex", alignItems: "center", gap: "0.75rem",
+                                    padding: "0.875rem 1rem", borderRadius: "var(--radius-xl)",
+                                    background: "var(--bg-card)", border: "1px solid var(--border-subtle)",
+                                    cursor: "pointer", textAlign: "left", transition: "all 0.2s",
+                                }}
+                            >
+                                <div style={{
+                                    width: "36px", height: "36px", borderRadius: "var(--radius-md)",
+                                    background: `${action.color}15`, display: "flex", alignItems: "center", justifyContent: "center",
+                                    flexShrink: 0,
+                                }}>
+                                    <Icon size={16} style={{ color: action.color }} />
+                                </div>
+                                <div>
+                                    <div style={{ fontSize: "0.85rem", fontWeight: "600" }}>{action.label}</div>
+                                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{action.desc}</div>
+                                </div>
+                            </button>
+                        );
+                    })}
+
+                    {/* Revenue Card */}
+                    <div style={{
+                        background: "rgba(0, 242, 255, 0.04)",
+                        border: "1px solid rgba(0, 242, 255, 0.12)",
+                        borderRadius: "var(--radius-xl)",
+                        padding: "1.25rem",
+                    }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                            <span style={{ fontSize: "0.85rem", fontWeight: "600" }}>Revenue Projection</span>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                            <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>Monthly Target</span>
+                            <span style={{ fontSize: "1rem", fontWeight: "700", color: "#10b981" }}>$1,200,000+</span>
+                        </div>
+                        <div style={{ width: "100%", height: "4px", background: "rgba(255,255,255,0.05)", borderRadius: "2px" }}>
+                            <div style={{ width: "35%", height: "100%", borderRadius: "2px", background: "#10b981" }} />
+                        </div>
                     </div>
 
-                    <div className="glass p-6 rounded-2xl space-y-4" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                        <h3 className="font-bold flex items-center justify-between">
-                            Revenue Scaling
-                            <span className="text-[10px] text-indigo-400 font-black tracking-widest uppercase">Phase 60</span>
-                        </h3>
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-400">Monthly Net Projection</span>
-                            <span className="text-emerald-400 font-extrabold">$1,200,000+</span>
-                        </div>
-                        <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-                            <div className="bg-emerald-500 h-full w-[35%]" />
-                        </div>
-                    </div>
-
-                    <div className="space-y-4">
-                        <LiveActivityFeed />
-                    </div>
+                    <LiveActivityFeed />
                 </div>
             </div>
             <GeneratorModal isOpen={showGenerator} onClose={() => setShowGenerator(false)} />
         </div>
-    );
-}
-
-function StatCard({ title, value, icon, trend, color }: any) {
-    const colors: any = {
-        blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-        green: 'text-green-400 bg-green-500/10 border-green-500/20',
-        orange: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
-        purple: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
-    };
-
-    return (
-        <div className="glass p-6 rounded-2xl flex flex-col gap-4" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
-            <div className="flex items-center justify-between">
-                <div className={`p-2 rounded-lg border ${colors[color]}`}>
-                    {icon}
-                </div>
-                <span className="text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-full">{trend}</span>
-            </div>
-            <div>
-                <p className="text-sm font-medium text-slate-400">{title}</p>
-                <p className="text-2xl font-bold mt-1 tracking-tight">{value}</p>
-            </div>
-        </div>
-    );
-}
-
-function ActionCard({ title, desc, icon, onClick, variant }: any) {
-    return (
-        <button
-            onClick={onClick}
-            className={`glass w-full p-4 rounded-xl flex items-start gap-4 text-left transition-all hover:scale-[1.02] active:scale-95 group ${variant === 'danger' ? 'hover:border-red-500/50' : 'hover:border-indigo-500/50'}`}
-            style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
-        >
-            <div className="p-3 bg-white/5 border border-white/5 rounded-xl text-white">
-                {icon}
-            </div>
-            <div>
-                <h4 className="font-bold text-slate-200">{title}</h4>
-                <p className="text-xs text-slate-500 mt-1 line-clamp-1">{desc}</p>
-            </div>
-        </button>
-    );
-}
-
-function StatusBadge({ status }: { status: string }) {
-    const styles: any = {
-        new: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
-        enriching: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20 animate-pulse',
-        enriched: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-        personalizing: 'bg-purple-500/10 text-purple-400 border-purple-500/20 animate-pulse',
-        personalized: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-        contacted: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-        failed: 'bg-red-500/10 text-red-400 border-red-500/20',
-    };
-
-    return (
-        <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${styles[status]}`}>
-            {status}
-        </span>
     );
 }

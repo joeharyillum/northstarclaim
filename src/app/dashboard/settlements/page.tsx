@@ -1,21 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
     Gavel,
     ShieldAlert,
     Target,
     TrendingUp,
-    MessageSquare,
     CheckCircle2,
-    Timer,
     ShieldCheck,
-    Cpu,
     ArrowUpRight,
     ArrowDownRight,
     Scale,
-    AlertCircle
 } from 'lucide-react';
 
 interface Negotiation {
@@ -26,311 +21,326 @@ interface Negotiation {
     targetFloor: number;
     status: 'ACTIVE' | 'CLOSING' | 'SETTLED' | 'ESCALATED';
     agent: string;
-    history: { speaker: string, text: string, time: string }[];
+    history: { speaker: string; text: string; time: string }[];
 }
 
 export default function SettlementWarRoom() {
     const [negotiations, setNegotiations] = useState<Negotiation[]>([
         {
-            id: 'WHALE-201',
-            payer: 'UnitedHealthcare (TMC)',
+            id: 'CLM-201',
+            payer: 'UnitedHealthcare',
             claimValue: 245000,
             currentOffer: 165000,
             targetFloor: 196000,
             status: 'ACTIVE',
-            agent: 'Agent 41 (Orchestrator)',
+            agent: 'AI Agent',
             history: [
                 { speaker: 'UHC Adjuster', text: 'We find no medical necessity for the dual spinal stabilization.', time: '12:45' },
-                { speaker: 'Agent 41', text: 'Citing NCCI Policy Manual Chapter 4, Section B. This is a primary stabilization requirement. Re-evaluate or we file a State Grievance in 10 minutes.', time: '12:46' },
-                { speaker: 'UHC Adjuster', text: 'Hold please. Reviewing NCCI citations...', time: '12:48' }
+                { speaker: 'AI Agent', text: 'Per NCCI Policy Manual Ch.4 §B, this is a primary stabilization requirement. Please re-evaluate within compliance window.', time: '12:46' },
+                { speaker: 'UHC Adjuster', text: 'Hold please. Reviewing citations...', time: '12:48' }
             ]
         },
         {
-            id: 'WHALE-205',
-            payer: 'Aetna Global',
+            id: 'CLM-205',
+            payer: 'Aetna',
             claimValue: 89000,
             currentOffer: 72000,
             targetFloor: 71200,
             status: 'CLOSING',
-            agent: 'Agent 38 (Negotiator)',
+            agent: 'AI Agent',
             history: [
-                { speaker: 'Agent 38', text: 'Settlement floor reached. Generating digital signature vault.', time: '12:50' }
+                { speaker: 'AI Agent', text: 'Settlement floor reached. Generating signature for approval.', time: '12:50' }
             ]
         },
         {
-            id: 'WHALE-210',
+            id: 'CLM-210',
             payer: 'BlueCross BlueShield TX',
             claimValue: 1250000,
             currentOffer: 310000,
             targetFloor: 937500,
             status: 'ACTIVE',
-            agent: 'Agent 41 (Orchestrator)',
+            agent: 'AI Agent',
             history: [
                 { speaker: 'BCBS Adjuster', text: 'This exceeds our quarterly threshold for out-of-network trauma.', time: '12:30' },
-                { speaker: 'Agent 41', text: 'The Prompt Pay Act does not recognize "quarterly thresholds" as a valid delay mechanism. Proceed to settlement or prepare for ERISA audit.', time: '12:32' }
+                { speaker: 'AI Agent', text: 'The Prompt Pay Act does not recognize quarterly thresholds as a valid delay mechanism. Proceeding to formal appeal.', time: '12:32' }
             ]
         }
     ]);
 
-    const [liveTranscript, setLiveTranscript] = useState<string[]>([]);
-    const transcriptEndRef = useRef<HTMLDivElement>(null);
+    const [liveLog, setLiveLog] = useState<string[]>([]);
+    const logEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const lines = [
-            "[SYSTEM] Phase 50: Settlement War Room Active",
-            "[AGENT 41] Scanning BCBS TX policy updates...",
-            "[AGENT 32] Detecting stall tactic from Cigna adjuster (Node 401)",
-            "[SYSTEM] State Grievance drafted for Claim #TX-882",
-            "[AGENT 41] Pivot initiated. Demand for 85% payout sent to UnitedHealthcare.",
+            "[SYSTEM] Settlement Engine Active",
+            "[AI] Scanning BCBS TX policy updates...",
+            "[AI] Detecting stall pattern from Cigna adjuster",
+            "[SYSTEM] Appeal drafted for Claim #TX-882",
+            "[AI] Demand for 85% payout sent to UnitedHealthcare",
             "[SYSTEM] Settlement Reached: $142,500.00 (Aetna)",
-            "[AGENT 38] Executing Payout Vault protocol...",
-            "[SYSTEM] Incoming Offer: $12,000.00 (Denied - Below Floor)",
-            "[AGENT 41] Warning: Adjuster 'Sarah K' attempting to cite outdated 2021 codes. Correcting..."
+            "[AI] Executing payout workflow...",
+            "[SYSTEM] Incoming Offer: $12,000.00 (Below Floor — Rejected)",
         ];
 
         let i = 0;
         const interval = setInterval(() => {
-            if (i < lines.length) {
-                setLiveTranscript(prev => [...prev, lines[i]]);
-                i++;
-            } else {
-                i = 0;
-                setLiveTranscript(prev => [lines[0]]); // Loop it for "live" feel
-            }
-        }, 2500);
+            setLiveLog(prev => [...prev.slice(-20), lines[i % lines.length]]);
+            i++;
+        }, 3000);
 
         return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
-        transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [liveTranscript]);
+        logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [liveLog]);
 
-    return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-black tracking-tighter flex items-center gap-3">
-                        <Gavel className="w-8 h-8 text-brand-primary" />
-                        Settlement <span className="text-gradient">War Room</span>
-                    </h1>
-                    <p className="text-slate-500 mt-2 font-medium">Phase 50 Guardian Haggling • Autonomous Resolution Grid Active</p>
-                </div>
-                <div className="flex items-center gap-4">
-                    <div className="glass px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                        <span className="text-[10px] font-black text-emerald-500 tracking-widest uppercase">Grid Sync: 99.8%</span>
-                    </div>
-                    <div className="glass px-4 py-2 rounded-full border border-indigo-500/20 bg-indigo-500/5 flex items-center gap-2">
-                        <ShieldCheck className="w-3 h-3 text-indigo-400" />
-                        <span className="text-[10px] font-black text-indigo-400 tracking-widest uppercase">Guardian Compliance</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* Top Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <MetricCard title="Active Negotiations" value="14" sub="High-Value Targets" icon={<Scale className="w-5 h-5" />} color="blue" />
-                <MetricCard title="Settlement Floor" value="82.4%" sub="Avg. Capture Rate" icon={<ArrowUpRight className="w-5 h-5" />} color="green" />
-                <MetricCard title="Daily Resolved" value="$1.42M" sub="+12% from YTD" icon={<TrendingUp className="w-5 h-5" />} color="purple" />
-                <MetricCard title="Grid Aggression" value="MAX" sub="Tactical Pivot Active" icon={<Activity className="w-5 h-5" />} color="orange" />
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Active Haggling View */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold flex items-center gap-2">
-                            <Target className="w-5 h-5 text-indigo-400" />
-                            Live Strategic Engagements
-                        </h2>
-                        <span className="text-xs text-slate-500 font-mono">Agent Performance: OPTIMAL</span>
-                    </div>
-
-                    <div className="space-y-4">
-                        {negotiations.map((neg) => (
-                            <motion.div
-                                key={neg.id}
-                                layoutId={neg.id}
-                                className="glass rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 transition-all p-6 bg-white/[0.02]"
-                            >
-                                <div className="flex items-start justify-between mb-4">
-                                    <div className="flex flex-col">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{neg.id}</span>
-                                            <h3 className="text-lg font-bold text-white">{neg.payer}</h3>
-                                        </div>
-                                        <p className="text-xs text-slate-500 mt-1">{neg.agent} • {neg.status}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="text-xl font-black text-white">${neg.claimValue.toLocaleString()}</div>
-                                        <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Claim Value</div>
-                                    </div>
-                                </div>
-
-                                {/* Progress Bar */}
-                                <div className="space-y-2 mb-6">
-                                    <div className="flex items-center justify-between text-xs font-bold">
-                                        <span className="text-slate-400 flex items-center gap-1">
-                                            <ArrowDownRight className="w-3 h-3 text-red-400" />
-                                            Offer: ${neg.currentOffer.toLocaleString()}
-                                        </span>
-                                        <span className="text-emerald-400 flex items-center gap-1">
-                                            Floor: ${neg.targetFloor.toLocaleString()}
-                                            <ShieldCheck className="w-3 h-3" />
-                                        </span>
-                                    </div>
-                                    <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                                        <motion.div
-                                            initial={{ width: 0 }}
-                                            animate={{ width: `${(neg.currentOffer / neg.targetFloor) * 100}%` }}
-                                            className={`h-full ${neg.status === 'CLOSING' ? 'bg-emerald-500 shadow-[0_0_15px_#10b981]' : 'bg-brand-primary'}`}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Mini Transcript */}
-                                <div className="bg-black/40 rounded-xl p-4 space-y-3 border border-white/5">
-                                    {neg.history.map((h, i) => (
-                                        <div key={i} className="flex gap-3 text-[11px] leading-relaxed">
-                                            <span className={`font-black uppercase shrink-0 ${h.speaker.includes('Agent') ? 'text-indigo-400' : 'text-slate-500'}`}>
-                                                [{h.speaker}]
-                                            </span>
-                                            <span className="text-slate-400">{h.text}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="flex items-center justify-between mt-6">
-                                    <button className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors flex items-center gap-1">
-                                        <AlertCircle className="w-3 h-3" />
-                                        Override Floor
-                                    </button>
-                                    <button className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${neg.status === 'CLOSING' ? 'bg-emerald-600 text-white animate-pulse' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'}`}>
-                                        {neg.status === 'CLOSING' ? 'EXECUTING SETTLEMENT...' : 'Pivoting Strategy'}
-                                    </button>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Tactical Side Panel */}
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold">Tactical Control</h2>
-
-                    {/* Live Transcript */}
-                    <div className="glass rounded-2xl overflow-hidden flex flex-col h-[500px]" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                        <div className="p-4 border-b border-white/5 flex items-center justify-between bg-white/10">
-                            <div className="flex items-center gap-2">
-                                <Cpu className="w-4 h-4 text-indigo-400" />
-                                <span className="text-xs font-black uppercase tracking-widest text-white">Neural Transceiver</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                                <span className="text-[10px] font-bold text-blue-500 uppercase">Haggling Active</span>
-                            </div>
-                        </div>
-
-                        <div className="p-4 flex-1 overflow-y-auto space-y-4 font-mono text-[10px] bg-black/60 scrollbar-hide">
-                            <AnimatePresence initial={false}>
-                                {liveTranscript.map((line, i) => (
-                                    <motion.div
-                                        key={i + line}
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        className="flex gap-2"
-                                    >
-                                        <span className="text-slate-600">[{new Date().toLocaleTimeString([], { hour12: false })}]</span>
-                                        <span className={`${line.includes('SYSTEM') ? 'text-indigo-400' : line.includes('AGENT') ? 'text-white' : 'text-slate-400'}`}>
-                                            {line}
-                                        </span>
-                                    </motion.div>
-                                ))}
-                                <div ref={transcriptEndRef} />
-                            </AnimatePresence>
-                        </div>
-
-                        <div className="p-4 bg-white/5 border-t border-white/5">
-                            <div className="flex items-center justify-between mb-4">
-                                <span className="text-[10px] font-black text-slate-500 uppercase">Settlement Agression</span>
-                                <span className="text-[10px] font-black text-brand-primary uppercase">Alpha-Strike</span>
-                            </div>
-                            <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                                <div className="h-full bg-brand-primary w-[85%] animate-pulse" />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Global Floor Control */}
-                    <div className="glass p-6 rounded-2xl space-y-6 border-brand-primary/20 bg-brand-primary/5">
-                        <div className="flex items-center gap-3">
-                            <ShieldAlert className="w-5 h-5 text-brand-primary" />
-                            <h3 className="font-bold">Global Floor Lockdown</h3>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm text-slate-400">Min. Recovery Floor</span>
-                                <span className="text-lg font-black text-white">75.0%</span>
-                            </div>
-                            <input
-                                type="range"
-                                min="50"
-                                max="95"
-                                defaultValue="75"
-                                className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-brand-primary"
-                            />
-                            <div className="flex justify-between text-[10px] font-bold text-slate-600 uppercase tracking-widest">
-                                <span>Risk: High</span>
-                                <span>Profit: Optimized</span>
-                            </div>
-                        </div>
-                        <p className="text-[10px] text-slate-500 leading-relaxed italic">
-                            *Setting the floor above 85% automatically triggers Agent 41 to prioritize formal grievances over standard negotiation loops.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function MetricCard({ title, value, sub, icon, color }: any) {
-    const colors: any = {
-        blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-        green: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-        purple: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
-        orange: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
+    const statusColors: Record<string, { bg: string; text: string; label: string }> = {
+        ACTIVE: { bg: "rgba(59, 130, 246, 0.1)", text: "#3b82f6", label: "Active" },
+        CLOSING: { bg: "rgba(16, 185, 129, 0.1)", text: "#10b981", label: "Closing" },
+        SETTLED: { bg: "rgba(168, 85, 247, 0.1)", text: "#a855f7", label: "Settled" },
+        ESCALATED: { bg: "rgba(239, 68, 68, 0.1)", text: "#ef4444", label: "Escalated" },
     };
 
     return (
-        <div className="glass p-6 rounded-2xl flex flex-col gap-4 bg-white/[0.02] border border-white/5">
-            <div className="flex items-center justify-between">
-                <div className={`p-2 rounded-lg border ${colors[color]}`}>
-                    {icon}
+        <div style={{ maxWidth: "1200px" }}>
+            {/* Header */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
+                <div>
+                    <h1 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "0.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <Gavel size={20} style={{ color: "var(--brand-primary)" }} />
+                        Settlement <span className="text-gradient">Center</span>
+                    </h1>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
+                        Claim negotiation and resolution tracking
+                    </p>
                 </div>
-                <div className="flex items-center gap-1">
-                    <Timer className="w-3 h-3 text-slate-600" />
-                    <span className="text-[10px] font-bold text-slate-600 uppercase tracking-tighter">Real-Time</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <div style={{
+                        display: "flex", alignItems: "center", gap: "0.375rem",
+                        padding: "0.25rem 0.625rem",
+                        background: "rgba(16, 185, 129, 0.08)",
+                        borderRadius: "var(--radius-full)",
+                        border: "1px solid rgba(16, 185, 129, 0.15)",
+                    }}>
+                        <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#10b981" }} />
+                        <span style={{ fontSize: "0.65rem", fontWeight: "600", color: "#10b981", textTransform: "uppercase" }}>Active</span>
+                    </div>
                 </div>
             </div>
-            <div>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{title}</p>
-                <div className="flex items-baseline gap-2">
-                    <p className="text-3xl font-black mt-1 tracking-tighter">{value}</p>
-                    <span className="text-[10px] font-bold text-emerald-400">{sub}</span>
-                </div>
-            </div>
-        </div>
-    );
-}
 
-function Activity({ className }: { className?: string }) {
-    return (
-        <div className={`${className} flex gap-1 items-end`}>
-            <div className="w-1 h-3 bg-current opacity-40 animate-[pulse_1s_infinite_0s]"></div>
-            <div className="w-1 h-5 bg-current opacity-60 animate-[pulse_1s_infinite_0.1s]"></div>
-            <div className="w-1 h-4 bg-current opacity-100 animate-[pulse_1s_infinite_0.2s]"></div>
+            {/* Metric Cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
+                {[
+                    { label: "Active Negotiations", value: negotiations.filter(n => n.status === 'ACTIVE').length.toString(), icon: Scale, color: "#3b82f6" },
+                    { label: "Settlement Rate", value: "82.4%", icon: ArrowUpRight, color: "#10b981" },
+                    { label: "Daily Resolved", value: "$1.42M", icon: TrendingUp, color: "#a855f7" },
+                    { label: "Avg Recovery", value: "78%", icon: CheckCircle2, color: "#f59e0b" },
+                ].map((m) => {
+                    const Icon = m.icon;
+                    return (
+                        <div key={m.label} style={{
+                            background: "var(--bg-card)",
+                            border: "1px solid var(--border-subtle)",
+                            borderRadius: "var(--radius-xl)",
+                            padding: "1.25rem",
+                        }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                                <Icon size={14} style={{ color: m.color }} />
+                                <span style={{ fontSize: "0.65rem", fontWeight: "600", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>{m.label}</span>
+                            </div>
+                            <div style={{ fontSize: "1.5rem", fontWeight: "800", letterSpacing: "-0.02em" }}>{m.value}</div>
+                        </div>
+                    );
+                })}
+            </div>
+
+            {/* Main Grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "1.5rem" }}>
+                {/* Negotiations */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    <h2 style={{ fontSize: "1rem", fontWeight: "600", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <Target size={16} style={{ color: "#6366f1" }} />
+                        Active Negotiations
+                    </h2>
+
+                    {negotiations.map((neg) => {
+                        const pct = Math.min((neg.currentOffer / neg.targetFloor) * 100, 100);
+                        const st = statusColors[neg.status] || statusColors.ACTIVE;
+                        return (
+                            <div key={neg.id} style={{
+                                background: "var(--bg-card)",
+                                border: "1px solid var(--border-subtle)",
+                                borderRadius: "var(--radius-xl)",
+                                padding: "1.25rem",
+                                transition: "all 0.2s",
+                            }}>
+                                {/* Header */}
+                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                                    <div>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
+                                            <span style={{ fontSize: "0.65rem", color: "var(--text-muted)", fontWeight: "600" }}>{neg.id}</span>
+                                            <span style={{
+                                                fontSize: "0.6rem", fontWeight: "600", padding: "0.125rem 0.375rem",
+                                                borderRadius: "var(--radius-full)", background: st.bg, color: st.text,
+                                            }}>{st.label}</span>
+                                        </div>
+                                        <div style={{ fontSize: "0.95rem", fontWeight: "600" }}>{neg.payer}</div>
+                                    </div>
+                                    <div style={{ textAlign: "right" }}>
+                                        <div style={{ fontSize: "1.1rem", fontWeight: "700" }}>${neg.claimValue.toLocaleString()}</div>
+                                        <div style={{ fontSize: "0.65rem", color: "var(--text-muted)" }}>Claim Value</div>
+                                    </div>
+                                </div>
+
+                                {/* Progress */}
+                                <div style={{ marginBottom: "0.75rem" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.375rem", fontSize: "0.7rem" }}>
+                                        <span style={{ color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                                            <ArrowDownRight size={10} style={{ color: "#ef4444" }} /> Offer: ${neg.currentOffer.toLocaleString()}
+                                        </span>
+                                        <span style={{ color: "#10b981", display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                                            Floor: ${neg.targetFloor.toLocaleString()} <ShieldCheck size={10} />
+                                        </span>
+                                    </div>
+                                    <div style={{ width: "100%", height: "4px", background: "rgba(255,255,255,0.05)", borderRadius: "2px" }}>
+                                        <div style={{
+                                            width: `${pct}%`,
+                                            height: "100%",
+                                            borderRadius: "2px",
+                                            background: neg.status === 'CLOSING'
+                                                ? "#10b981"
+                                                : "var(--brand-primary)",
+                                            transition: "width 0.5s ease",
+                                        }} />
+                                    </div>
+                                </div>
+
+                                {/* Transcript */}
+                                <div style={{
+                                    background: "rgba(0,0,0,0.2)",
+                                    borderRadius: "var(--radius-md)",
+                                    padding: "0.75rem",
+                                    border: "1px solid var(--border-subtle)",
+                                }}>
+                                    {neg.history.map((h, i) => (
+                                        <div key={i} style={{
+                                            display: "flex",
+                                            gap: "0.5rem",
+                                            fontSize: "0.75rem",
+                                            lineHeight: 1.5,
+                                            marginBottom: i < neg.history.length - 1 ? "0.375rem" : 0,
+                                        }}>
+                                            <span style={{
+                                                fontWeight: "700",
+                                                color: h.speaker.includes('AI') ? "#6366f1" : "var(--text-muted)",
+                                                whiteSpace: "nowrap",
+                                                flexShrink: 0,
+                                            }}>
+                                                [{h.speaker}]
+                                            </span>
+                                            <span style={{ color: "var(--text-secondary)" }}>{h.text}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {/* Side Panel */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    {/* Live Log */}
+                    <div style={{
+                        background: "var(--bg-card)",
+                        border: "1px solid var(--border-subtle)",
+                        borderRadius: "var(--radius-xl)",
+                        overflow: "hidden",
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "400px",
+                    }}>
+                        <div style={{
+                            padding: "0.75rem 1rem",
+                            borderBottom: "1px solid var(--border-subtle)",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            background: "rgba(255,255,255,0.02)",
+                        }}>
+                            <span style={{ fontSize: "0.75rem", fontWeight: "600" }}>System Log</span>
+                            <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+                                <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#3b82f6" }} />
+                                <span style={{ fontSize: "0.6rem", fontWeight: "600", color: "#3b82f6" }}>LIVE</span>
+                            </div>
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            overflowY: "auto",
+                            padding: "0.75rem",
+                            fontFamily: "monospace",
+                            fontSize: "0.7rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "0.375rem",
+                            background: "rgba(0,0,0,0.2)",
+                        }}>
+                            {liveLog.map((line, i) => (
+                                <div key={i} style={{
+                                    display: "flex",
+                                    gap: "0.5rem",
+                                    lineHeight: 1.4,
+                                }}>
+                                    <span style={{ color: "var(--text-muted)", flexShrink: 0 }}>
+                                        [{new Date().toLocaleTimeString([], { hour12: false })}]
+                                    </span>
+                                    <span style={{
+                                        color: line.includes('SYSTEM') ? "#6366f1" : "var(--text-secondary)",
+                                        wordBreak: "break-word",
+                                    }}>
+                                        {line}
+                                    </span>
+                                </div>
+                            ))}
+                            <div ref={logEndRef} />
+                        </div>
+                    </div>
+
+                    {/* Floor Control */}
+                    <div style={{
+                        background: "rgba(0, 242, 255, 0.04)",
+                        border: "1px solid rgba(0, 242, 255, 0.12)",
+                        borderRadius: "var(--radius-xl)",
+                        padding: "1.25rem",
+                    }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                            <ShieldAlert size={16} style={{ color: "var(--brand-primary)" }} />
+                            <h3 style={{ fontSize: "0.85rem", fontWeight: "600" }}>Recovery Floor</h3>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                            <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>Min. Recovery</span>
+                            <span style={{ fontSize: "1rem", fontWeight: "700" }}>75.0%</span>
+                        </div>
+                        <input
+                            type="range"
+                            min="50"
+                            max="95"
+                            defaultValue="75"
+                            style={{
+                                width: "100%",
+                                height: "4px",
+                                borderRadius: "2px",
+                                cursor: "pointer",
+                                accentColor: "var(--brand-primary)",
+                            }}
+                        />
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", color: "var(--text-muted)", marginTop: "0.375rem" }}>
+                            <span>Conservative</span>
+                            <span>Aggressive</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

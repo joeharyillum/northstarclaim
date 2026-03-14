@@ -23,31 +23,19 @@ export async function GET() {
             stripeTotal = (available + pending) / 100;
         }
 
-        // 2. Fetch Database Aggregates with Query Timeout Protection
-        let totalClaimsCount = 0;
-        let paidRevenue = 0;
-        let pipelineRevenue = 0;
+        // 2. Fetch Database Aggregates
+        const totalClaimsCount = await prisma.claim.count();
+        const paidInvoices = await prisma.invoice.aggregate({
+            _sum: { amountEarned: true },
+            where: { status: 'PAID' }
+        });
+        const recoverableClaims = await prisma.claim.aggregate({
+            _sum: { billedAmount: true },
+            where: { status: 'RECOVERABLE' }
+        });
 
-        try {
-            // Use a Promise.race to ensure we don't hang for 100s (prevent 524)
-            const dbData = await Promise.race([
-                Promise.all([
-                    prisma.claim.count(),
-                    prisma.invoice.aggregate({
-                        _sum: { amountEarned: true },
-                        where: { status: 'PAID' }
-                    }),
-                    prisma.claim.aggregate({
-                        _sum: { billedAmount: true },
-                        where: { status: 'RECOVERABLE' }
-                    })
-                ]),
-                new Promise((_, reject) => setTimeout(() => reject(new Error('DB Timeout')), 2000))
-            ]) as [number, any, any];
-
-            totalClaimsCount = dbData[0];
-            paidRevenue = dbData[1]._sum.amountEarned || 0;
-            pipelineRevenue = dbData[2]._sum.billedAmount || 0;
+        const paidRevenue = paidInvoices._sum.amountEarned || 0;
+        const pipelineRevenue = recoverableClaims._sum.billedAmount || 0;
         } catch (dbError: any) {
             console.warn('DB Query slow or failed.', dbError.message);
             // Return zeros instead of fake data

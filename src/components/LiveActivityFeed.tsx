@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Activity, Zap, Shield, Search, Mail } from 'lucide-react';
+import { Activity, Search, Mail, CheckCircle2, FileText } from 'lucide-react';
 
 interface FeedItem {
     id: string;
-    type: 'SCRAPE' | 'ENRICH' | 'PERSONAL' | 'SEND' | 'SUCCESS';
+    type: string;
     text: string;
     timestamp: Date;
     color: string;
@@ -16,15 +15,15 @@ export default function LiveActivityFeed() {
     const [items, setItems] = useState<FeedItem[]>([]);
 
     const activities = [
-        { type: 'SCRAPE', text: 'AI Scraper Node 48 detected new Clinic in FL-09', color: 'text-blue-400' },
-        { type: 'ENRICH', text: 'Bypassing gatekeeper at HCA Florida...', color: 'text-yellow-400' },
-        { type: 'PERSONAL', text: 'GPT-4o generating pitch for Dr. Miller (Surgery)', color: 'text-purple-400' },
-        { type: 'SEND', text: 'Dispatching payload to Instantly.ai node...', color: 'text-indigo-400' },
-        { type: 'SUCCESS', text: 'Lead Ingested: Cleveland Clinic Florida (Guardian)', color: 'text-emerald-400' },
-        { type: 'SCRAPE', text: 'Scanning Florida Medical Registry for v4.1 leads', color: 'text-blue-400' },
-        { type: 'ENRICH', text: 'Clay.com API enrichment: Found CFO personal email', color: 'text-yellow-400' },
-        { type: 'PERSONAL', text: 'Analyzing A/R leak pattern for Orlando Health', color: 'text-purple-400' },
-        { type: 'SEND', text: 'Sending 50-batch payload to SMTP Cluster 3', color: 'text-indigo-400' },
+        { type: 'SCAN', text: 'New claim batch uploaded for analysis', color: '#3b82f6' },
+        { type: 'REVIEW', text: 'Appeal draft generated for denied claim', color: '#eab308' },
+        { type: 'AI', text: 'CMS guideline match found for CPT 99213', color: '#a855f7' },
+        { type: 'SEND', text: 'Appeal submitted to UnitedHealthcare', color: '#6366f1' },
+        { type: 'SUCCESS', text: 'Claim recovery approved — $12,450.00', color: '#10b981' },
+        { type: 'SCAN', text: 'EOB document parsed successfully', color: '#3b82f6' },
+        { type: 'REVIEW', text: 'Modifier pathway identified for billing correction', color: '#eab308' },
+        { type: 'AI', text: 'Payer rule analysis complete for Aetna', color: '#a855f7' },
+        { type: 'SEND', text: 'Follow-up appeal queued for BCBS TX', color: '#6366f1' },
     ];
 
     useEffect(() => {
@@ -33,7 +32,6 @@ export default function LiveActivityFeed() {
             const newItem: FeedItem = {
                 id: Math.random().toString(36),
                 ...randomActivity,
-                type: randomActivity.type as any,
                 timestamp: new Date()
             };
 
@@ -45,62 +43,69 @@ export default function LiveActivityFeed() {
 
     const getIcon = (type: string) => {
         switch (type) {
-            case 'SCRAPE': return <Search className="w-3 h-3" />;
-            case 'ENRICH': return <Shield className="w-3 h-3" />;
-            case 'PERSONAL': return <Zap className="w-3 h-3" />;
-            case 'SEND': return <Mail className="w-3 h-3" />;
-            case 'SUCCESS': return <Activity className="w-3 h-3" />;
-            default: return <Terminal className="w-3 h-3" />;
+            case 'SCAN': return <Search size={10} />;
+            case 'REVIEW': return <FileText size={10} />;
+            case 'AI': return <Activity size={10} />;
+            case 'SEND': return <Mail size={10} />;
+            case 'SUCCESS': return <CheckCircle2 size={10} />;
+            default: return <Activity size={10} />;
         }
     };
 
     return (
-        <div className="glass rounded-2xl overflow-hidden flex flex-col h-[400px]" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
-            <div className="p-4 border-b border-white/5 flex items-center justify-between bg-white/5">
-                <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-indigo-400" />
-                    <span className="text-xs font-black uppercase tracking-widest text-white">Neural Activity Feed</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                    <span className="text-[10px] font-bold text-emerald-500 uppercase">Live Ops</span>
+        <div style={{
+            background: "var(--bg-card)",
+            border: "1px solid var(--border-subtle)",
+            borderRadius: "var(--radius-xl)",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            height: "320px",
+        }}>
+            <div style={{
+                padding: "0.75rem 1rem",
+                borderBottom: "1px solid var(--border-subtle)",
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                background: "rgba(255,255,255,0.02)",
+            }}>
+                <span style={{ fontSize: "0.75rem", fontWeight: "600" }}>Activity Feed</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+                    <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#10b981" }} />
+                    <span style={{ fontSize: "0.6rem", fontWeight: "600", color: "#10b981" }}>LIVE</span>
                 </div>
             </div>
 
-            <div className="p-4 flex-1 overflow-y-auto space-y-3 font-mono text-[11px]">
-                <AnimatePresence initial={false}>
-                    {items.map((item) => (
-                        <motion.div
-                            key={item.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 20 }}
-                            className="flex items-start gap-3 border-l-2 border-white/5 pl-3 py-1 hover:border-indigo-500/30 transition-colors"
-                        >
-                            <span className="text-slate-600 shrink-0">
-                                {item.timestamp.toLocaleTimeString([], { hour12: false })}
-                            </span>
-                            <div className={`shrink-0 mt-0.5 ${item.color}`}>
-                                {getIcon(item.type)}
-                            </div>
-                            <span className="text-slate-400 leading-relaxed">
-                                {item.text}
-                            </span>
-                        </motion.div>
-                    ))}
-                    {items.length === 0 && (
-                        <div className="h-full flex items-center justify-center text-slate-600 italic">
-                            Awaiting neural synchronization...
-                        </div>
-                    )}
-                </AnimatePresence>
-            </div>
-
-            <div className="p-3 bg-indigo-500/5 border-t border-white/5">
-                <div className="flex items-center justify-between">
-                    <span className="text-[9px] text-indigo-300 font-bold uppercase tracking-tighter">Throughput: 1.2k events / min</span>
-                    <span className="text-[9px] text-slate-500">v4.1.0-stable</span>
-                </div>
+            <div style={{
+                flex: 1, overflowY: "auto", padding: "0.625rem 0.75rem",
+                display: "flex", flexDirection: "column", gap: "0.375rem",
+                fontFamily: "monospace", fontSize: "0.65rem",
+            }}>
+                {items.map((item) => (
+                    <div key={item.id} style={{
+                        display: "flex", alignItems: "flex-start", gap: "0.5rem",
+                        borderLeft: "2px solid var(--border-subtle)",
+                        paddingLeft: "0.5rem", paddingTop: "0.125rem", paddingBottom: "0.125rem",
+                        lineHeight: 1.4,
+                    }}>
+                        <span style={{ color: "var(--text-muted)", flexShrink: 0 }}>
+                            {item.timestamp.toLocaleTimeString([], { hour12: false })}
+                        </span>
+                        <span style={{ color: item.color, flexShrink: 0, marginTop: "1px" }}>
+                            {getIcon(item.type)}
+                        </span>
+                        <span style={{ color: "var(--text-secondary)" }}>
+                            {item.text}
+                        </span>
+                    </div>
+                ))}
+                {items.length === 0 && (
+                    <div style={{
+                        height: "100%", display: "flex", alignItems: "center", justifyContent: "center",
+                        color: "var(--text-muted)", fontStyle: "italic",
+                    }}>
+                        Waiting for activity...
+                    </div>
+                )}
             </div>
         </div>
     );

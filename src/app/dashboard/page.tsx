@@ -24,75 +24,218 @@ export default async function DashboardOverview() {
         prisma.claim.findMany({
             where: { batch: { userId: session.user.id } },
             orderBy: { createdAt: 'desc' },
-            take: 4
+            take: 6
         })
     ]);
 
     const totalRecovered = recoveredInvoices._sum.amountEarned || 0;
-    const successRate = totalClaims > 0 ? ((totalClaims - pendingClaims) / totalClaims * 100).toFixed(1) : "94.2";
+    const successRate = totalClaims > 0 ? ((totalClaims - pendingClaims) / totalClaims * 100).toFixed(1) : "0.0";
+
+    const kpis = [
+        {
+            label: "Total Recovered",
+            value: `$${(totalRecovered / 1000000).toFixed(1)}M`,
+            sub: "Revenue collected",
+            color: "#10b981",
+            borderColor: "rgba(16, 185, 129, 0.2)",
+            bgColor: "rgba(16, 185, 129, 0.06)",
+        },
+        {
+            label: "Active Claims",
+            value: totalClaims.toLocaleString(),
+            sub: "In pipeline",
+            color: "#3b82f6",
+            borderColor: "rgba(59, 130, 246, 0.2)",
+            bgColor: "rgba(59, 130, 246, 0.06)",
+        },
+        {
+            label: "Success Rate",
+            value: `${successRate}%`,
+            sub: "Recovery rate",
+            color: "#a855f7",
+            borderColor: "rgba(168, 85, 247, 0.2)",
+            bgColor: "rgba(168, 85, 247, 0.06)",
+        },
+        {
+            label: "Pending Review",
+            value: pendingClaims.toString(),
+            sub: "Needs attention",
+            color: "#f59e0b",
+            borderColor: "rgba(245, 158, 11, 0.2)",
+            bgColor: "rgba(245, 158, 11, 0.06)",
+        },
+    ];
+
+    const statusColors: Record<string, { bg: string; text: string }> = {
+        PENDING_ANALYSIS: { bg: "rgba(245, 158, 11, 0.1)", text: "#f59e0b" },
+        RECOVERABLE: { bg: "rgba(16, 185, 129, 0.1)", text: "#10b981" },
+        DENIED: { bg: "rgba(239, 68, 68, 0.1)", text: "#ef4444" },
+        APPEALED: { bg: "rgba(59, 130, 246, 0.1)", text: "#3b82f6" },
+        SETTLED: { bg: "rgba(168, 85, 247, 0.1)", text: "#a855f7" },
+    };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-950 text-white p-8">
-            <div className="max-w-7xl mx-auto">
-                {/* HEADER */}
-                <div className="flex justify-between items-end mb-8">
-                    <div>
-                        <h1 className="text-4xl font-black mb-2">Operations Center</h1>
-                        <p className="text-gray-400">Welcome back, {session.user.name}</p>
-                    </div>
-                    <div className="flex gap-4">
-                        <Button href="/dashboard/war-room">📊 War Room</Button>
-                        <Button href="/dashboard/upload" variant="outline">⬆️ Upload</Button>
-                    </div>
+        <div style={{ maxWidth: "1200px" }}>
+            {/* Header */}
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                marginBottom: "1.5rem",
+                flexWrap: "wrap",
+                gap: "1rem",
+            }}>
+                <div>
+                    <h1 style={{
+                        fontSize: "1.5rem",
+                        fontWeight: "700",
+                        marginBottom: "0.25rem",
+                        letterSpacing: "-0.02em",
+                    }}>
+                        Operations Center
+                    </h1>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
+                        Welcome back, {session.user.name}
+                    </p>
                 </div>
-
-                {/* KPI CARDS */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <div className="rounded-2xl border border-green-500/30 bg-gradient-to-br from-green-600/10 to-black/50 p-6">
-                        <div className="text-xs font-bold text-green-500 uppercase mb-2">Total Recovered</div>
-                        <div className="text-3xl font-black mb-1">${(totalRecovered / 1000000).toFixed(1)}M</div>
-                        <div className="text-sm text-gray-400">Real revenue</div>
-                    </div>
-
-                    <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-600/10 to-black/50 p-6">
-                        <div className="text-xs font-bold text-blue-500 uppercase mb-2">Active Claims</div>
-                        <div className="text-3xl font-black mb-1">{totalClaims.toLocaleString()}</div>
-                        <div className="text-sm text-gray-400">Processing now</div>
-                    </div>
-
-                    <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-600/10 to-black/50 p-6">
-                        <div className="text-xs font-bold text-purple-500 uppercase mb-2">Success Rate</div>
-                        <div className="text-3xl font-black mb-1">{successRate}%</div>
-                        <div className="text-sm text-gray-400">Proven track record</div>
-                    </div>
-
-                    <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-600/10 to-black/50 p-6">
-                        <div className="text-xs font-bold text-orange-500 uppercase mb-2">Pending Review</div>
-                        <div className="text-3xl font-black mb-1">{pendingClaims}</div>
-                        <div className="text-sm text-gray-400">Next action</div>
-                    </div>
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <Button href="/dashboard/war-room" size="sm">War Room</Button>
+                    <Button href="/dashboard/upload" variant="outline" size="sm">Upload</Button>
                 </div>
+            </div>
 
-                {/* STRIPE WALLET */}
-                <div className="rounded-2xl border border-green-500/30 bg-gradient-to-br from-green-600/10 to-black/50 p-6 mb-8">
-                    <h3 className="text-xl font-bold mb-4">💳 Live Stripe Wallet</h3>
-                    <LiveBalance />
+            {/* KPI Cards */}
+            <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: "1rem",
+                marginBottom: "1.5rem",
+            }}>
+                {kpis.map((kpi) => (
+                    <div key={kpi.label} style={{
+                        background: kpi.bgColor,
+                        border: `1px solid ${kpi.borderColor}`,
+                        borderRadius: "var(--radius-xl)",
+                        padding: "1.25rem",
+                    }}>
+                        <div style={{
+                            fontSize: "0.65rem",
+                            fontWeight: "700",
+                            color: kpi.color,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.06em",
+                            marginBottom: "0.5rem",
+                        }}>
+                            {kpi.label}
+                        </div>
+                        <div style={{
+                            fontSize: "1.75rem",
+                            fontWeight: "800",
+                            lineHeight: 1.1,
+                            marginBottom: "0.25rem",
+                            letterSpacing: "-0.02em",
+                        }}>
+                            {kpi.value}
+                        </div>
+                        <div style={{
+                            fontSize: "0.75rem",
+                            color: "var(--text-muted)",
+                        }}>
+                            {kpi.sub}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Stripe Wallet */}
+            <div style={{
+                background: "rgba(16, 185, 129, 0.05)",
+                border: "1px solid rgba(16, 185, 129, 0.15)",
+                borderRadius: "var(--radius-xl)",
+                padding: "1.25rem",
+                marginBottom: "1.5rem",
+            }}>
+                <div style={{
+                    fontSize: "0.8rem",
+                    fontWeight: "600",
+                    marginBottom: "0.5rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                }}>
+                    💳 Stripe Wallet Balance
                 </div>
+                <LiveBalance />
+            </div>
 
-                {/* RECENT ACTIVITY */}
-                <div className="rounded-2xl border border-gray-500/30 bg-gradient-to-br from-gray-600/10 to-black/50 p-6">
-                    <h3 className="text-xl font-bold mb-4">📊 Recent Claims</h3>
-                    <div className="space-y-2">
-                        {recentActivity.slice(0, 4).map((claim, i) => (
-                            <div key={i} className="flex justify-between items-center p-3 bg-gray-800/20 rounded-lg border border-gray-600/20">
+            {/* Recent Claims */}
+            <div style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--border-subtle)",
+                borderRadius: "var(--radius-xl)",
+                overflow: "hidden",
+            }}>
+                <div style={{
+                    padding: "1rem 1.25rem",
+                    borderBottom: "1px solid var(--border-subtle)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}>
+                    <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>Recent Claims</span>
+                    <Button href="/dashboard/review" variant="outline" size="sm">View All</Button>
+                </div>
+                <div>
+                    {recentActivity.length === 0 ? (
+                        <div style={{
+                            padding: "2.5rem",
+                            textAlign: "center",
+                            color: "var(--text-muted)",
+                            fontSize: "0.85rem",
+                        }}>
+                            No claims yet. Upload ERA/EOB files to get started.
+                        </div>
+                    ) : (
+                        recentActivity.map((claim, i) => (
+                            <div key={i} style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                padding: "0.875rem 1.25rem",
+                                borderBottom: i < recentActivity.length - 1 ? "1px solid var(--border-subtle)" : "none",
+                                transition: "background 0.15s",
+                            }}>
                                 <div>
-                                    <div className="font-semibold">{claim.patientId}</div>
-                                    <div className="text-sm text-gray-400">{claim.status}</div>
+                                    <div style={{
+                                        fontWeight: "600",
+                                        fontSize: "0.85rem",
+                                        marginBottom: "0.125rem",
+                                    }}>
+                                        {claim.patientId}
+                                    </div>
+                                    <div style={{
+                                        display: "inline-block",
+                                        fontSize: "0.65rem",
+                                        fontWeight: "600",
+                                        padding: "0.125rem 0.5rem",
+                                        borderRadius: "var(--radius-full)",
+                                        background: (statusColors[claim.status] || statusColors.PENDING_ANALYSIS).bg,
+                                        color: (statusColors[claim.status] || statusColors.PENDING_ANALYSIS).text,
+                                        textTransform: "uppercase",
+                                        letterSpacing: "0.04em",
+                                    }}>
+                                        {claim.status.replace(/_/g, " ")}
+                                    </div>
                                 </div>
-                                <div className="font-bold">${claim.billedAmount.toLocaleString()}</div>
+                                <div style={{
+                                    fontWeight: "700",
+                                    fontSize: "0.95rem",
+                                }}>
+                                    ${claim.billedAmount.toLocaleString()}
+                                </div>
                             </div>
-                        ))}
-                    </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>

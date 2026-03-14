@@ -3,6 +3,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://northstarclaim.com"),
@@ -168,12 +169,14 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Navigation />
-        <main style={{ minHeight: "100vh" }}>
-          {children}
-        </main>
-        <Footer />
-        <Chatbot />
+        <ErrorBoundary>
+          <Navigation />
+          <main style={{ minHeight: "100vh" }}>
+            {children}
+          </main>
+          <Footer />
+          <Chatbot />
+        </ErrorBoundary>
       </body>
     </html>
   );
