@@ -14,9 +14,11 @@ export default function DashboardSidebar() {
 
     const mainLinks = [
         { name: "Overview", href: "/dashboard", icon: "📊" },
-        { name: "Upload Claims", href: "/dashboard/upload", icon: "📤" },
-        { name: "Review", href: "/dashboard/review", icon: "✅" },
-        { name: "Settlements", href: "/dashboard/settlements", icon: "⚔️" },
+        ...(isAdmin ? [
+            { name: "Upload Claims", href: "/dashboard/upload", icon: "📤" },
+            { name: "Review", href: "/dashboard/review", icon: "✅" },
+            { name: "Settlements", href: "/dashboard/settlements", icon: "⚔️" },
+        ] : []),
     ];
 
     const businessLinks = [

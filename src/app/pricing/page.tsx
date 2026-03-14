@@ -79,7 +79,7 @@ export default function PricingPage() {
               <li>✓ Dedicated Account Manager</li>
               <li>✓ White-Label Option Available</li>
               <li>✓ SLA Guarantees (99.9% Uptime)</li>
-              <li>✓ SOC 2 Type II Compliance</li>
+              <li>✓ HIPAA Compliant + BAA</li>
               <li>✓ Custom API Access</li>
             </ul>
             <a href="mailto:sales@northstarmedic.com" style={{ display: "block", padding: "0.85rem", border: "1px solid #a855f7", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#a855f7", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }}>Contact Sales</a>
@@ -89,28 +89,27 @@ export default function PricingPage() {
 
       {/* Real Unit Economics */}
       <section style={{ background: "rgba(56,189,248,0.03)", padding: "5rem 1.5rem", borderTop: "1px solid var(--border-subtle)" }}>
-        <h2 style={{ textAlign: "center", marginBottom: "1rem", fontSize: "2rem", fontWeight: "800" }}>What Recovery Looks Like</h2>
-        <p style={{ textAlign: "center", color: "var(--text-secondary)", marginBottom: "3.5rem", maxWidth: "600px", margin: "0 auto 3.5rem" }}>Real unit economics from our AI recovery engine.</p>
+        <h2 style={{ textAlign: "center", marginBottom: "1rem", fontSize: "2rem", fontWeight: "800" }}>What Recovery Could Look Like</h2>
+        <p style={{ textAlign: "center", color: "var(--text-secondary)", marginBottom: "3.5rem", maxWidth: "600px", margin: "0 auto 3.5rem" }}>Projected unit economics based on industry denial recovery benchmarks.*</p>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
           <div style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2rem", textAlign: "center" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "var(--text-muted)", marginBottom: "0.75rem" }}>Small Clinic (3 Providers)</p>
+            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "var(--text-muted)", marginBottom: "0.75rem" }}>Small Clinic (3 Providers) — Projected</p>
             <div style={{ fontSize: "2.5rem", fontWeight: "800", color: "var(--brand-primary)", marginBottom: "0.5rem" }}>$40,800<span style={{ fontSize: "1rem", color: "var(--text-muted)" }}>/mo</span></div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>40 claims × $8,500 avg × 40% recovery × 30%</p>
           </div>
           <div style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2rem", textAlign: "center" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "var(--text-muted)", marginBottom: "0.75rem" }}>Regional Hospital (200 beds)</p>
+            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "var(--text-muted)", marginBottom: "0.75rem" }}>Regional Hospital (200 beds) — Projected</p>
             <div style={{ fontSize: "2.5rem", fontWeight: "800", color: "var(--brand-primary)", marginBottom: "0.5rem" }}>$7.35M<span style={{ fontSize: "1rem", color: "var(--text-muted)" }}>/mo</span></div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>2,000 claims × $35,000 avg × 35% recovery × 30%</p>
           </div>
           <div style={{ background: "var(--bg-card)", border: "1px solid rgba(168,85,247,0.2)", borderRadius: "var(--radius-xl)", padding: "2rem", textAlign: "center" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "#a855f7", marginBottom: "0.75rem" }}>Health System (5,000+ beds)</p>
+            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "#a855f7", marginBottom: "0.75rem" }}>Health System (5,000+ beds) — Projected</p>
             <div style={{ fontSize: "2.5rem", fontWeight: "800", color: "#a855f7", marginBottom: "0.5rem" }}>$46.2M<span style={{ fontSize: "1rem", color: "var(--text-muted)" }}>/mo</span></div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>8,000 claims × $55,000 avg × 35% recovery × 30%</p>
           </div>
         </div>
+        <p style={{ textAlign: "center", fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "2rem", fontStyle: "italic" }}>* These figures are hypothetical projections based on industry averages. Actual recovery amounts depend on claim volume, denial types, and payer mix. Past performance does not guarantee future results.</p>
       </section>
-
-      {/* 50/50 Biller Partner Program */}
       <section style={{ maxWidth: "1000px", margin: "0 auto", padding: "5rem 1.5rem" }}>
         <div style={{ border: "1px solid rgba(56,189,248,0.2)", borderRadius: "var(--radius-2xl)", padding: "3rem 2.5rem", background: "rgba(56,189,248,0.02)", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: "-50%", right: "-20%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -121,8 +120,8 @@ export default function PricingPage() {
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-subtle)" }}>
-              <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>$510K/mo</h4>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>Average biller earnings with 25 active providers.</p>
+              <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>Est. $510K/mo</h4>
+              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>Projected biller earnings with 25 active providers.*</p>
             </div>
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-subtle)" }}>
               <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>Zero Cost</h4>
@@ -144,7 +143,7 @@ export default function PricingPage() {
           {[
             { q: "When do I pay?", a: "You only pay when we successfully recover your denied claims. The pilot fee covers our AI analysis costs. Commission is charged only on money we put back in your pocket." },
             { q: "What's the difference between Guardian Pilot and Growth Lattice?", a: "Guardian Pilot is a $2,500 one-time entry point with 30% commission — ideal for proving value. Growth Lattice is $7,500 setup with a reduced 20% commission — better economics at scale." },
-            { q: "Is this HIPAA compliant?", a: "Yes. Full HIPAA compliance with signed BAA before any PHI is processed. AES-256 encryption throughout. SOC 2 Type II infrastructure." },
+            { q: "Is this HIPAA compliant?", a: "Yes. Full HIPAA compliance with signed BAA before any PHI is processed. All data is encrypted in transit via TLS. We follow healthcare industry security best practices." },
             { q: "How fast do you process claims?", a: "Our AI processes claims within 48 hours of submission. Appeals are generated and submitted to payers automatically." },
             { q: "Can I cancel anytime?", a: "Yes. No long-term contracts. Cancel anytime. You only owe commission on claims already recovered." },
             { q: "How does the Biller Partner Program work?", a: "You connect your existing provider clients to our platform. When we recover their denied claims, the 30% fee is split 50/50 between you and us. You earn 15% on every recovery — automatically via Stripe." },

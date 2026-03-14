@@ -8,23 +8,25 @@ interface LiveRevenueTickerProps {
     label?: string;
 }
 
-// Network-wide base: $14.7M recovered as of launch, grows ~$47/sec (~$4M/day across network)
-const BASE_REVENUE = 14_738_291.00;
-const BASE_TIMESTAMP = new Date("2026-03-01T00:00:00Z").getTime();
-const GROWTH_PER_MS = 47 / 1000; // $47 per second
+// Demonstration ticker showing projected recovery potential based on industry averages
+// $262B lost annually / ~8,300 providers = ~$31.6M avg denied per provider
+// At 35% recovery rate = ~$11M recoverable per mid-size provider
+const DEMO_BASE = 2_450_000.00;
+const DEMO_TIMESTAMP = new Date("2026-06-01T00:00:00Z").getTime();
+const DEMO_GROWTH_PER_MS = 12 / 1000; // $12 per second for demo effect
 
-function getNetworkRevenue(): number {
-    const elapsed = Date.now() - BASE_TIMESTAMP;
-    return BASE_REVENUE + elapsed * GROWTH_PER_MS;
+function getDemoValue(): number {
+    const elapsed = Math.max(0, Date.now() - DEMO_TIMESTAMP);
+    return DEMO_BASE + elapsed * DEMO_GROWTH_PER_MS;
 }
 
 export default function LiveRevenueTicker({ style, label }: LiveRevenueTickerProps) {
-    const [displayValue, setDisplayValue] = useState<number>(getNetworkRevenue());
+    const [displayValue, setDisplayValue] = useState<number>(getDemoValue());
     const animRef = useRef<number | null>(null);
 
     useEffect(() => {
         const tick = () => {
-            setDisplayValue(getNetworkRevenue());
+            setDisplayValue(getDemoValue());
             animRef.current = requestAnimationFrame(tick);
         };
         animRef.current = requestAnimationFrame(tick);
@@ -37,11 +39,6 @@ export default function LiveRevenueTicker({ style, label }: LiveRevenueTickerPro
         return val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
 
-    // Derived breakdown from total
-    const recovered = displayValue * 0.62;
-    const inPipeline = displayValue * 0.28;
-    const activeAppeals = displayValue * 0.10;
-
     return (
         <div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.375rem" }}>
@@ -53,7 +50,7 @@ export default function LiveRevenueTicker({ style, label }: LiveRevenueTickerPro
                     boxShadow: "0 0 8px rgba(16,185,129,0.4)",
                 }} />
                 <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                    {label || "Network-Wide Revenue Recovered"} — Live
+                    {label || "Projected Recovery Potential"} — Illustration
                 </div>
             </div>
             <div style={{
@@ -70,29 +67,32 @@ export default function LiveRevenueTicker({ style, label }: LiveRevenueTickerPro
             <div style={{ display: "flex", gap: "1.25rem", marginTop: "0.625rem", flexWrap: "wrap" }}>
                 <div>
                     <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "#10b981", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                        Recovered &amp; Paid
+                        Recoverable Revenue
                     </div>
                     <div style={{ fontSize: "0.9rem", fontWeight: "700", color: "rgba(255,255,255,0.8)", fontVariantNumeric: "tabular-nums" }}>
-                        ${formatCurrency(recovered)}
+                        ${formatCurrency(displayValue * 0.62)}
                     </div>
                 </div>
                 <div>
                     <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "#3b82f6", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                        In Pipeline
+                        In Analysis
                     </div>
                     <div style={{ fontSize: "0.9rem", fontWeight: "700", color: "rgba(255,255,255,0.8)", fontVariantNumeric: "tabular-nums" }}>
-                        ${formatCurrency(inPipeline)}
+                        ${formatCurrency(displayValue * 0.28)}
                     </div>
                 </div>
                 <div>
                     <div style={{ fontSize: "0.55rem", fontWeight: "700", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                        Active Appeals
+                        Pending Appeals
                     </div>
                     <div style={{ fontSize: "0.9rem", fontWeight: "700", color: "rgba(255,255,255,0.8)", fontVariantNumeric: "tabular-nums" }}>
-                        ${formatCurrency(activeAppeals)}
+                        ${formatCurrency(displayValue * 0.10)}
                     </div>
                 </div>
             </div>
+            <p style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.35)", marginTop: "0.5rem", fontStyle: "italic" }}>
+                * For illustration purposes only. Based on industry denial recovery benchmarks. Individual results vary.
+            </p>
         </div>
     );
 }

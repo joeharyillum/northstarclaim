@@ -85,7 +85,7 @@ export default function Home() {
             <p style={{
               fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "var(--text-secondary)", marginBottom: "3rem", maxWidth: "700px", margin: "0 auto 3rem", lineHeight: "1.7"
             }}>
-              US healthcare providers lose $262 billion annually to preventable denials. Our autonomous AI engine has recovered <strong style={{ color: "var(--brand-primary)" }}>$14.7M+</strong> in denied claims across 340+ clinics. Start with a $2,500 pilot — pay 30% only on recovered revenue.
+              US healthcare providers lose $262 billion annually to preventable denials. Our autonomous AI engine analyzes denied claims, drafts legally-sound appeals, and submits them to payers — all within 48 hours. Start with a $2,500 pilot — pay 30% only on recovered revenue.
             </p>
             
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
@@ -109,7 +109,7 @@ export default function Home() {
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", opacity: 0.7 }}>
                 <span style={{ fontSize: "1.2rem" }}>🛡️</span>
-                <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: "600" }}>SOC 2 Type II</span>
+                <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: "600" }}>BAA Protected</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", opacity: 0.7 }}>
                 <span style={{ fontSize: "1.2rem" }}>⚡</span>
@@ -156,16 +156,16 @@ export default function Home() {
                         <div style={{ fontSize: "0.8rem", fontWeight: "700", color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "1rem" }}>
                           Live Recovery Grid
                         </div>
-                        <LiveRevenueTicker label="Total System Revenue Recovered" />
+                        <LiveRevenueTicker label="Projected Recovery Potential" />
                     </div>
-                    <p className="text-sm text-slate-400 mt-4">This ticker represents the total value recovered by our AI agents across the entire network, updated in real-time.</p>
+                    <p className="text-sm text-slate-400 mt-4">This ticker illustrates projected recovery potential based on industry denial benchmarks. Individual results vary.</p>
                 </div>
 
                 {/* Side Card: Success Rate */}
                 <div className="glass-panel p-8 flex flex-col justify-center items-center text-center">
-                    <div className="text-6xl font-bold text-cyan-400" style={{ fontSize: '4rem', color: 'var(--brand-accent)'}}>38.7%</div>
-                    <div className="text-sm font-bold uppercase text-slate-300 mt-2">Avg. Recovery Rate</div>
-                    <p className="text-xs text-slate-500 mt-2">Across 12,847 claims processed — verified by independent audit.</p>
+                    <div className="text-6xl font-bold text-cyan-400" style={{ fontSize: '4rem', color: 'var(--brand-accent)'}}>35–40%</div>
+                    <div className="text-sm font-bold uppercase text-slate-300 mt-2">Target Recovery Rate</div>
+                    <p className="text-xs text-slate-500 mt-2">Industry benchmark for AI-assisted claim recovery processes.</p>
                 </div>
 
                 {/* Bottom Card 1: Automation */}
@@ -176,8 +176,8 @@ export default function Home() {
 
                 {/* Bottom Card 2: Security */}
                 <div className="glass-panel p-8">
-                    <h3 className="text-xl font-bold mb-2">Military-Grade Security</h3>
-                    <p className="text-sm text-slate-400">Fully HIPAA compliant with end-to-end encryption and signed BAAs for every partner.</p>
+                    <h3 className="text-xl font-bold mb-2">Enterprise Security</h3>
+                    <p className="text-sm text-slate-400">HIPAA compliant with TLS encryption in transit and signed BAAs for every partner.</p>
                 </div>
 
                 {/* Bottom Card 3: Pricing */}

@@ -23,6 +23,9 @@ export default auth((req) => {
     const isAdminRoute = [
         '/dashboard/war-room',
         '/dashboard/leads',
+        '/dashboard/upload',
+        '/dashboard/review',
+        '/dashboard/settlements',
     ].some(p => nextUrl.pathname.startsWith(p));
 
     // Admin-only API routes
@@ -35,6 +38,7 @@ export default auth((req) => {
     // Public pages — no auth required
     const isPublicRoute = [
         '/', '/signup', '/login', '/features', '/pricing', '/free-scan', '/about', '/baa',
+        '/privacy', '/terms',
         '/robots.txt', '/sitemap.xml',
     ].includes(nextUrl.pathname);
 

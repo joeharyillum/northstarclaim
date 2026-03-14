@@ -207,6 +207,27 @@ model Invoice {
   @@index([status])
 }
 // ----------------------------------------------------------------------------
+// 5.5 PAYMENT: Tracks Stripe checkout purchases & subscription events
+// ----------------------------------------------------------------------------
+model Payment {
+  id                String   @id @default(uuid())
+  stripeSessionId   String?  @unique
+  stripeCustomerId  String?
+  stripeSubscriptionId String?
+  customerEmail     String
+  customerName      String?
+  tier              String   // guardian-pilot, growth-lattice
+  amount            Int      // Amount in cents
+  currency          String   @default("usd")
+  status            String   @default("completed") // completed, refunded, failed
+  createdAt         DateTime @default(now())
+
+  @@index([customerEmail])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ----------------------------------------------------------------------------
 // 6. AUDIT LOG: HIPAA compliance tracking for data access events
 // ----------------------------------------------------------------------------
 model AuditLog {
