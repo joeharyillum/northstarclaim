@@ -1,5 +1,8 @@
+'use server';
+
 import { prisma } from '@/lib/prisma';
-import { put } from '@vercel/blob';
+import { writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 import { auth } from '@/auth';
 
 export async function processClaimUpload(formData: FormData) {
@@ -26,12 +29,14 @@ export async function processClaimUpload(formData: FormData) {
             }
         });
 
-        // 2. Vault the first file to Vercel Blob (MVP handles first file for detailed analysis)
+        // 2. Store file locally
         const file = files[0];
-        const blob = await put(`vault/${batch.id}/${file.name}`, file, {
-            access: 'private',
-            addRandomSuffix: false
-        });
+        const uploadDir = path.join(process.cwd(), 'uploads', 'vault', batch.id);
+        await mkdir(uploadDir, { recursive: true });
+        const filePath = path.join(uploadDir, file.name);
+        const buffer = Buffer.from(await file.arrayBuffer());
+        await writeFile(filePath, buffer);
+        const fileUrl = `/uploads/vault/${batch.id}/${file.name}`;
 
         // AI Multi-Agent Simulation (Agent 1-14)
         // In a full implementation, this triggers a webhook to our /api/ingest pipeline
@@ -61,7 +66,7 @@ export async function processClaimUpload(formData: FormData) {
             success: true,
             batchId: batch.id,
             claimId: claim.id,
-            vaultUrl: blob.url,
+            vaultUrl: fileUrl,
             extractedClaim: {
                 patientId: claim.patientId,
                 dateOfService: "2023-11-14",

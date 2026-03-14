@@ -24,24 +24,23 @@ export async function GET() {
         }
 
         // 2. Fetch Database Aggregates
-        const totalClaimsCount = await prisma.claim.count();
-        const paidInvoices = await prisma.invoice.aggregate({
-            _sum: { amountEarned: true },
-            where: { status: 'PAID' }
-        });
-        const recoverableClaims = await prisma.claim.aggregate({
-            _sum: { billedAmount: true },
-            where: { status: 'RECOVERABLE' }
-        });
-
-        const paidRevenue = paidInvoices._sum.amountEarned || 0;
-        const pipelineRevenue = recoverableClaims._sum.billedAmount || 0;
+        let totalClaimsCount = 0;
+        let paidRevenue = 0;
+        let pipelineRevenue = 0;
+        try {
+            totalClaimsCount = await prisma.claim.count();
+            const paidInvoices = await prisma.invoice.aggregate({
+                _sum: { amountEarned: true },
+                where: { status: 'PAID' }
+            });
+            const recoverableClaims = await prisma.claim.aggregate({
+                _sum: { billedAmount: true },
+                where: { status: 'RECOVERABLE' }
+            });
+            paidRevenue = paidInvoices._sum.amountEarned || 0;
+            pipelineRevenue = recoverableClaims._sum.billedAmount || 0;
         } catch (dbError: any) {
             console.warn('DB Query slow or failed.', dbError.message);
-            // Return zeros instead of fake data
-            totalClaimsCount = 0;
-            paidRevenue = 0;
-            pipelineRevenue = 0;
         }
 
         const systemWideRevenue = stripeTotal + paidRevenue + pipelineRevenue;
