@@ -20,7 +20,7 @@ export default function TrustFooter() {
 
             {/* Copyright */}
             <div style={{ textAlign: "center", fontSize: "0.65rem", color: "var(--text-muted)" }}>
-                © {new Date().getFullYear()} NorthStar Claim. Medical claims recovery intelligence.
+                © {new Date().getFullYear()} NorthStar Medic. Medical claims recovery intelligence.
                 <br />
                 All activity is logged and auditable for compliance.
             </div>

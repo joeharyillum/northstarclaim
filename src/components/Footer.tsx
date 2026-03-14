@@ -43,7 +43,7 @@ export default function Footer() {
                             <img src="/logo.png" alt="N" style={{ width: "24px" }} />
                         </div>
                         <span style={{ fontSize: "1.5rem", fontWeight: "900", color: "white", letterSpacing: "-0.04em" }}>
-                            Northstar <span className="text-gradient">Guardian</span>
+                            NorthStar <span className="text-gradient">Medic</span>
                         </span>
                     </div>
                     <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: "1.7", marginBottom: "2.5rem", fontSize: "0.95rem", maxWidth: "400px" }}>
@@ -88,7 +88,7 @@ export default function Footer() {
                     <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem", fontSize: "0.9rem" }}>
                         <li><Link href="/signup" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Partner Login</Link></li>
                         <li><Link href="/pricing" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Agency Access</Link></li>
-                        <li><a href="mailto:support@northstarclaim.com" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Contact Support</a></li>
+                        <li><a href="mailto:support@northstarmedic.com" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Contact Support</a></li>
                     </ul>
                 </div>
             </div>
@@ -107,7 +107,7 @@ export default function Footer() {
                 zIndex: 1
             }}>
                 <div style={{ display: "flex", gap: "2rem" }}>
-                    <p>&copy; {new Date().getFullYear()} Northstar Claim Alliance. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Northstar Medic Alliance. All rights reserved.</p>
                 </div>
                 <div style={{ display: "flex", gap: "3rem", fontWeight: "700" }}>
                     <p style={{ color: "var(--brand-accent)" }}>// GRID SECURED</p>

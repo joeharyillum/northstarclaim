@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/dashboard/"],
       },
     ],
-    sitemap: "https://northstarclaim.com/sitemap.xml",
+    sitemap: "https://northstarmedic.com/sitemap.xml",
   };
 }

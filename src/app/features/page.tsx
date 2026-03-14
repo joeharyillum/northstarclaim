@@ -3,7 +3,7 @@ import FeatureCard from "@/components/FeatureCard";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "How It Works | NorthStar Claim",
+    title: "How It Works | NorthStar Medic",
 };
 
 export default function FeaturesPage() {

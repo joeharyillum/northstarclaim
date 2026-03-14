@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import LiveRevenueTicker from "@/components/LiveRevenueTicker";
 
 export const metadata: Metadata = {
-  title: "NorthStar Claim | AI Medical Claim Recovery — $2,500 Pilot",
+  title: "NorthStar Medic | AI Medical Claim Recovery — $2,500 Pilot",
   description:
-    "Stop losing money to denied insurance claims. NorthStar Claim's AI recovers denied medical claims with a 35–40% success rate. Start with a $2,500 pilot — pay 30% commission only on recovered revenue.",
+    "Stop losing money to denied insurance claims. NorthStar Medic's AI recovers denied medical claims with a 35–40% success rate. Start with a $2,500 pilot — pay 30% commission only on recovered revenue.",
   alternates: {
     canonical: "https://northstarmedic.com",
   },
@@ -33,7 +33,7 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center top",
           zIndex: 0,
-          filter: "brightness(0.35) contrast(1.1) saturate(0.9)",
+          filter: "brightness(0.55) contrast(1.1) saturate(0.9)",
           transform: "scale(1.05)"
         }} />
 
@@ -110,7 +110,7 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           zIndex: 0,
-          filter: "brightness(0.15) contrast(1.1) saturate(0.7)",
+          filter: "brightness(0.4) contrast(1.1) saturate(0.8)",
         }} />
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
@@ -119,7 +119,7 @@ export default function Home() {
         }} />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
             <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 4rem" }}>
-              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1.5rem", lineHeight: "1.2" }}>The <span className="text-gradient">NorthStar</span> Advantage</h2>
+              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1.5rem", lineHeight: "1.2" }}>The <span className="text-gradient">NorthStar Medic</span> Advantage</h2>
               <p style={{ color: "var(--text-secondary)", fontSize: "1.125rem" }}>
                 Our platform is more than a tool—it's a fully autonomous revenue recovery engine designed for modern healthcare.
               </p>
@@ -178,7 +178,7 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           zIndex: 0,
-          filter: "brightness(0.12) contrast(1.2) saturate(0.6)",
+          filter: "brightness(0.4) contrast(1.1) saturate(0.8)",
         }} />
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
@@ -211,21 +211,76 @@ export default function Home() {
             </div>
 
             <div className="glass-panel" style={{
-              padding: "0.5rem",
-              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)",
+              padding: "2rem",
+              boxShadow: "0 4px 30px rgba(0, 0, 0, 0.5)",
               border: "1px solid var(--border-active)",
               overflow: "hidden",
               position: "relative"
             }}>
-              <div style={{ position: "relative", overflow: "hidden", borderRadius: "var(--radius-lg)", paddingBottom: "56.25%", height: 0 }}>
-                {/* High-speed Vimeo / Iframe Embed Placeholder */}
-                <iframe
-                  src="https://player.vimeo.com/video/824804225?autoplay=0&loop=1&muted=1&background=1"
-                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
-                  allow="fullscreen; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
-                ></iframe>
+              {/* AHA MOMENT: Before → After Visual */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                {/* Before: Denied Claim */}
+                <div style={{
+                  background: "rgba(239, 68, 68, 0.08)",
+                  border: "1px solid rgba(239, 68, 68, 0.3)",
+                  borderRadius: "var(--radius-md)",
+                  padding: "1.25rem",
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "1px", color: "#ef4444" }}>❌ Denied Claim</span>
+                    <span style={{ fontSize: "0.7rem", color: "var(--text-secondary)", background: "rgba(239,68,68,0.15)", padding: "0.2rem 0.6rem", borderRadius: "var(--radius-full)" }}>CO-16 / PR-1</span>
+                  </div>
+                  <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                      <span>Patient: J. Martinez</span><span>CPT: 99214</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                      <span>Payer: UnitedHealthcare</span><span style={{ color: "#ef4444", fontWeight: "700" }}>-$247.00</span>
+                    </div>
+                    <div style={{ fontSize: "0.8rem", color: "#ef4444" }}>Reason: &quot;Claim lacks information or has submission errors&quot;</div>
+                  </div>
+                </div>
+
+                {/* Arrow / AI Processing */}
+                <div style={{ textAlign: "center", position: "relative" }}>
+                  <div style={{
+                    display: "inline-flex", alignItems: "center", gap: "0.75rem",
+                    background: "linear-gradient(135deg, rgba(56,189,248,0.1), rgba(129,140,248,0.1))",
+                    padding: "0.6rem 1.5rem", borderRadius: "var(--radius-full)",
+                    border: "1px solid rgba(56,189,248,0.2)"
+                  }}>
+                    <span style={{ fontSize: "1.2rem" }}>⚡</span>
+                    <span style={{ fontSize: "0.75rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "1px", color: "var(--brand-primary)" }}>NorthStar Medic AI Processing — 47 seconds</span>
+                    <span style={{ fontSize: "1.2rem" }}>⚡</span>
+                  </div>
+                </div>
+
+                {/* After: Recovered */}
+                <div style={{
+                  background: "rgba(34, 197, 94, 0.08)",
+                  border: "1px solid rgba(34, 197, 94, 0.3)",
+                  borderRadius: "var(--radius-md)",
+                  padding: "1.25rem",
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "1px", color: "#22c55e" }}>✅ Claim Recovered</span>
+                    <span style={{ fontSize: "0.7rem", color: "var(--text-secondary)", background: "rgba(34,197,94,0.15)", padding: "0.2rem 0.6rem", borderRadius: "var(--radius-full)" }}>Appeal Accepted</span>
+                  </div>
+                  <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                      <span>AI cited CMS §1395ff(b)(1)(E)</span><span>Modifier 25 applied</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                      <span>Appeal submitted to UHC</span><span style={{ color: "#22c55e", fontWeight: "700", fontSize: "1.1rem" }}>+$247.00</span>
+                    </div>
+                    <div style={{ fontSize: "0.8rem", color: "#22c55e" }}>Status: Payment received in 12 business days</div>
+                  </div>
+                </div>
+
+                {/* Summary stat */}
+                <div style={{ textAlign: "center", padding: "0.75rem", borderTop: "1px solid var(--border-subtle)" }}>
+                  <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Multiply this across <strong style={{ color: "var(--brand-primary)" }}>500 denied claims</strong> — that&apos;s your pilot.</span>
+                </div>
               </div>
             </div>
           </div>
@@ -241,7 +296,7 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           zIndex: 0,
-          filter: "brightness(0.2) contrast(1.1) saturate(0.8)",
+          filter: "brightness(0.45) contrast(1.1) saturate(0.8)",
         }} />
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",

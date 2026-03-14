@@ -34,9 +34,18 @@ export default function Navigation() {
 
                 {/* Logo */}
                 <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: 'none' }}>
-                    <img src="/logo.png" alt="Northstar Claim" style={{ height: "36px" }} />
-                    <span style={{ fontSize: "1.125rem", fontWeight: "700", color: 'var(--text-primary)', letterSpacing: "-0.02em" }}>
-                        Northstar Claim
+                    <img src="/logo.png" alt="NorthStar Medic" style={{ height: "36px" }} />
+                    <span style={{ 
+                        fontSize: "1.125rem", 
+                        fontWeight: "700", 
+                        letterSpacing: "-0.02em",
+                        background: "linear-gradient(135deg, #38bdf8, #818cf8, #f0abfc, #38bdf8)",
+                        backgroundSize: "200% 200%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        animation: "shimmer 3s ease-in-out infinite",
+                    }}>
+                        NorthStar Medic ✦
                     </span>
                 </Link>
 

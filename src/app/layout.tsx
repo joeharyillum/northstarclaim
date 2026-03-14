@@ -6,13 +6,13 @@ import Chatbot from "@/components/Chatbot";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://northstarclaim.com"),
+  metadataBase: new URL("https://northstarmedic.com"),
   title: {
-    default: "NorthStar Claim | #1 AI Medical Claim Recovery Platform",
-    template: "%s | NorthStar Claim",
+    default: "NorthStar Medic | #1 AI Medical Claim Recovery Platform",
+    template: "%s | NorthStar Medic",
   },
   description:
-    "NorthStar Claim uses AI to recover denied medical insurance claims with a 35–40% success rate. Zero upfront cost — clinics pay $2,500 pilot or 30% on recovered revenue. Trusted by healthcare providers nationwide.",
+    "NorthStar Medic uses AI to recover denied medical insurance claims with a 35–40% success rate. Zero upfront cost — clinics pay $2,500 pilot or 30% on recovered revenue. Trusted by healthcare providers nationwide.",
   keywords: [
     "medical claim recovery",
     "denied claim appeals",
@@ -23,16 +23,16 @@ export const metadata: Metadata = {
     "healthcare revenue recovery",
     "medical claim appeal service",
     "automated claim recovery",
-    "NorthStar Claim",
+    "NorthStar Medic",
     "medical billing AI",
     "insurance denial management",
     "revenue cycle management AI",
     "hospital claim recovery",
     "clinic denied claims",
   ],
-  authors: [{ name: "NorthStar Claim" }],
-  creator: "NorthStar Claim",
-  publisher: "NorthStar Claim",
+  authors: [{ name: "NorthStar Medic" }],
+  creator: "NorthStar Medic",
+  publisher: "NorthStar Medic",
   robots: {
     index: true,
     follow: true,
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://northstarclaim.com",
-    siteName: "NorthStar Claim",
-    title: "NorthStar Claim | #1 AI Medical Claim Recovery Platform",
+    url: "https://northstarmedic.com",
+    siteName: "NorthStar Medic",
+    title: "NorthStar Medic | #1 AI Medical Claim Recovery Platform",
     description:
       "Recover denied medical claims automatically with 35–40% success rate. $2,500 pilot or 30% commission — pay only when we win.",
     images: [
@@ -57,19 +57,19 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "NorthStar Claim - AI Medical Claim Recovery",
+        alt: "NorthStar Medic - AI Medical Claim Recovery",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NorthStar Claim | #1 AI Medical Claim Recovery",
+    title: "NorthStar Medic | #1 AI Medical Claim Recovery",
     description:
       "Recover denied claims with AI. $2,500 pilot, 30% commission.",
     images: ["/og-image.png"],
   },
   alternates: {
-    canonical: "https://northstarclaim.com",
+    canonical: "https://northstarmedic.com",
   },
   verification: {},
 };
@@ -88,10 +88,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
-              name: "NorthStar Claim",
+              name: "NorthStar Medic",
               applicationCategory: "BusinessApplication",
               operatingSystem: "Web",
-              url: "https://northstarclaim.com",
+              url: "https://northstarmedic.com",
               description:
                 "AI-powered medical claim recovery platform that automatically appeals denied insurance claims with a 35–40% success rate.",
               offers: {
@@ -103,9 +103,9 @@ export default function RootLayout({
               },
               provider: {
                 "@type": "Organization",
-                name: "NorthStar Claim",
-                url: "https://northstarclaim.com",
-                logo: "https://northstarclaim.com/logo.png",
+                name: "NorthStar Medic",
+                url: "https://northstarmedic.com",
+                logo: "https://northstarmedic.com/logo.png",
                 sameAs: [],
                 contactPoint: {
                   "@type": "ContactPoint",
@@ -125,10 +125,10 @@ export default function RootLayout({
               mainEntity: [
                 {
                   "@type": "Question",
-                  name: "How much does NorthStar Claim cost?",
+                  name: "How much does NorthStar Medic cost?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "NorthStar Claim has a $2,500 one-time pilot fee that covers AI analysis of up to 500 claims. After that, we charge a 30% success fee only on recovered claims. The Growth Lattice tier is $7,500 with a reduced 20% commission for higher volume.",
+                    text: "NorthStar Medic has a $2,500 one-time pilot fee that covers AI analysis of up to 500 claims. After that, we charge a 30% success fee only on recovered claims. The Growth Lattice tier is $7,500 with a reduced 20% commission for higher volume.",
                   },
                 },
                 {
@@ -136,7 +136,7 @@ export default function RootLayout({
                   name: "What is the success rate for denied claim appeals?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "NorthStar Claim achieves a 35–40% recovery success rate on denied medical insurance claim appeals using our AI-powered analysis and appeal generation system.",
+                    text: "NorthStar Medic achieves a 35–40% recovery success rate on denied medical insurance claim appeals using our AI-powered analysis and appeal generation system.",
                   },
                 },
                 {
@@ -149,10 +149,10 @@ export default function RootLayout({
                 },
                 {
                   "@type": "Question",
-                  name: "Is NorthStar Claim HIPAA compliant?",
+                  name: "Is NorthStar Medic HIPAA compliant?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Yes. NorthStar Claim is fully HIPAA compliant with military-grade encryption and we provide a signed Business Associate Agreement (BAA) to every client.",
+                    text: "Yes. NorthStar Medic is fully HIPAA compliant with military-grade encryption and we provide a signed Business Associate Agreement (BAA) to every client.",
                   },
                 },
               ],

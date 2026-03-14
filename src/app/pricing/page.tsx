@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Pricing | NorthStar Claim",
+  title: "Pricing | NorthStar Medic",
   description: "Transparent, performance-based pricing. Zero upfront cost — pay only when we recover your denied claims.",
 };
 

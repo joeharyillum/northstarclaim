@@ -4,7 +4,7 @@ import { Shield, Zap, Target, Lock, Activity, CheckCircle2, Building, Scale, Clo
 import Button from '@/components/Button';
 
 export const metadata: Metadata = {
-    title: 'About Us | Northstar',
+    title: 'About Us | NorthStar Medic',
     description: 'Our Company Profile, Mission, and Rules & Regulations.',
 };
 
@@ -20,7 +20,7 @@ export default function AboutPage() {
                         <Building size={14} /> Corporate Profile
                     </div>
                     <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase text-white mb-6 drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]">
-                        The Northstar <span className="text-[#00f2ff]">Directive</span>
+                        The NorthStar Medic <span className="text-[#00f2ff]">Directive</span>
                     </h1>
                     <p className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
                         Forged from frustration with the $260B unclaimed medical revenue crisis. We are the elite recovery grid bridging healthcare and sovereign capital.
@@ -42,7 +42,7 @@ export default function AboutPage() {
                             Our company was founded when we witnessed independent medical clinics and healthcare providers drowning under the crushing weight of insurance payer denials. Hardworking practitioners were rendering care but losing out on millions due to arbitrary bureaucratic roadblocks.
                         </p>
                         <p className="text-slate-400 text-lg leading-loose">
-                            We saw an asymmetrical war: Insurance giants had armies of auditors; clinics had stretched billing teams. <strong>We built Northstar to level the playing field.</strong> By combining military-grade AI neural networks with aggressive legal expertise, we created a system that automatically audits, drafts, and forces settlement of denied claims. Our mission is to restore the balance of power back to the provider.
+                            We saw an asymmetrical war: Insurance giants had armies of auditors; clinics had stretched billing teams. <strong>We built NorthStar Medic to level the playing field.</strong> By combining military-grade AI neural networks with aggressive legal expertise, we created a system that automatically audits, drafts, and forces settlement of denied claims. Our mission is to restore the balance of power back to the provider.
                         </p>
                     </div>
 
@@ -91,7 +91,7 @@ export default function AboutPage() {
                             <div className="p-8 bg-black/40 border border-white/5 rounded-3xl">
                                 <h4 className="text-xl font-bold mb-4 text-white flex items-center gap-2"><Clock className="text-emerald-400" /> 48-Hour Processing Window</h4>
                                 <p className="text-slate-400 leading-relaxed">
-                                    Speed is currency. Once your historical data enters the Northstar ingestion node, our systems process, audit, and route appeals directly to payer portals. <strong>The entire initial ingestion and analysis process takes about 48 hours.</strong> Faster execution means faster settlements.
+                                    Speed is currency. Once your historical data enters the NorthStar Medic ingestion node, our systems process, audit, and route appeals directly to payer portals. <strong>The entire initial ingestion and analysis process takes about 48 hours.</strong> Faster execution means faster settlements.
                                 </p>
                             </div>
                         </div>
