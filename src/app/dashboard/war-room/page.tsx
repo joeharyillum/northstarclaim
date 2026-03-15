@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   TrendingUp, DollarSign, Users, Zap, Target, Award, Clock, CheckCircle2,
   AlertCircle, Percent, Activity, Shield, Server, Database, Cpu, ArrowUpRight,
-  ArrowDownRight, BarChart3, PieChart, Globe, Layers, Radio
+  ArrowDownRight, BarChart3, PieChart, Globe, Layers, Radio, UserCheck, FileText
 } from "lucide-react";
 
 /* ─── Animated counter hook ─── */
@@ -64,6 +64,12 @@ export default function WarRoomDashboard() {
 
   const [loaded, setLoaded] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [userProgress, setUserProgress] = useState<Array<{
+    id: string; name: string; email: string; clinicName: string; role: string;
+    joinedAt: string; totalClaims: number; totalBilled: number;
+    recoveredCount: number; recoveredAmount: number; pendingCount: number;
+    appealedCount: number; recoveryRate: number; lastActivity: string;
+  }>>([]);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -91,6 +97,15 @@ export default function WarRoomDashboard() {
         }
       } catch (e) {
         console.error('Failed to fetch war room data:', e);
+      }
+      try {
+        const uRes = await fetch('/api/admin/users-progress');
+        if (uRes.ok) {
+          const { users } = await uRes.json();
+          if (users) setUserProgress(users);
+        }
+      } catch (e) {
+        console.error('Failed to fetch user progress:', e);
       }
       setLoaded(true);
     };
@@ -176,9 +191,6 @@ export default function WarRoomDashboard() {
             <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", fontFamily: "monospace" }}>
               {currentTime.toLocaleTimeString()} EST
             </span>
-            <div style={{ padding: "0.25rem 0.625rem", background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.15)", borderRadius: "var(--radius-full)", fontSize: "0.6rem", fontWeight: "700", color: "#a855f7", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-              Admin Only
-            </div>
           </div>
         </div>
         <h1 style={{ fontSize: "2rem", fontWeight: "800", letterSpacing: "-0.03em", lineHeight: 1.2, marginBottom: "0.375rem" }}>
@@ -370,6 +382,125 @@ export default function WarRoomDashboard() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* ═══ USER PROGRESS TRACKER ═══ */}
+      <div style={{ ...cardBase, padding: "1.5rem", marginTop: "1.5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
+          <h3 style={{ fontSize: "1rem", fontWeight: "700", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Users size={18} style={{ color: "#38bdf8" }} /> User Progress Tracker
+          </h3>
+          <span style={{ fontSize: "0.6rem", fontWeight: "700", color: "#38bdf8", background: "rgba(56,189,248,0.08)", padding: "0.25rem 0.5rem", borderRadius: "var(--radius-full)", border: "1px solid rgba(56,189,248,0.15)" }}>
+            {userProgress.length} USERS
+          </span>
+        </div>
+
+        {userProgress.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontSize: "0.85rem" }}>
+            No users registered yet
+          </div>
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "0 0.375rem" }}>
+              <thead>
+                <tr>
+                  {["User", "Clinic", "Role", "Claims", "Billed", "Recovered", "Pending", "Appealed", "Rate", "Last Active"].map(h => (
+                    <th key={h} style={{ fontSize: "0.6rem", fontWeight: "700", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.06em", padding: "0.5rem 0.75rem", textAlign: "left", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {userProgress.map((u) => {
+                  const rateColor = u.recoveryRate >= 80 ? "#10b981" : u.recoveryRate >= 50 ? "#f59e0b" : u.recoveryRate > 0 ? "#ef4444" : "var(--text-muted)";
+                  const roleColors: Record<string, string> = { admin: "#a855f7", biller: "#3b82f6", client: "#10b981" };
+                  const roleColor = roleColors[u.role] || "#64748b";
+                  const lastActive = new Date(u.lastActivity);
+                  const now = new Date();
+                  const diffMs = now.getTime() - lastActive.getTime();
+                  const diffDays = Math.floor(diffMs / 86400000);
+                  const timeAgo = diffDays === 0 ? "Today" : diffDays === 1 ? "Yesterday" : `${diffDays}d ago`;
+
+                  return (
+                    <tr key={u.id} style={{ transition: "all 0.2s" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLTableRowElement).style.background = "rgba(255,255,255,0.03)"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLTableRowElement).style.background = "transparent"; }}
+                    >
+                      <td style={{ padding: "0.75rem", borderRadius: "var(--radius-md) 0 0 var(--radius-md)" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
+                          <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: `linear-gradient(135deg, ${roleColor}30, ${roleColor}10)`, border: `1px solid ${roleColor}40`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", fontWeight: "700", color: roleColor, flexShrink: 0 }}>
+                            {u.name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2)}
+                          </div>
+                          <div>
+                            <div style={{ fontSize: "0.8rem", fontWeight: "600", whiteSpace: "nowrap" }}>{u.name}</div>
+                            <div style={{ fontSize: "0.6rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>{u.email}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td style={{ padding: "0.75rem", fontSize: "0.78rem", color: "var(--text-secondary)", maxWidth: "140px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {u.clinicName}
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <span style={{ fontSize: "0.6rem", fontWeight: "700", color: roleColor, background: `${roleColor}12`, border: `1px solid ${roleColor}25`, padding: "0.15rem 0.5rem", borderRadius: "var(--radius-full)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                          {u.role}
+                        </span>
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+                          <FileText size={13} style={{ color: "#3b82f6" }} />
+                          <span style={{ fontSize: "0.85rem", fontWeight: "700" }}>{u.totalClaims}</span>
+                        </div>
+                      </td>
+                      <td style={{ padding: "0.75rem", fontSize: "0.8rem", fontWeight: "600", color: "var(--text-secondary)" }}>
+                        ${u.totalBilled.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+                          <CheckCircle2 size={13} style={{ color: "#10b981" }} />
+                          <span style={{ fontSize: "0.85rem", fontWeight: "700", color: "#10b981" }}>
+                            {u.recoveredCount}
+                          </span>
+                          {u.recoveredAmount > 0 && (
+                            <span style={{ fontSize: "0.65rem", color: "rgba(16,185,129,0.7)" }}>
+                              (${u.recoveredAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })})
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <span style={{ fontSize: "0.85rem", fontWeight: "600", color: u.pendingCount > 0 ? "#f59e0b" : "var(--text-muted)" }}>
+                          {u.pendingCount}
+                        </span>
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <span style={{ fontSize: "0.85rem", fontWeight: "600", color: u.appealedCount > 0 ? "#818cf8" : "var(--text-muted)" }}>
+                          {u.appealedCount}
+                        </span>
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                          <div style={{ width: "40px", height: "4px", background: "rgba(255,255,255,0.06)", borderRadius: "2px" }}>
+                            <div style={{ width: `${Math.min(u.recoveryRate, 100)}%`, height: "100%", borderRadius: "2px", background: rateColor, transition: "width 0.8s ease" }} />
+                          </div>
+                          <span style={{ fontSize: "0.75rem", fontWeight: "700", color: rateColor, minWidth: "28px" }}>
+                            {u.recoveryRate}%
+                          </span>
+                        </div>
+                      </td>
+                      <td style={{ padding: "0.75rem", borderRadius: "0 var(--radius-md) var(--radius-md) 0" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+                          <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: diffDays === 0 ? "#10b981" : diffDays <= 7 ? "#f59e0b" : "#64748b" }} />
+                          <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>{timeAgo}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
