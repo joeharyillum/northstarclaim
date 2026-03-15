@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { checkRateLimit } from '@/lib/security';
 import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   // AUTH GATE: Only authenticated users can ingest leads
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const session = await getOwnerSession();
 
   // Rate limit: max 10 ingestions per minute
   if (!checkRateLimit(session.user.id, 10)) {
@@ -78,10 +75,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const session = await getOwnerSession();
 
   const [leads, total, contacted, bySource] = await Promise.all([
     prisma.lead.findMany({ orderBy: { createdAt: 'desc' }, take: 100 }),

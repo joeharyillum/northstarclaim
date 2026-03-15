@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { checkRateLimit } from '@/lib/security';
 
 export const dynamic = 'force-dynamic';
@@ -11,10 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 
 export async function POST(request: Request) {
     // AUTH GATE: Only authenticated users can onboard
-    const session = await auth();
-    if (!session?.user?.id) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const session = await getOwnerSession();
 
     // Rate limit: max 5 onboard attempts per minute
     if (!checkRateLimit(session.user.id, 5)) {

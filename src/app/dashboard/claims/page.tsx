@@ -1,10 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import { getOwnerSession } from "@/lib/owner-session";
 
 export default async function MyClaimsPage() {
-    const session = await auth();
-    if (!session?.user?.id) return redirect("/signup");
+    const session = await getOwnerSession();
 
     const claims = await prisma.claim.findMany({
         where: { batch: { userId: session.user.id } },

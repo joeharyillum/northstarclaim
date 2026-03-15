@@ -1,11 +1,10 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { getOwnerSession } from "@/lib/owner-session";
 import Button from "@/components/Button";
 import LiveBalance from "@/components/LiveBalance";
 
 export default async function DashboardOverview() {
-    const session = await auth();
-    if (!session?.user?.id) return null;
+    const session = await getOwnerSession();
 
     const [totalClaims, pendingClaims, recoveredInvoices, recentActivity] = await Promise.all([
         prisma.claim.count({

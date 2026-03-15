@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { checkRateLimit, validateFinancialConsent, logAudit } from '@/lib/security';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -9,10 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 
 export async function POST(req: Request) {
     // AML GATE: Only authenticated founder can trigger payouts
-    const session = await auth();
-    if (!session?.user?.id) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const session = await getOwnerSession();
 
     // Rate limit: max 3 payouts per minute
     if (!checkRateLimit(session.user.id, 3)) {

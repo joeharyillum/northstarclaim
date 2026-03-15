@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { dispatchPhysicalAppeal } from '@/lib/fax-engine';
 import { validateFinancialConsent } from '@/lib/security';
 import { ConsensusEngine } from '@/lib/consensus-engine';
@@ -29,8 +29,7 @@ export async function generateSecureAppeal(claimData: any, analysisResults: any)
 }
 
 export async function approveAppeal(claimId: string) {
-    const session = await auth();
-    if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+    const session = await getOwnerSession();
 
     try {
         await prisma.appeal.update({
@@ -51,8 +50,7 @@ export async function approveAppeal(claimId: string) {
 }
 
 export async function dispatchPhysical(claimId: string, method: 'FAX' | 'MAIL', recipientAddress: string) {
-    const session = await auth();
-    if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+    const session = await getOwnerSession();
 
     try {
         // FINANCIAL SOVEREIGNTY LOCK: Only the founder can incur costs
@@ -98,8 +96,7 @@ export async function dispatchPhysical(claimId: string, method: 'FAX' | 'MAIL', 
 }
 
 export async function triggerGrievance(claimId: string) {
-    const session = await auth();
-    if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+    const session = await getOwnerSession();
 
     try {
         const result = await generateLegalGrievance(claimId, session.user.id);

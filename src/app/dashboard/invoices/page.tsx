@@ -1,11 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { getOwnerSession } from "@/lib/owner-session";
 import Button from "@/components/Button";
-import { redirect } from "next/navigation";
 
 export default async function InvoicesPage() {
-    const session = await auth();
-    if (!session?.user?.id) return redirect("/signup");
+    const session = await getOwnerSession();
 
     // Fetch real invoices from the database
     const invoicesData = await prisma.invoice.findMany({

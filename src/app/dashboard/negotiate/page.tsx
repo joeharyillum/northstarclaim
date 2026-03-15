@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import { getOwnerSession } from "@/lib/owner-session";
 import NegotiationDesk from "./NegotiationDesk";
 
 export default async function NegotiatePage({
@@ -8,8 +7,7 @@ export default async function NegotiatePage({
 }: {
     searchParams: Promise<{ claimId?: string }>;
 }) {
-    const session = await auth();
-    if (!session?.user?.id) return redirect("/signup");
+    const session = await getOwnerSession();
 
     const { claimId } = await searchParams;
 

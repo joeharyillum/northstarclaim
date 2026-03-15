@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { checkRateLimit } from '@/lib/security';
 import { prisma } from '@/lib/prisma';
 import { deployBestArmy } from '@/lib/orchestrator';
@@ -13,10 +13,7 @@ const openai = new OpenAI({
 });
 
 export async function POST(request: Request) {
-    const session = await auth();
-    if (!session) {
-        return NextResponse.json({ error: "Access denied. HIPAA security audit triggered." }, { status: 401 });
-    }
+    const session = await getOwnerSession();
 
     // Rate Limit: 10 generation requests per minute (very heavy operation)
     if (!checkRateLimit(session.user?.id || "unknown", 10)) {

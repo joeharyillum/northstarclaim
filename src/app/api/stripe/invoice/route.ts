@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { validateFinancialConsent, checkRateLimit } from '@/lib/security';
 
 export const dynamic = 'force-dynamic';
@@ -18,8 +18,7 @@ const TOTAL_FEE_PERCENTAGE = 0.30;
 const PARTNER_REVENUE_SPLIT = 0.50;
 
 export async function POST(request: Request) {
-    const session = await auth();
-    if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const session = await getOwnerSession();
 
     // Rate limit: max 10 invoices per minute
     if (!checkRateLimit(session.user.id, 10)) {

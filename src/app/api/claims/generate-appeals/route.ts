@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { prisma } from '@/lib/prisma';
 import OpenAI from 'openai';
 
@@ -14,10 +14,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' });
  * This is the CORE revenue engine — appeals are what earn the 30% fee.
  */
 export async function POST(req: NextRequest) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const session = await getOwnerSession();
 
   const body = await req.json();
   const { batchId } = body;

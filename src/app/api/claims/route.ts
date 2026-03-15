@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { prisma } from '@/lib/prisma';
 
 /**
@@ -8,10 +8,7 @@ import { prisma } from '@/lib/prisma';
  * No PHI leaks to other users or billers.
  */
 export async function GET(req: NextRequest) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const session = await getOwnerSession();
 
   const { searchParams } = new URL(req.url);
   const status = searchParams.get('status');

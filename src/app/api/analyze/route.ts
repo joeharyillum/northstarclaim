@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { checkRateLimit } from '@/lib/security';
 
 export const dynamic = 'force-dynamic';
@@ -12,10 +12,7 @@ const openai = new OpenAI({
 });
 
 export async function POST(request: Request) {
-    const session = await auth();
-    if (!session) {
-        return NextResponse.json({ error: "Unauthorized access detected. This event has been logged." }, { status: 401 });
-    }
+    const session = await getOwnerSession();
 
     // Rate Limit: 30 requests per minute per user for analysis
     if (!checkRateLimit(session.user?.id || "unknown", 30)) {

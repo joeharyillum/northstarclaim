@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import { getOwnerSession } from "@/lib/owner-session";
 import ReviewClient from "./ReviewClient"; // We will move the interactive parts here
 
 export default async function ReviewAndApprovePage({
@@ -8,8 +7,7 @@ export default async function ReviewAndApprovePage({
 }: {
     searchParams: Promise<{ batchId?: string }>;
 }) {
-    const session = await auth();
-    if (!session?.user?.id) return redirect("/signup");
+    const session = await getOwnerSession();
 
     const { batchId } = await searchParams;
 

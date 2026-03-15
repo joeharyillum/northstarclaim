@@ -3,7 +3,7 @@
 import { prisma } from '@/lib/prisma';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' });
@@ -12,10 +12,7 @@ const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 const ALLOWED_TYPES = ['application/pdf', 'text/csv', 'text/plain'];
 
 export async function processClaimUpload(formData: FormData) {
-    const session = await auth();
-    if (!session?.user?.id) {
-        return { success: false, error: "Unauthorized: HIPAA session required." };
-    }
+    const session = await getOwnerSession();
 
     try {
         const rawFiles = formData.getAll('files') as File[];

@@ -49,7 +49,7 @@ export default function DashboardTopNav() {
             alignItems: "center",
             position: "sticky",
             top: 0,
-            zIndex: 10,
+            zIndex: 50,
         }}>
             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                 <h1 style={{

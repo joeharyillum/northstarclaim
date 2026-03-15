@@ -10,7 +10,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { getOwnerSession } from '@/lib/owner-session';
 import { prisma } from '@/lib/prisma';
 import { addLeadsToCampaign, type InstantlyLead } from '@/lib/instantly-client';
 
@@ -37,10 +37,7 @@ function generatePitch(lead: { firstName: string; lastName: string; company: str
 }
 
 export async function POST(request: NextRequest) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const session = await getOwnerSession();
 
   try {
     const body = await request.json();
@@ -124,10 +121,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const session = await getOwnerSession();
 
   const [total, newLeads, contacted, bySource, byState] = await Promise.all([
     prisma.lead.count(),
