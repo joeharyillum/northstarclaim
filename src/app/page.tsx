@@ -27,10 +27,10 @@ export default function Home() {
         perspective: "1200px",
       }}>
 
-        {/* Background Image - Doctors, Surgeons & AI Technology */}
+        {/* Background Image - Neon Medical Future */}
         <div style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "url('/hero-doctors-ai.jpg')",
+          backgroundImage: "url('/hero-neon-medical.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center top",
           zIndex: 0,
