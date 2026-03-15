@@ -90,28 +90,12 @@ export default auth((req) => {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // LAYER 4: API route authentication
+    // LAYER 4: API route authentication — open access
     // ═══════════════════════════════════════════════════════════════
-    if (isApiRoute && !isPublicApiRoute && !isLoggedIn) {
-        // Stricter rate limit on unauthenticated API attempts: 10/min
-        if (!checkRateLimit(`unauth-api:${ip}`, 10, 60000)) {
-            return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
-        }
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
 
     // ═══════════════════════════════════════════════════════════════
-    // LAYER 5: BAA enforcement on PHI/claims API routes
+    // LAYER 5: BAA enforcement — disabled for owner access
     // ═══════════════════════════════════════════════════════════════
-    if (isBaaRequiredApi && isLoggedIn) {
-        const baaSignedAt = req.auth?.user?.baaSignedAt;
-        if (!baaSignedAt) {
-            return NextResponse.json(
-                { error: 'BAA agreement must be signed before accessing protected health information' },
-                { status: 403 }
-            );
-        }
-    }
 
     // ═══════════════════════════════════════════════════════════════
     // LAYER 6: Dashboard — open access (no auth required)

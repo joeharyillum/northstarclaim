@@ -17,21 +17,7 @@ export default function DashboardLayout({
                 background: "var(--bg-primary)",
                 position: "relative",
             }}>
-                {/* Background Image Layer */}
-                <div style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundImage: "url('/bg-doctors-business.jpg')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    opacity: 0.06,
-                    zIndex: 0,
-                    pointerEvents: "none",
-                }} />
+
                 <DashboardSidebar />
                 <div style={{
                     flex: 1,
