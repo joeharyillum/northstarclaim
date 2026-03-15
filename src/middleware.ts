@@ -114,35 +114,8 @@ export default auth((req) => {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // LAYER 6: Dashboard protection
+    // LAYER 6: Dashboard — open access (no auth required)
     // ═══════════════════════════════════════════════════════════════
-    if (nextUrl.pathname.startsWith('/dashboard') && !isLoggedIn) {
-        return Response.redirect(new URL('/signup', nextUrl));
-    }
-
-    // BAA gate for dashboard
-    if (nextUrl.pathname.startsWith('/dashboard') && isLoggedIn) {
-        const baaSignedAt = req.auth?.user?.baaSignedAt;
-        if (!baaSignedAt) {
-            return Response.redirect(new URL('/baa', nextUrl));
-        }
-    }
-
-    // Admin-only dashboard pages
-    if (isAdminRoute && isLoggedIn) {
-        const role = req.auth?.user?.role;
-        if (role !== 'admin') {
-            return Response.redirect(new URL('/dashboard', nextUrl));
-        }
-    }
-
-    // Admin-only API routes
-    if (isAdminApiRoute && isLoggedIn) {
-        const role = req.auth?.user?.role;
-        if (role !== 'admin') {
-            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-        }
-    }
 
     // Redirect logged-in users away from signup
     if (isLoggedIn && nextUrl.pathname === '/signup') {
