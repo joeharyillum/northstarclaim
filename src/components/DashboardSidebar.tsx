@@ -26,8 +26,8 @@ export default function DashboardSidebar() {
     ];
 
     const businessLinks = [
+        { name: "War Room", href: "/dashboard/war-room", icon: "⌘" },
         ...(isAdmin ? [
-            { name: "War Room", href: "/dashboard/war-room", icon: "⌘" },
             { name: "Lead Engine", href: "/dashboard/leads", icon: "◆" },
         ] : []),
         { name: "Wallet", href: "/dashboard/wallet", icon: "◇" },

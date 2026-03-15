@@ -26,7 +26,7 @@ export default function DashboardLayout({
                     flexDirection: "column",
                     minHeight: "100vh",
                     position: "relative",
-                    zIndex: 1,
+                    zIndex: 30,
                 }}>
                     <DashboardTopNav />
                     <main style={{
