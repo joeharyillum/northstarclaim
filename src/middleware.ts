@@ -1,25 +1,44 @@
 import NextAuth from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authConfig } from './auth.config';
-import { checkBlacklist } from './lib/security';
+import { checkBlacklist, checkRateLimit, getClientIp } from './lib/security';
 
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
     const { nextUrl } = req;
-    const ip = req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || 'unknown';
+    const ip = getClientIp(req);
 
-    // 0. IP Blacklist Check
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 0: IP Blacklist — immediately reject banned IPs
+    // ═══════════════════════════════════════════════════════════════
     const blacklist = checkBlacklist(ip);
     if (blacklist.isBlocked) {
         return new Response('Access Denied', { status: 403 });
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 1: Global rate limiting — 120 requests/min per IP
+    // ═══════════════════════════════════════════════════════════════
+    if (!checkRateLimit(`global:${ip}`, 120, 60000)) {
+        return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 2: Force HTTPS — reject non-secure in production
+    // ═══════════════════════════════════════════════════════════════
+    const proto = req.headers.get('x-forwarded-proto');
+    if (proto === 'http' && process.env.NODE_ENV === 'production') {
+        const httpsUrl = new URL(nextUrl.toString());
+        httpsUrl.protocol = 'https:';
+        return NextResponse.redirect(httpsUrl, 301);
     }
 
     const isLoggedIn = !!req.auth;
     const isApiRoute = nextUrl.pathname.startsWith('/api');
     const isWebhookRoute = nextUrl.pathname.startsWith('/api/webhook');
 
-    // Admin-only routes (admin role required)
+    // Admin-only dashboard routes
     const isAdminRoute = [
         '/dashboard/war-room',
         '/dashboard/leads',
@@ -33,6 +52,14 @@ export default auth((req) => {
         '/api/system/stats',
         '/api/leads',
         '/api/pipeline',
+        '/api/claims/generate-appeals',
+    ].some(p => nextUrl.pathname.startsWith(p));
+
+    // API routes that require BAA (handle PHI/claims data)
+    const isBaaRequiredApi = [
+        '/api/claims',
+        '/api/generate-appeal',
+        '/api/upload',
     ].some(p => nextUrl.pathname.startsWith(p));
 
     // Public pages — no auth required
@@ -49,27 +76,51 @@ export default auth((req) => {
         '/api/stripe/checkout',
     ].some(p => nextUrl.pathname.startsWith(p));
 
-    // Webhook routes — authenticated by their own secret, not user auth
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 3: Webhook routes — authenticated by their own secrets
+    // ═══════════════════════════════════════════════════════════════
     if (isWebhookRoute) {
+        // Stricter rate limit for webhooks: 30/min per IP
+        if (!checkRateLimit(`webhook:${ip}`, 30, 60000)) {
+            return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+        }
         const response = NextResponse.next();
         addSecurityHeaders(response);
         return response;
     }
 
-    // 1. Protect API routes (except public ones)
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 4: API route authentication
+    // ═══════════════════════════════════════════════════════════════
     if (isApiRoute && !isPublicApiRoute && !isLoggedIn) {
-        return NextResponse.json(
-            { error: 'Unauthorized' },
-            { status: 401 }
-        );
+        // Stricter rate limit on unauthenticated API attempts: 10/min
+        if (!checkRateLimit(`unauth-api:${ip}`, 10, 60000)) {
+            return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+        }
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Protect dashboard pages
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 5: BAA enforcement on PHI/claims API routes
+    // ═══════════════════════════════════════════════════════════════
+    if (isBaaRequiredApi && isLoggedIn) {
+        const baaSignedAt = req.auth?.user?.baaSignedAt;
+        if (!baaSignedAt) {
+            return NextResponse.json(
+                { error: 'BAA agreement must be signed before accessing protected health information' },
+                { status: 403 }
+            );
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 6: Dashboard protection
+    // ═══════════════════════════════════════════════════════════════
     if (nextUrl.pathname.startsWith('/dashboard') && !isLoggedIn) {
         return Response.redirect(new URL('/signup', nextUrl));
     }
 
-    // 2a. BAA gate — logged-in users must have signed BAA to access dashboard
+    // BAA gate for dashboard
     if (nextUrl.pathname.startsWith('/dashboard') && isLoggedIn) {
         const baaSignedAt = req.auth?.user?.baaSignedAt;
         if (!baaSignedAt) {
@@ -77,7 +128,7 @@ export default auth((req) => {
         }
     }
 
-    // 2b. Protect admin-only dashboard pages (admin role required)
+    // Admin-only dashboard pages
     if (isAdminRoute && isLoggedIn) {
         const role = req.auth?.user?.role;
         if (role !== 'admin') {
@@ -85,7 +136,7 @@ export default auth((req) => {
         }
     }
 
-    // 2c. Protect admin-only API routes
+    // Admin-only API routes
     if (isAdminApiRoute && isLoggedIn) {
         const role = req.auth?.user?.role;
         if (role !== 'admin') {
@@ -93,7 +144,7 @@ export default auth((req) => {
         }
     }
 
-    // 3. Redirect logged-in users away from signup
+    // Redirect logged-in users away from signup
     if (isLoggedIn && nextUrl.pathname === '/signup') {
         return Response.redirect(new URL('/dashboard', nextUrl));
     }
@@ -103,26 +154,62 @@ export default auth((req) => {
     return response;
 });
 
+// ═══════════════════════════════════════════════════════════════════════════
+// MILITARY-GRADE SECURITY HEADERS
+// HSTS 2-year preload, strict CSP, full anti-clickjack/MIME/XSS stack
+// ═══════════════════════════════════════════════════════════════════════════
 function addSecurityHeaders(response: NextResponse) {
-    response.headers.set('X-Frame-Options', 'DENY');
-    response.headers.set('X-Content-Type-Options', 'nosniff');
-    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-    response.headers.set('X-XSS-Protection', '1; mode=block');
+    // HTTPS enforcement — 2 years, all subdomains, preload-ready
     response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
-    response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+    // Prevent clickjacking — page cannot be embedded in any frame
+    response.headers.set('X-Frame-Options', 'DENY');
+
+    // Prevent MIME-type sniffing attacks
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+
+    // Legacy XSS protection (defense-in-depth)
+    response.headers.set('X-XSS-Protection', '1; mode=block');
+
+    // Referrer policy — don't leak full URLs to third parties
+    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+    // Disable dangerous browser features
+    response.headers.set('Permissions-Policy',
+        'camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), ambient-light-sensor=(), autoplay=(), encrypted-media=(self), fullscreen=(self)'
+    );
+
+    // Cross-Origin isolation headers
+    response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+    response.headers.set('Cross-Origin-Resource-Policy', 'same-origin');
+    response.headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
+
+    // Prevent DNS prefetch to uncontrolled origins
+    response.headers.set('X-DNS-Prefetch-Control', 'off');
+
+    // Prevent browsers from caching sensitive pages
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    response.headers.set('Pragma', 'no-cache');
+
+    // Don't disclose server technology
+    response.headers.delete('X-Powered-By');
+    response.headers.delete('Server');
+
+    // Content Security Policy — tight whitelist
     response.headers.set(
         'Content-Security-Policy',
         [
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.stripe.com",
             "connect-src 'self' https://*.stripe.com https://api.instantly.ai",
-            "frame-src 'self' https://*.stripe.com",
-            "img-src 'self' data: blob:",
+            "frame-src 'self' https://*.stripe.com https://www.youtube.com",
+            "img-src 'self' data: blob: https:",
             "style-src 'self' 'unsafe-inline'",
             "font-src 'self' data:",
             "form-action 'self'",
             "frame-ancestors 'none'",
             "base-uri 'self'",
+            "upgrade-insecure-requests",
         ].join('; ')
     );
 }

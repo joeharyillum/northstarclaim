@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { prisma } from '@/lib/prisma';
+import { sendPaymentReceiptEmail, sendPaymentFailedEmail, sendAdminNotification } from '@/lib/sendgrid-client';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2025-04-30.basil' as Stripe.LatestApiVersion,
@@ -68,6 +69,19 @@ export async function POST(req: NextRequest) {
                 });
 
                 console.log(`[STRIPE] Payment received: $${(amount / 100).toFixed(2)} from ${customerEmail} (${tier})`);
+
+                // Send payment receipt (non-blocking)
+                if (customerEmail !== 'unknown') {
+                    sendPaymentReceiptEmail(customerEmail, amount, tier, session.id)
+                        .catch(err => console.error('[SENDGRID] Payment receipt failed:', err.message));
+                }
+
+                // Notify admin (non-blocking)
+                sendAdminNotification(
+                    `Payment: $${(amount / 100).toFixed(2)}`,
+                    `New payment received:\nCustomer: ${customerEmail}\nAmount: $${(amount / 100).toFixed(2)}\nTier: ${tier}\nSession: ${session.id}`
+                ).catch(err => console.error('[SENDGRID] Admin notification failed:', err.message));
+
                 break;
             }
 
@@ -101,6 +115,13 @@ export async function POST(req: NextRequest) {
                 });
 
                 console.log(`[STRIPE] Payment failed for ${email}`);
+
+                // Notify customer of failed payment (non-blocking)
+                if (email !== 'unknown') {
+                    sendPaymentFailedEmail(email, invoice.id || 'N/A')
+                        .catch(err => console.error('[SENDGRID] Payment failed email failed:', err.message));
+                }
+
                 break;
             }
 

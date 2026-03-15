@@ -53,13 +53,28 @@ export default function UploadClaimsPage() {
 
             if (!result.success) {
                 console.error("Processing failed:", result.error || "Unknown Error");
-                alert("Upload failed. Please try a smaller batch or check file format.");
+                alert("Upload failed: " + (result.error || "Unknown error. Try a different file."));
                 setIsUploading(false);
                 setProgress(0);
                 return;
             }
 
-            setProgress(90);
+            setProgress(60);
+
+            // Auto-generate appeal letters for extracted claims
+            try {
+                const appealRes = await fetch('/api/claims/generate-appeals', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ batchId: result.batchId }),
+                });
+                const appealData = await appealRes.json();
+                console.log(`Appeals generated: ${appealData.appealsGenerated}/${appealData.total}`);
+            } catch (e) {
+                console.warn("Appeal auto-generation skipped:", e);
+            }
+
+            setProgress(95);
             window.location.href = `/dashboard/review?batchId=${result.batchId}`;
 
         } catch (error) {

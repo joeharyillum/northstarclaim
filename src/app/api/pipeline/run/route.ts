@@ -176,6 +176,7 @@ export async function GET() {
         apolloConfigured: !!process.env.APOLLO_API_KEY,
         instantlyConfigured: !!process.env.INSTANTLY_API_KEY,
         instantlyCampaign: process.env.INSTANTLY_CAMPAIGN_ID || 'NOT_SET',
+        sendgridConfigured: !!process.env.SENDGRID_API_KEY,
         instructions: {
             dryRun: 'POST with { "dryRun": true } to test Apollo fetch without sending emails',
             fullRun: 'POST with { "states": ["Florida", "Texas"], "count": 25 } to run the full pipeline',

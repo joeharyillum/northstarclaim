@@ -87,41 +87,18 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Real Unit Economics */}
-      <section style={{ background: "rgba(56,189,248,0.03)", padding: "5rem 1.5rem", borderTop: "1px solid var(--border-subtle)" }}>
-        <h2 style={{ textAlign: "center", marginBottom: "1rem", fontSize: "2rem", fontWeight: "800" }}>What Recovery Could Look Like</h2>
-        <p style={{ textAlign: "center", color: "var(--text-secondary)", marginBottom: "3.5rem", maxWidth: "600px", margin: "0 auto 3.5rem" }}>Projected unit economics based on industry denial recovery benchmarks.*</p>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
-          <div style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2rem", textAlign: "center" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "var(--text-muted)", marginBottom: "0.75rem" }}>Small Clinic (3 Providers) — Projected</p>
-            <div style={{ fontSize: "2.5rem", fontWeight: "800", color: "var(--brand-primary)", marginBottom: "0.5rem" }}>$40,800<span style={{ fontSize: "1rem", color: "var(--text-muted)" }}>/mo</span></div>
-            <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>40 claims × $8,500 avg × 40% recovery × 30%</p>
-          </div>
-          <div style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2rem", textAlign: "center" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "var(--text-muted)", marginBottom: "0.75rem" }}>Regional Hospital (200 beds) — Projected</p>
-            <div style={{ fontSize: "2.5rem", fontWeight: "800", color: "var(--brand-primary)", marginBottom: "0.5rem" }}>$7.35M<span style={{ fontSize: "1rem", color: "var(--text-muted)" }}>/mo</span></div>
-            <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>2,000 claims × $35,000 avg × 35% recovery × 30%</p>
-          </div>
-          <div style={{ background: "var(--bg-card)", border: "1px solid rgba(168,85,247,0.2)", borderRadius: "var(--radius-xl)", padding: "2rem", textAlign: "center" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", color: "#a855f7", marginBottom: "0.75rem" }}>Health System (5,000+ beds) — Projected</p>
-            <div style={{ fontSize: "2.5rem", fontWeight: "800", color: "#a855f7", marginBottom: "0.5rem" }}>$46.2M<span style={{ fontSize: "1rem", color: "var(--text-muted)" }}>/mo</span></div>
-            <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>8,000 claims × $55,000 avg × 35% recovery × 30%</p>
-          </div>
-        </div>
-        <p style={{ textAlign: "center", fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "2rem", fontStyle: "italic" }}>* These figures are hypothetical projections based on industry averages. Actual recovery amounts depend on claim volume, denial types, and payer mix. Past performance does not guarantee future results.</p>
-      </section>
       <section style={{ maxWidth: "1000px", margin: "0 auto", padding: "5rem 1.5rem" }}>
         <div style={{ border: "1px solid rgba(56,189,248,0.2)", borderRadius: "var(--radius-2xl)", padding: "3rem 2.5rem", background: "rgba(56,189,248,0.02)", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: "-50%", right: "-20%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
           <p style={{ fontSize: "0.7rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "3px", color: "var(--brand-primary)", marginBottom: "1rem" }}>For Medical Billers & RCM Agencies</p>
           <h2 style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "1rem" }}>50/50 Biller Partner Program</h2>
           <p style={{ color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "2rem", maxWidth: "700px" }}>
-            You already manage provider relationships. Our AI recovers their denied claims. We split the 30% performance fee 50/50 — you earn 15% of every recovery without lifting a finger.
+            You already manage provider relationships. Our AI recovers their denied claims. We split the performance fee 50/50 — you earn on every recovery without lifting a finger.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-subtle)" }}>
-              <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>Est. $510K/mo</h4>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>Projected biller earnings with 25 active providers.*</p>
+              <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>50/50 Split</h4>
+              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>Fair revenue share on every successful recovery.</p>
             </div>
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-subtle)" }}>
               <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>Zero Cost</h4>
@@ -158,9 +135,9 @@ export default function PricingPage() {
 
       {/* CTA */}
       <section style={{ padding: "5rem 1.5rem", textAlign: "center", borderTop: "1px solid var(--border-subtle)", background: "var(--bg-secondary)" }}>
-        <h2 style={{ marginBottom: "1rem", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: "800" }}>Ready to Recover Millions?</h2>
-        <p style={{ color: "var(--text-secondary)", marginBottom: "2.5rem", fontSize: "1.1rem", maxWidth: "500px", margin: "0 auto 2.5rem" }}>Start with a 500-claim pilot. See exactly how much you're leaving on the table.</p>
-        <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "inline-block", padding: "1rem 2.5rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", color: "#000", borderRadius: "var(--radius-lg)", textDecoration: "none", fontWeight: "700", fontSize: "1.05rem" }}>Start Your Pilot — $2,500</a>
+        <h2 style={{ marginBottom: "1rem", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: "800" }}>Ready to Get Started?</h2>
+        <p style={{ color: "var(--text-secondary)", marginBottom: "2.5rem", fontSize: "1.1rem", maxWidth: "500px", margin: "0 auto 2.5rem" }}>Choose the plan that fits your practice and start recovering denied claims today.</p>
+        <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "inline-block", padding: "1rem 2.5rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", color: "#000", borderRadius: "var(--radius-lg)", textDecoration: "none", fontWeight: "700", fontSize: "1.05rem" }}>Start Your Pilot</a>
       </section>
     </main>
   );

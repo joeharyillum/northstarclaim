@@ -10,11 +10,11 @@ export default function PrivacyPage() {
     <main style={{ background: "var(--bg-dark)", color: "#fff", minHeight: "100vh" }}>
       <section style={{ maxWidth: "800px", margin: "0 auto", padding: "10rem 1.5rem 5rem" }}>
         <h1 style={{ fontSize: "2.5rem", fontWeight: "800", marginBottom: "1rem" }}>Privacy Policy</h1>
-        <p style={{ color: "var(--text-secondary)", marginBottom: "3rem" }}>Last updated: June 2025</p>
+        <p style={{ color: "var(--text-secondary)", marginBottom: "3rem" }}>Last updated: March 2026</p>
 
         <div style={{ color: "var(--text-secondary)", lineHeight: 1.8, fontSize: "0.95rem" }}>
           <Section title="1. Introduction">
-            NorthStar Medic (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) operates the website northstarmedic.com and provides AI-powered medical claim recovery services. This Privacy Policy describes how we collect, use, disclose, and protect your personal information when you use our services.
+            NorthStar Medic (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) operates the website www.northstarmedic.com and provides AI-powered medical claim recovery services. This Privacy Policy describes how we collect, use, disclose, and protect your personal information when you use our services.
           </Section>
 
           <Section title="2. Information We Collect">
@@ -76,7 +76,7 @@ export default function PrivacyPage() {
               <li>Opt out of marketing communications</li>
               <li>Receive a copy of your data in a portable format</li>
             </ul>
-            To exercise these rights, contact us at privacy@northstarmedic.com.
+            To exercise these rights, contact us at privacy@northstarclaim.com.
           </Section>
 
           <Section title="9. Cookies">
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
             If you have questions about this Privacy Policy, contact us at:
             <br /><br />
             NorthStar Medic<br />
-            Email: privacy@northstarmedic.com
+            Email: privacy@northstarclaim.com
           </Section>
         </div>
       </section>

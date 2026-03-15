@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
+import { sendBaaConfirmationEmail } from '@/lib/sendgrid-client';
 
 export async function POST(req: Request) {
     try {
@@ -30,6 +31,14 @@ export async function POST(req: Request) {
                 ipAddress: ip !== 'unknown' ? ip : null,
             },
         });
+
+        // Send BAA confirmation email (non-blocking)
+        sendBaaConfirmationEmail(
+            session.user.email!,
+            session.user.email!,
+            new Date(),
+            ip !== 'unknown' ? ip : null
+        ).catch(err => console.error('[SENDGRID] BAA confirmation email failed:', err.message));
 
         return NextResponse.json({ success: true, message: 'BAA signed successfully' });
     } catch (error: any) {

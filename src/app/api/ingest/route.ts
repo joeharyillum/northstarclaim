@@ -34,14 +34,14 @@ export async function POST(request: Request) {
 
         const fileBuffer = Buffer.from(await file.arrayBuffer());
 
-        // --- ENTERPRISE SECURITY: LOCAL VAULT STORAGE ---
-        // Securely vault the PDF into persistent storage (Railway volume)
-        const uploadsDir = path.join(process.cwd(), 'uploads', 'claims');
-        await mkdir(uploadsDir, { recursive: true });
+        // --- ENTERPRISE SECURITY: TEMP VAULT STORAGE ---
+        // Write to /tmp for serverless compatibility (Vercel/Railway)
+        const tmpDir = path.join('/tmp', 'claims');
+        await mkdir(tmpDir, { recursive: true });
         const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        const vaultPath = path.join(uploadsDir, `${Date.now()}-${safeFileName}`);
+        const vaultPath = path.join(tmpDir, `${Date.now()}-${safeFileName}`);
         await writeFile(vaultPath, fileBuffer);
-        const vaultUrl = `/uploads/claims/${path.basename(vaultPath)}`;
+        const vaultUrl = `/tmp/claims/${path.basename(vaultPath)}`;
 
         console.log("🔒 Document Vaulted Securely:", vaultUrl);
 

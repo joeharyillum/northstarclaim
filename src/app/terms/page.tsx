@@ -10,7 +10,7 @@ export default function TermsPage() {
     <main style={{ background: "var(--bg-dark)", color: "#fff", minHeight: "100vh" }}>
       <section style={{ maxWidth: "800px", margin: "0 auto", padding: "10rem 1.5rem 5rem" }}>
         <h1 style={{ fontSize: "2.5rem", fontWeight: "800", marginBottom: "1rem" }}>Terms of Service</h1>
-        <p style={{ color: "var(--text-secondary)", marginBottom: "3rem" }}>Last updated: June 2025</p>
+        <p style={{ color: "var(--text-secondary)", marginBottom: "3rem" }}>Last updated: March 2026</p>
 
         <div style={{ color: "var(--text-secondary)", lineHeight: 1.8, fontSize: "0.95rem" }}>
           <Section title="1. Acceptance of Terms">

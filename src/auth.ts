@@ -3,10 +3,39 @@ import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { checkLoginAllowed, recordLoginFailure, clearLoginFailures, getClientIp } from '@/lib/security';
 
 export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
     ...authConfig,
-    session: { strategy: "jwt" },
+    session: {
+        strategy: "jwt",
+        maxAge: 8 * 60 * 60,       // 8 hours — HIPAA-appropriate session lifetime
+        updateAge: 30 * 60,         // Refresh token every 30 minutes
+    },
+    cookies: {
+        sessionToken: {
+            name: process.env.NODE_ENV === 'production'
+                ? '__Secure-next-auth.session-token'
+                : 'next-auth.session-token',
+            options: {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'lax',
+                path: '/',
+            },
+        },
+        csrfToken: {
+            name: process.env.NODE_ENV === 'production'
+                ? '__Host-next-auth.csrf-token'
+                : 'next-auth.csrf-token',
+            options: {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'lax',
+                path: '/',
+            },
+        },
+    },
     providers: [
         Credentials({
             name: "Credentials",
@@ -14,18 +43,36 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials) {
+            async authorize(credentials, req) {
                 if (!credentials?.email || !credentials?.password) return null;
 
+                const ip = getClientIp(req);
+
+                // Brute-force protection — check if IP is locked out
+                const loginCheck = checkLoginAllowed(ip);
+                if (!loginCheck.allowed) {
+                    throw new Error(`Account locked. Try again in ${loginCheck.remainingLockout} seconds.`);
+                }
+
+                const email = (credentials.email as string).toLowerCase().trim();
                 const user = await prisma.user.findUnique({
-                    where: { email: credentials.email as string }
+                    where: { email }
                 });
 
-                if (!user || !user.password) return null;
+                if (!user || !user.password) {
+                    await recordLoginFailure(ip, email);
+                    return null;
+                }
 
                 const pwMatch = await bcrypt.compare(credentials.password as string, user.password);
 
-                if (!pwMatch) return null;
+                if (!pwMatch) {
+                    await recordLoginFailure(ip, email);
+                    return null;
+                }
+
+                // Success — clear any login failure records
+                clearLoginFailures(ip);
 
                 return {
                     id: user.id,
