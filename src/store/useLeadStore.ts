@@ -32,9 +32,9 @@ export const useLeadStore = create<LeadStore>()(
     (set) => ({
       leads: [],
       stats: {
-        total: 1582, // Hardcoded baseline for Phase 60
-        contacted: 42,
-        pending: 1540,
+        total: 0,
+        contacted: 0,
+        pending: 0,
       },
       addLeads: (newLeads) => set((state) => {
         // Only keep the most recent 100 in-memory for the UI to prevent freezing

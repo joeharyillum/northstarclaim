@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 export default function Navigation() {
     const [scrolled, setScrolled] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -13,6 +14,19 @@ export default function Navigation() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        document.body.style.overflow = menuOpen ? "hidden" : "";
+        return () => { document.body.style.overflow = ""; };
+    }, [menuOpen]);
+
+    const navLinkItems = [
+        { href: "/features", label: "Features" },
+        { href: "/pricing", label: "Pricing" },
+        { href: "/about", label: "About" },
+        { href: "/dashboard", label: "Dashboard" },
+    ];
 
     return (
         <nav
@@ -49,17 +63,16 @@ export default function Navigation() {
                     </span>
                 </Link>
 
-                {/* Nav Links */}
-                <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", fontSize: '0.9rem', fontWeight: '500' }}>
-                    <Link href="/features" className="text-slate-300 hover:text-white transition-colors">Features</Link>
-                    <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
-                    <Link href="/about" className="text-slate-300 hover:text-white transition-colors">About</Link>
-                    <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors">Dashboard</Link>
+                {/* Nav Links — hidden on mobile via CSS */}
+                <div className="nav-links" style={{ display: "flex", gap: "1.5rem", alignItems: "center", fontSize: '0.9rem', fontWeight: '500' }}>
+                    {navLinkItems.map(item => (
+                        <Link key={item.href} href={item.href} className="text-slate-300 hover:text-white transition-colors">{item.label}</Link>
+                    ))}
                 </div>
 
-                {/* CTA */}
+                {/* CTA + Hamburger */}
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <Link href="/signup" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem" }}>Sign In</Link>
+                    <Link href="/signup" className="nav-links" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem", display: "inline" }}>Sign In</Link>
                     <Link href="/free-scan" style={{ 
                         background: "var(--brand-primary)", 
                         color: "var(--bg-primary)", 
@@ -70,13 +83,82 @@ export default function Navigation() {
                         textDecoration: "none",
                         transition: 'transform 0.2s ease',
                     }}
-                    className="hover:scale-105"
+                    className="hover:scale-105 nav-links"
+                    >
+                        Start Free Scan
+                    </Link>
+
+                    {/* Hamburger — visible only on mobile via CSS */}
+                    <button
+                        className="nav-mobile-toggle"
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        aria-label="Toggle navigation menu"
+                        style={{
+                            display: "none",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            padding: "0.5rem",
+                            color: "var(--text-primary)",
+                        }}
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                            {menuOpen ? (
+                                <>
+                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                </>
+                            ) : (
+                                <>
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <line x1="3" y1="12" x2="21" y2="12" />
+                                    <line x1="3" y1="18" x2="21" y2="18" />
+                                </>
+                            )}
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            {menuOpen && (
+                <div className="nav-mobile-menu">
+                    <button
+                        onClick={() => setMenuOpen(false)}
+                        aria-label="Close menu"
+                        style={{
+                            position: "absolute", top: "1.5rem", right: "1.5rem",
+                            background: "none", border: "none", cursor: "pointer",
+                            color: "var(--text-primary)", padding: "0.5rem",
+                        }}
+                    >
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                    {navLinkItems.map(item => (
+                        <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</Link>
+                    ))}
+                    <Link href="/signup" onClick={() => setMenuOpen(false)}>Sign In</Link>
+                    <Link
+                        href="/free-scan"
+                        onClick={() => setMenuOpen(false)}
+                        style={{
+                            background: "var(--brand-primary)",
+                            color: "var(--bg-primary)",
+                            padding: "0.75rem 2rem",
+                            borderRadius: "var(--radius-full)",
+                            fontWeight: "600",
+                            textDecoration: "none",
+                        }}
                     >
                         Start Free Scan
                     </Link>
                 </div>
-            </div>
-
+            )}
         </nav>
     );
 }

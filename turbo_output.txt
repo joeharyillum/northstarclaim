@@ -1,0 +1,43 @@
+[dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+============================================================
+  COUNTING ALL LEADS IN NORTHSTARCLAIM CAMPAIGN
+  Campaign: 937570df-3957-4624-8c3c-dd7e0644c300
+  Started: 2026-03-15T07:30:06.465Z
+============================================================
+
+       5,000 leads | 18s elapsed | 279 leads/s | ~38.5min remaining
+      10,000 leads | 31s elapsed | 318 leads/s | ~33.5min remaining
+      15,000 leads | 43s elapsed | 346 leads/s | ~30.6min remaining
+      20,000 leads | 65s elapsed | 308 leads/s | ~34.1min remaining
+      25,000 leads | 85s elapsed | 293 leads/s | ~35.6min remaining
+      30,000 leads | 100s elapsed | 299 leads/s | ~34.5min remaining
+      35,000 leads | 114s elapsed | 306 leads/s | ~33.5min remaining
+      40,000 leads | 133s elapsed | 302 leads/s | ~33.7min remaining
+      45,000 leads | 146s elapsed | 308 leads/s | ~32.7min remaining
+      50,000 leads | 158s elapsed | 316 leads/s | ~31.7min remaining
+      55,000 leads | 173s elapsed | 318 leads/s | ~31.2min remaining
+      60,000 leads | 186s elapsed | 323 leads/s | ~30.5min remaining
+      65,000 leads | 198s elapsed | 329 leads/s | ~29.6min remaining
+      70,000 leads | 213s elapsed | 329 leads/s | ~29.4min remaining
+      75,000 leads | 228s elapsed | 329 leads/s | ~29.2min remaining
+      80,000 leads | 249s elapsed | 322 leads/s | ~29.5min remaining
+      85,000 leads | 261s elapsed | 325 leads/s | ~28.9min remaining
+      90,000 leads | 273s elapsed | 329 leads/s | ~28.4min remaining
+      95,000 leads | 285s elapsed | 333 leads/s | ~27.8min remaining
+     100,000 leads | 297s elapsed | 336 leads/s | ~27.3min remaining
+     105,000 leads | 310s elapsed | 339 leads/s | ~26.8min remaining
+     110,000 leads | 322s elapsed | 342 leads/s | ~26.3min remaining
+     115,000 leads | 334s elapsed | 345 leads/s | ~25.9min remaining
+     120,000 leads | 346s elapsed | 347 leads/s | ~25.4min remaining
+     125,000 leads | 358s elapsed | 350 leads/s | ~25.0min remaining
+     130,000 leads | 370s elapsed | 352 leads/s | ~24.7min remaining
+     135,000 leads | 383s elapsed | 353 leads/s | ~24.3min remaining
+     140,000 leads | 397s elapsed | 352 leads/s | ~24.1min remaining
+     145,000 leads | 413s elapsed | 351 leads/s | ~24.0min remaining
+     150,000 leads | 428s elapsed | 351 leads/s | ~23.8min remaining
+     155,000 leads | 441s elapsed | 351 leads/s | ~23.5min remaining
+     160,000 leads | 455s elapsed | 352 leads/s | ~23.2min remaining
+     165,000 leads | 470s elapsed | 351 leads/s | ~23.0min remaining
+     170,000 leads | 485s elapsed | 351 leads/s | ~22.8min remaining
+     175,000 leads | 500s elapsed | 350 leads/s | ~22.6min remaining

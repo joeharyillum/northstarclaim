@@ -104,7 +104,7 @@ export default async function DashboardOverview() {
             </div>
 
             {/* KPI Cards */}
-            <div style={{
+            <div className="stats-grid" style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(4, 1fr)",
                 gap: "1rem",

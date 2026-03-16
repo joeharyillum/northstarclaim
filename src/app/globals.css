@@ -623,6 +623,15 @@ h1, h2, h3, h4, h5, h6 {
   .section-padding {
     padding: 3rem 0;
   }
+
+  /* Bento grid — 2 cols on tablet */
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .bento-grid .bento-span-2 {
+    grid-column: span 2 !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -640,6 +649,65 @@ h1, h2, h3, h4, h5, h6 {
   .glass-panel {
     padding: 1rem !important;
     border-radius: var(--radius-lg) !important;
+  }
+
+  /* Prevent nav links crashing into logo/CTA on mobile */
+  nav .container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Hide nav links on mobile — show hamburger instead */
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-mobile-toggle {
+    display: flex !important;
+  }
+
+  /* Mobile nav menu overlay */
+  .nav-mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(2, 6, 23, 0.97);
+    backdrop-filter: blur(20px);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .nav-mobile-menu a {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* Landing page bento grid — stack on mobile */
+  .bento-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .bento-grid .bento-span-2 {
+    grid-column: span 1 !important;
+  }
+
+  /* Dashboard stat cards — 2 cols on mobile */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 

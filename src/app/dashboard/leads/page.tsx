@@ -3,13 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLeadStore } from '@/store/useLeadStore';
 import { parseLeads, generateLeadId } from '@/lib/csv-parser';
-import { generateLeads } from '@/lib/lead-generator';
-import GeneratorModal from '@/components/GeneratorModal';
-import { bulkPersonalize } from '@/lib/personalization';
 import { runMassCampaign } from '@/lib/outreach';
 import {
     Plus,
-    Zap,
     Users,
     Mail,
     TrendingUp,
@@ -18,14 +14,12 @@ import {
     CheckCircle2,
     Filter,
     MoreVertical,
-    Sparkles,
     CreditCard,
     Trash2,
     Upload,
     Send,
     Database,
 } from 'lucide-react';
-import LiveActivityFeed from '@/components/LiveActivityFeed';
 
 interface DbLead {
     id: string;
@@ -49,10 +43,8 @@ interface DbStats {
 
 export default function DashboardLeads() {
     const { leads, stats, addLeads, clearLeads } = useLeadStore();
-    const [showGenerator, setShowGenerator] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [stripeBalance, setStripeBalance] = useState<number | null>(null);
-    const [isGenerating, setIsGenerating] = useState(false);
     const [dbLeads, setDbLeads] = useState<DbLead[]>([]);
     const [dbStats, setDbStats] = useState<DbStats>({ total: 0, contacted: 0, pending: 0 });
     const [pushStatus, setPushStatus] = useState<string | null>(null);
@@ -93,27 +85,10 @@ export default function DashboardLeads() {
         return () => clearInterval(interval);
     }, []);
 
-    const handleBulkPersonalize = async () => {
-        setIsProcessing(true);
-        await bulkPersonalize();
-        setIsProcessing(false);
-    };
-
     const handleRunCampaign = async () => {
         setIsProcessing(true);
         await runMassCampaign();
         setIsProcessing(false);
-    };
-
-    const handleQuickGenerate = async () => {
-        setIsGenerating(true);
-        const newLeads = generateLeads({
-            industry: 'Healthcare',
-            location: 'Texas',
-            count: 500
-        });
-        addLeads(newLeads);
-        setIsGenerating(false);
     };
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -276,30 +251,6 @@ export default function DashboardLeads() {
                         </h2>
                         <div style={{ display: "flex", gap: "0.5rem" }}>
                             <button
-                                onClick={handleQuickGenerate}
-                                disabled={isGenerating}
-                                style={{
-                                    display: "flex", alignItems: "center", gap: "0.375rem",
-                                    padding: "0.375rem 0.75rem", borderRadius: "var(--radius-md)",
-                                    background: "rgba(16, 185, 129, 0.1)", border: "1px solid rgba(16, 185, 129, 0.2)",
-                                    color: "#10b981", fontSize: "0.75rem", fontWeight: "600", cursor: "pointer",
-                                }}
-                            >
-                                <Zap size={12} /> {isGenerating ? "Generating..." : "Quick Generate"}
-                            </button>
-                            <button
-                                onClick={() => setShowGenerator(true)}
-                                style={{
-                                    display: "flex", alignItems: "center", gap: "0.375rem",
-                                    padding: "0.375rem 0.75rem", borderRadius: "var(--radius-md)",
-                                    background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15))",
-                                    border: "1px solid rgba(99,102,241,0.2)",
-                                    color: "#818cf8", fontSize: "0.75rem", fontWeight: "600", cursor: "pointer",
-                                }}
-                            >
-                                <Sparkles size={12} /> Generate Leads
-                            </button>
-                            <button
                                 onClick={() => document.getElementById('csv-upload')?.click()}
                                 style={{
                                     display: "flex", alignItems: "center", gap: "0.375rem",
@@ -408,7 +359,6 @@ export default function DashboardLeads() {
 
                     {[
                         { label: "Push to Campaign", desc: `Send ${dbStats.pending || 0} leads to Instantly.ai`, icon: Send, color: "#10b981", onClick: handlePushToCampaign },
-                        { label: "Bulk Personalize", desc: "AI-research all new leads", icon: Zap, color: "#eab308", onClick: handleBulkPersonalize },
                         { label: "Launch Campaign", desc: "Send follow-up outreach", icon: Mail, color: "#6366f1", onClick: handleRunCampaign },
                         { label: "Clear Leads", desc: "Remove all local data", icon: Trash2, color: "#ef4444", onClick: clearLeads },
                     ].map((action) => {
@@ -459,10 +409,8 @@ export default function DashboardLeads() {
                         </div>
                     </div>
 
-                    <LiveActivityFeed />
                 </div>
             </div>
-            <GeneratorModal isOpen={showGenerator} onClose={() => setShowGenerator(false)} />
         </div>
     );
 }

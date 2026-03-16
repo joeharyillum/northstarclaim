@@ -174,13 +174,13 @@ export default function Home() {
               </p>
             </div>
 
-            <div style={{
+            <div className="bento-grid" style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: '1.5rem',
             }}>
                 {/* Live Recovery Ticker — spans 2 columns */}
-                <div className="glass-panel card-3d" style={{ padding: '2rem', gridColumn: 'span 2 / span 2' }}>
+                <div className="glass-panel card-3d bento-span-2" style={{ padding: '2rem', gridColumn: 'span 2 / span 2' }}>
                     <LiveRevenueTicker label="Live Recovery Engine" />
                 </div>
 
@@ -258,7 +258,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Cinematic Platform Showcase */}
+          {/* Platform Showcase — Screenshot */}
           <div style={{
             maxWidth: "960px",
             margin: "0 auto",
@@ -269,7 +269,7 @@ export default function Home() {
             position: "relative",
             background: "linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.9))",
           }}>
-            {/* Top Bar — fake browser chrome */}
+            {/* Browser Chrome Bar */}
             <div style={{
               display: "flex", alignItems: "center", gap: "0.5rem",
               padding: "0.75rem 1.25rem",
@@ -289,128 +289,26 @@ export default function Home() {
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
                 northstarmedic.com/dashboard
               </div>
-              <span style={{ fontSize: "0.55rem", fontWeight: "700", color: "#10b981", textTransform: "uppercase", letterSpacing: "0.06em", padding: "0.2rem 0.5rem", background: "rgba(16,185,129,0.08)", borderRadius: "var(--radius-full)", border: "1px solid rgba(16,185,129,0.15)" }}>LIVE</span>
             </div>
 
-            {/* Dashboard Preview Content */}
-            <div style={{ padding: "1.5rem", display: "grid", gridTemplateColumns: "180px 1fr", gap: "1rem", minHeight: "420px" }}>
-              {/* Mini Sidebar */}
-              <div style={{
-                background: "rgba(0,0,0,0.3)", borderRadius: "var(--radius-lg)",
-                padding: "1rem 0.75rem", display: "flex", flexDirection: "column", gap: "0.25rem",
-                border: "1px solid rgba(255,255,255,0.04)",
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem", padding: "0 0.25rem" }}>
-                  <div style={{ width: "28px", height: "28px", borderRadius: "var(--radius-md)", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", fontWeight: "800", color: "white" }}>N</div>
-                  <div>
-                    <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "white" }}>NorthStar</div>
-                    <div style={{ fontSize: "0.5rem", color: "var(--text-muted)" }}>AI Platform</div>
-                  </div>
-                </div>
-                {["Overview", "Claims", "Appeals", "Wallet", "War Room"].map((item, i) => (
-                  <div key={item} style={{
-                    padding: "0.45rem 0.6rem", borderRadius: "var(--radius-md)", fontSize: "0.6rem", fontWeight: "500",
-                    color: i === 0 ? "white" : "var(--text-muted)",
-                    background: i === 0 ? "rgba(56,189,248,0.1)" : "transparent",
-                    border: i === 0 ? "1px solid rgba(56,189,248,0.15)" : "1px solid transparent",
-                  }}>{item}</div>
-                ))}
-              </div>
-
-              {/* Main Content Area */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {/* KPI Row */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem" }}>
-                  {[
-                    { label: "Total Recovered", value: "$84.6M", change: "+18.3%", color: "#10b981" },
-                    { label: "Active Claims", value: "2,847", change: "+12.7%", color: "#38bdf8" },
-                    { label: "Recovery Rate", value: "94.2%", change: "+2.4%", color: "#a855f7" },
-                  ].map(kpi => (
-                    <div key={kpi.label} style={{
-                      padding: "1rem", borderRadius: "var(--radius-lg)",
-                      background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)",
-                      position: "relative", overflow: "hidden",
-                    }}>
-                      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, transparent, ${kpi.color}, transparent)`, opacity: 0.5 }} />
-                      <div style={{ fontSize: "0.5rem", fontWeight: "600", color: kpi.color, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.375rem" }}>{kpi.label}</div>
-                      <div style={{ fontSize: "1.35rem", fontWeight: "800", letterSpacing: "-0.03em", color: "white" }}>{kpi.value}</div>
-                      <div style={{ fontSize: "0.5rem", fontWeight: "600", color: "#10b981", marginTop: "0.25rem" }}>▲ {kpi.change}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Chart Area + Activity */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 200px", gap: "0.75rem", flex: 1 }}>
-                  {/* Fake Chart */}
-                  <div style={{
-                    padding: "1rem", borderRadius: "var(--radius-lg)",
-                    background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)",
-                    display: "flex", flexDirection: "column",
-                  }}>
-                    <div style={{ fontSize: "0.55rem", fontWeight: "600", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.75rem" }}>Revenue Recovery Pipeline</div>
-                    <svg viewBox="0 0 400 150" style={{ width: "100%", flex: 1 }}>
-                      <defs>
-                        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                      <polygon fill="url(#chartGrad)" points="0,140 30,120 70,110 110,95 150,100 190,70 230,60 270,45 310,50 350,30 390,20 400,18 400,150 0,150" />
-                      <polyline fill="none" stroke="#38bdf8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" points="0,140 30,120 70,110 110,95 150,100 190,70 230,60 270,45 310,50 350,30 390,20 400,18" />
-                      <circle cx="400" cy="18" r="4" fill="#38bdf8">
-                        <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
-                      </circle>
-                    </svg>
-                  </div>
-
-                  {/* Activity Feed */}
-                  <div style={{
-                    padding: "0.75rem", borderRadius: "var(--radius-lg)",
-                    background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)",
-                    display: "flex", flexDirection: "column", gap: "0.5rem",
-                  }}>
-                    <div style={{ fontSize: "0.55rem", fontWeight: "600", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Live Activity</div>
-                    {[
-                      { text: "Claim #4821 recovered", amt: "$12,450", color: "#10b981" },
-                      { text: "Appeal submitted #127", amt: "$34,200", color: "#f59e0b" },
-                      { text: "Clinic onboarded", amt: "", color: "#38bdf8" },
-                      { text: "Claim #4819 recovered", amt: "$8,720", color: "#10b981" },
-                      { text: "OCR processed 48 docs", amt: "", color: "#818cf8" },
-                    ].map((item, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.375rem", padding: "0.35rem 0.5rem", borderRadius: "var(--radius-md)", background: "rgba(255,255,255,0.015)" }}>
-                        <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: item.color, flexShrink: 0 }} />
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: "0.5rem", fontWeight: "500", color: "var(--text-secondary)" }}>{item.text}</div>
-                        </div>
-                        {item.amt && <span style={{ fontSize: "0.5rem", fontWeight: "700", color: item.color }}>{item.amt}</span>}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Bottom Status Bar */}
-                <div style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "0.5rem 0.75rem", borderRadius: "var(--radius-md)",
-                  background: "rgba(16,185,129,0.04)", border: "1px solid rgba(16,185,129,0.08)",
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
-                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981" }} />
-                    <span style={{ fontSize: "0.5rem", fontWeight: "600", color: "#10b981", textTransform: "uppercase", letterSpacing: "0.06em" }}>All Systems Operational</span>
-                  </div>
-                  <div style={{ display: "flex", gap: "0.75rem" }}>
-                    {["AI Engine 99.99%", "OCR 99.97%", "API 99.98%"].map(s => (
-                      <span key={s} style={{ fontSize: "0.45rem", color: "var(--text-muted)", fontFamily: "monospace" }}>{s}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            {/* Platform Screenshot */}
+            <div style={{ position: "relative", minHeight: "420px", display: "flex", alignItems: "center", justifyContent: "center", padding: "3rem 2rem" }}>
+              <img
+                src="/data-dashboard-hero.png"
+                alt="NorthStar Medic Dashboard — AI Claim Recovery Platform"
+                style={{
+                  width: "100%",
+                  maxWidth: "860px",
+                  borderRadius: "var(--radius-lg)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
+                }}
+              />
             </div>
           </div>
 
           <p style={{ textAlign: "center", color: "var(--text-muted)", fontSize: "0.8rem", marginTop: "1.25rem" }}>
-            Live platform preview — real-time recovery intelligence at your fingertips
+            Your command center — real-time claim recovery intelligence at your fingertips
           </p>
         </div>
       </section>

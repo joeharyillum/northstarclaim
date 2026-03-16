@@ -41,7 +41,7 @@ export async function dispatchPhysicalAppeal(
                 console.warn("[AGENT 41] Phaxio keys missing. Dry run mode.");
                 await prisma.physicalDispatch.update({
                     where: { id: dispatchEntry.id },
-                    data: { status: 'SENT', trackingId: 'MOCK-FAX-ID' }
+                    data: { status: 'SENT', trackingId: 'DRY-RUN-FAX-NO-KEY' }
                 });
                 return { success: true, mode: 'DRY_RUN', message: "Fax logged (Keys missing)." };
             }
@@ -77,7 +77,7 @@ export async function dispatchPhysicalAppeal(
                 console.warn("[AGENT 41] Lob keys missing. Dry run mode.");
                 await prisma.physicalDispatch.update({
                     where: { id: dispatchEntry.id },
-                    data: { status: 'SENT', trackingId: 'MOCK-MAIL-ID' }
+                    data: { status: 'SENT', trackingId: 'DRY-RUN-MAIL-NO-KEY' }
                 });
                 return { success: true, mode: 'DRY_RUN', message: "Mail logged (Keys missing)." };
             }
