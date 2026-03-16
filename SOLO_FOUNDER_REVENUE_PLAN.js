@@ -2,17 +2,29 @@
 
 /**
  * ══════════════════════════════════════════════════════════════════════════════
- * 💰 NORTHSTAR CLAIM — 1-YEAR HARDCORE REVENUE PUSH 2026
+ * 💰 NORTHSTAR MEDIC — 1-YEAR REVENUE PLAN 2026 (Updated March 16)
  * ══════════════════════════════════════════════════════════════════════════════
  *
- * PLATFORM: NorthStar Claim — AI-Powered Denied Claims Recovery
- * BRANDING: NorthStar Claim
+ * PLATFORM: NorthStar Medic — AI-Powered Denied Claims Recovery
+ * WEBSITE:  northstarmedic.com (Next.js on Vercel)
+ * BRANDING: NorthStar Medic
+ * FOUNDER:  Joehary Illum (Solo, based in Denmark, operating US market remotely)
  *
  * PREMISE:
- *   One founder. One AI system. Zero employees.
+ *   One founder. One AI system. Zero employees. Zero meetings. Zero Zoom calls.
+ *   AI auto-responds to every inbox reply. Stripe handles payments.
  *   TWO revenue streams: Direct Recovery (30%) + Biller Partnerships (15% each side)
- *   Timeline: 12-month hardcore scaling push
- *   Target: $2B+ in Year 1
+ *   Timeline: 12-month scaling push
+ *
+ * CURRENT STATE (March 16, 2026):
+ *   ✅ 5,000 leads loaded on Instantly.ai campaign (US hospital C-suite)
+ *   ✅ Campaign ACTIVE — Mon-Fri 9am-5pm CT
+ *   ✅ AI auto-responder LIVE — GPT-4 handles all reply emails automatically
+ *   ✅ Sending: 2/day ramp → 20/day max (1 email account, free plan)
+ *   ✅ Stripe checkout LIVE: https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00
+ *   ✅ Webhook pipeline: Instantly reply → AI response → auto-send
+ *   ⚠️ 0 emails sent yet (just activated — first sends start next business day)
+ *   ⚠️ Free Instantly plan: 100 lead upload limit used, no warmup
  *
  * STREAM 1: DIRECT CLAIMS RECOVERY (30% commission)
  *   You sign clinics + hospitals directly → AI processes claims → You keep 30%
@@ -39,33 +51,113 @@
  *   ✅ BAA executed digitally before any PHI processing
  *   ✅ Web 4.0 AI Agent Governance (EU AI Act + US proposals)
  *
- * NO:  Hiring a team, selling SaaS, training sales managers
- * YES: You + AI + billers as distribution + whale hunting + Apollo for leads
+ * NO:  Hiring, SaaS selling, meetings, Zoom calls, manual inbox management
+ * YES: You + AI + billers as distribution + whale hunting + Instantly cold email
  * ══════════════════════════════════════════════════════════════════════════════
  */
 
 const MEGA_PLAN = {
 
   // ════════════════════════════════════════════
+  // CURRENT INFRASTRUCTURE (March 2026)
+  // ════════════════════════════════════════════
+  current_state: {
+    leads_in_db:              5000,
+    leads_on_instantly:        4996,
+    emails_sent:              0,
+    email_accounts:           1,        // joehary@northstarmedic.com
+    daily_send_limit:         20,       // ramps from 2/day +1/day
+    sending_schedule:         'Mon-Fri 9am-5pm CT',
+    ai_auto_responder:        'LIVE — GPT-4 Turbo handles all replies',
+    stripe_checkout:          'LIVE — $2,500 Guardian Pilot',
+    webhook_pipeline:         'Instantly reply → AI draft → auto-send → audit log',
+    instantly_plan:           'Free (100 upload limit used, no warmup)',
+    deployment:               'Vercel (auto-deploy from GitHub master)',
+  },
+
+  // ════════════════════════════════════════════
   // YOUR REAL COSTS (Monthly — scales with volume)
   // ════════════════════════════════════════════
   monthly_costs: {
-    at_launch: {
-      railway_hosting:        20,
-      neon_database:          25,
-      stripe_fees:            0,       // % based, deducted from payouts
-      cloudflare:             0,
-      domain:                 1,
-      total:                  46,
+    current: {
+      vercel_hosting:         0,        // Free tier (hobby)
+      neon_database:          0,        // Free tier
+      instantly:              0,        // Free plan
+      porkbun_email:          0,        // Included with domain
+      domain:                 1,        // northstarmedic.com
+      openai_api:             5,        // GPT-4 for auto-replies (low volume)
+      stripe_fees:            0,        // % based, deducted from payouts
+      total:                  6,
+      note: 'Running on $6/month. First revenue is 99.9%+ margin.'
+    },
+    at_first_revenue: {
+      vercel_pro:             20,       // When traffic grows
+      neon_database:          25,       // Paid tier for production
+      instantly_growth:       30,       // Growth plan: 1,000 leads/mo, 5,000 emails
+      openai_api:             20,       // Higher volume auto-replies
+      total:                  96,
     },
     at_scale: {
-      railway_hosting:        200,     // Pro plan, scaled
-      neon_database:          100,     // Higher tier
-      stripe_fees:            0,
-      cloudflare:             0,
-      domain:                 1,
-      total:                  301,
-      note: 'Even at $301/month costs, margin is 99.99%+ on any revenue'
+      vercel_pro:             20,
+      neon_database:          100,
+      instantly_hypergrowth:  78,       // Hypergrowth: 25K leads, 100K emails
+      openai_api:             100,
+      additional_domains:     20,       // 5 sending domains for deliverability
+      total:                  318,
+    },
+  },
+
+  // ════════════════════════════════════════════
+  // SENDING CAPACITY & PIPELINE MATH
+  // ════════════════════════════════════════════
+  sending_pipeline: {
+    current_free_plan: {
+      accounts:               1,
+      daily_limit:            20,
+      ramp:                   '2/day → +1/day → 20/day cap',
+      sequence_steps:         2,        // Initial + follow-up (2 days later)
+      unique_leads_per_day:   10,       // 20 emails ÷ 2-step sequence
+      unique_leads_per_month: 200,      // 10/day × 20 business days
+      months_to_exhaust:      25,       // 5,000 ÷ 200
+      note: 'Free plan is slow but safe — builds sender reputation naturally'
+    },
+    with_growth_plan: {
+      accounts:               3,        // 3 sending emails on 3 domains
+      daily_limit_each:       50,
+      total_daily:            150,
+      unique_leads_per_day:   75,
+      unique_leads_per_month: 1500,
+      months_to_exhaust:      3.3,      // 5,000 ÷ 1,500
+      note: 'Upgrade to Growth ($30/mo) when first $2,500 deal closes'
+    },
+    with_hypergrowth: {
+      accounts:               10,       // 10 sending emails on 5 domains
+      daily_limit_each:       75,
+      total_daily:            750,
+      unique_leads_per_month: 7500,
+      note: 'Load 25,000+ new leads from Apollo. Full pipeline velocity.'
+    },
+  },
+
+  // ════════════════════════════════════════════
+  // COLD EMAIL CONVERSION MATH (Industry Benchmarks)
+  // ════════════════════════════════════════════
+  conversion_funnel: {
+    per_1000_leads_contacted: {
+      emails_delivered:       950,       // 95% deliverability
+      emails_opened:          190,       // 20% open rate (strong subject lines)
+      replies:                30,        // 3% reply rate (C-suite healthcare)
+      positive_replies:       15,        // 50% of replies are interested/curious
+      meetings_booked:        5,         // 33% of positive replies → meeting/demo
+      deals_closed:           1,         // 20% close rate from meetings
+      note: 'AI auto-responder advantage: instant 24/7 follow-up increases positive reply conversion by 2-3x'
+    },
+    revenue_per_1000_leads: {
+      guardian_pilot_deals:   1,         // 1 deal per 1,000 leads
+      upfront_revenue:        2500,      // $2,500 pilot fee
+      monthly_commission:     40800,     // 40 claims × $8,500 × 40% success × 30%
+      year1_from_1000_leads:  2500 + (40800 * 11),  // $451,300
+      note: 'Each 1,000 leads that converts ONE small clinic = $451K/year recurring'
     },
   },
 
@@ -101,16 +193,43 @@ const MEGA_PLAN = {
     name: '🔥 DIRECT CLAIMS RECOVERY',
     description: 'You sign clinics & hospitals directly. AI processes. You keep 30%.',
 
-    year1: {
-      small_clinics:        25,
-      whale_hospitals:      3,
-      small_claims:         25 * 40 * 12,                         // 12,000 claims
-      whale_claims:         3 * 2000 * 12,                        // 72,000 claims
-      total_claims:         84000,
-      small_revenue:        12000 * 8500 * 0.40 * 0.30,          // $12,240,000
-      whale_revenue:        72000 * 45000 * 0.35 * 0.30,         // $340,200,000
-      total_revenue:        12240000 + 340200000,                 // $352,440,000
-      monthly_avg:          352440000 / 12,                       // ~$29.4M/month
+    // REALISTIC YEAR 1 — Based on current sending capacity
+    year1_realistic: {
+      phase1_free_plan: {
+        months:              '1-3',
+        leads_contacted:     600,       // 200/mo × 3 months (free plan pace)
+        deals_closed:        1,         // Conservative: 1 deal from 600 leads
+        upfront_revenue:     2500,      // 1 × $2,500 Guardian Pilot
+        monthly_commission:  40800,     // 1 clinic × 40 claims × $8,500 × 40% × 30%
+        phase_revenue:       2500 + (40800 * 2),  // ~$84,100
+      },
+      phase2_growth_plan: {
+        months:              '4-6',
+        leads_contacted:     4500,      // 1,500/mo × 3 months (Growth plan)
+        deals_closed:        4,         // 4 new deals (5 total active)
+        new_upfront:         10000,     // 4 × $2,500
+        monthly_commission:  204000,    // 5 clinics × $40,800/mo
+        phase_revenue:       10000 + (204000 * 3), // ~$622,000
+      },
+      phase3_scale: {
+        months:              '7-12',
+        leads_contacted:     9000,      // 1,500/mo × 6 months (fresh Apollo leads)
+        deals_closed:        9,         // 9 new deals (14 total active)
+        whale_hospitals:     1,         // First whale from referral/warm intro
+        monthly_commission_small: 571200,   // 14 clinics × $40,800
+        monthly_commission_whale: 7350000,  // 1 regional hospital × 2,000 claims
+        phase_revenue_range: '$4.7M – $47.5M',
+        note: 'Revenue explodes IF you land even 1 whale hospital in this phase'
+      },
+
+      // YEAR 1 TOTALS
+      total_leads_contacted: 14100,
+      total_deals_closed:    14,        // 14 small clinics + attempt at 1 whale
+      year1_no_whale:        '$2.5M',   // 14 clinics × $40.8K × 12 (averaged)
+      year1_with_1_whale:    '$50M+',   // 1 whale changes everything
+      year1_expected:        '$3M-$8M', // Most likely range
+
+      note: 'Without a whale: solid $3M-$8M year. With ONE whale: $50M+ year.'
     },
   },
 
@@ -121,53 +240,98 @@ const MEGA_PLAN = {
     name: '🤝 BILLER PARTNERSHIPS',
     description: 'Billers bring their provider clients. AI processes. Biller gets 15%, you keep 15%.',
 
-    year1: {
-      biller_partners:          20,
-      avg_providers_per_biller: 80,
-      total_providers_reached:  1600,
-      active_submitting:        400,
-      claims_from_small:        400 * 30 * 12,                     // 144,000
-      claims_from_whales:       20 * 2 * 1500 * 12,               // 720,000
-      total_claims:             864000,
-      small_revenue:            144000 * 8500 * 0.40 * 0.15,      // $73,440,000
-      whale_revenue:            720000 * 45000 * 0.35 * 0.15,     // $1,701,000,000
-      total_revenue:            73440000 + 1701000000,             // $1,774,440,000
-      monthly_avg:              1774440000 / 12,                   // ~$147.9M/month
+    year1_realistic: {
+      phase1: {
+        months:             '1-3',
+        biller_partners:    2,         // 2 billers recruited from Instantly leads
+        providers_active:   5,         // 5 providers submitting claims
+        monthly_revenue:    5 * 30 * 8500 * 0.40 * 0.15,  // $38,250/mo
+        phase_total:        38250 * 2, // ~$76,500 (billers start month 2-3)
+      },
+      phase2: {
+        months:             '4-6',
+        biller_partners:    6,         // 6 total billers
+        providers_active:   25,        // 25 providers active
+        monthly_revenue:    25 * 30 * 8500 * 0.40 * 0.15,  // $191,250/mo
+        phase_total:        191250 * 3, // ~$573,750
+      },
+      phase3: {
+        months:             '7-12',
+        biller_partners:    12,        // 12 total billers (referrals kick in)
+        providers_active:   80,        // 80 providers active
+        monthly_revenue:    80 * 30 * 8500 * 0.40 * 0.15,  // $612,000/mo
+        phase_total:        612000 * 6, // ~$3,672,000
+        note: 'If even ONE biller brings a hospital client: +$2.3M/mo'
+      },
+
+      year1_total:          '$4.3M',
+      note: 'Biller network is the long game. Slow start, exponential growth.'
     },
   },
 
   // ══════════════════════════════════════════════════════════════════
-  // YEAR 1 COMBINED TOTALS — BOTH STREAMS
+  // YEAR 1 COMBINED TOTALS — REALISTIC SCENARIOS
   // ══════════════════════════════════════════════════════════════════
   annual_totals: {
-    year1: {
-      stream1_direct:           352440000,
-      stream2_billers:          1774440000,
-      gross_commission:         352440000 + 1774440000,            // $2,126,880,000
-      operating_costs:          46 * 12,                           // $552
-      net_profit:               2126880000 - 552,                  // $2,126,879,448
-      monthly_avg_profit:       (2126880000 - 552) / 12,          // ~$177.2M/month
-      clinics_direct:           28,
-      biller_partners:          20,
-      total_providers_served:   428,
-      employees:                0,
+    year1_scenarios: {
+      bare_minimum: {
+        label:              '⚠️ Bare Minimum (no whales, slow close rate)',
+        small_clinics:      5,
+        biller_partners:    3,
+        annual_revenue:     '$500K-$1M',
+        monthly_by_dec:     '$80K/mo',
+        note:               'Still life-changing money for a solo founder'
+      },
+      realistic: {
+        label:              '📊 Realistic',
+        small_clinics:      14,
+        biller_partners:    8,
+        annual_revenue:     '$3M-$8M',
+        monthly_by_dec:     '$500K-$1M/mo',
+      },
+      optimistic: {
+        label:              '🚀 Optimistic (1 whale hospital lands)',
+        small_clinics:      14,
+        biller_partners:    12,
+        whale_hospitals:    1,
+        annual_revenue:     '$50M-$100M',
+        monthly_by_dec:     '$7M-$10M/mo',
+        note:               'ONE whale hospital = game over. Everything changes.'
+      },
+      moonshot: {
+        label:              '🌙 Moonshot (2+ whales + strong biller network)',
+        small_clinics:      20,
+        biller_partners:    20,
+        whale_hospitals:    3,
+        annual_revenue:     '$200M+',
+        monthly_by_dec:     '$25M+/mo',
+      },
     },
+    operating_costs_yearly: 96 * 12, // $1,152 at Growth plan level
+    employees:              0,
+    note: 'Operating costs are irrelevant at any revenue tier. 99.9%+ margin.'
   },
 
   // ════════════════════════════════════════════════════════════════════
-  // MONTHLY PROFIT MILESTONES — THE PATH TO $500M/MONTH
+  // MONTHLY REVENUE MILESTONES — REALISTIC PATH
   // ════════════════════════════════════════════════════════════════════
   monthly_milestones: {
-    month_1:  { target: '$5M',   how: '2 small clinics + 1 whale pilot + 3 billers via Apollo leads' },
-    month_2:  { target: '$15M',  how: '5 clinics + 1 whale active + 5 billers' },
-    month_3:  { target: '$40M',  how: '8 clinics + 2 whales + 8 billers, backlog clearing' },
-    month_4:  { target: '$70M',  how: '12 clinics + 2 whales + 12 billers — HIT $70M TARGET' },
-    month_5:  { target: '$100M', how: '15 clinics + 3 whales + 15 billers — 9 figures/month' },
-    month_6:  { target: '$150M', how: '20 clinics + 3 whales + 18 billers — referral engine ON' },
-    month_8:  { target: '$200M', how: '25 clinics + 5 whales + 20 billers — machine mode' },
-    month_10: { target: '$350M', how: '40 clinics + 8 whales + 20 billers — backlogs fully loaded' },
-    month_12: { target: '$500M', how: '80 clinics + 12 whales + 20 billers — $500M MONTH' },
-    note: 'Most revenue comes from whale hospitals. One 10,000-bed health system = $100M+/month alone.'
+    month_1:  { target: '$0-$2.5K',   sends: '~60 emails',   how: 'Ramp sending. 2/day → 20/day. Build sender reputation. First replies come in. AI handles them.' },
+    month_2:  { target: '$2.5K-$5K',  sends: '~400 emails',  how: 'First Guardian Pilot sale ($2,500 upfront). First biller recruited. AI closes warm leads.' },
+    month_3:  { target: '$40K/mo',    sends: '~400 emails',  how: 'First clinic starts submitting claims. Commission revenue begins. Upgrade to Instantly Growth plan.' },
+    month_4:  { target: '$80K/mo',    sends: '~1,500 emails', how: '2 clinics active + 1 biller bringing providers. Scale to 3 sending accounts.' },
+    month_5:  { target: '$120K/mo',   sends: '~1,500 emails', how: '3+ clinics + 2 billers. Referral engine starting. Load 10,000 fresh Apollo leads.' },
+    month_6:  { target: '$250K/mo',   sends: '~1,500 emails', how: '5+ clinics + 4 billers. First case study published. Pipeline building.' },
+    month_8:  { target: '$500K/mo',   sends: '~3,000 emails', how: '8+ clinics + 6 billers. Whale hospital pilot underway. 10 sending accounts.' },
+    month_10: { target: '$1M/mo',     sends: '~5,000 emails', how: '12+ clinics + 8 billers. If whale closes: jumps to $7M+/mo.' },
+    month_12: { target: '$1M-$10M/mo', sends: '~7,500 emails', how: '14+ clinics + 12 billers. With whale: $10M/mo. Without: $1M/mo.' },
+
+    first_dollar:    'Expected: Month 2 (first $2,500 Guardian Pilot sale)',
+    first_10k_month: 'Expected: Month 3-4 (first clinic submitting claims)',
+    first_100k_month: 'Expected: Month 5-6',
+    first_1m_month:   'Expected: Month 8-12 (with scale OR sooner with a whale)',
+
+    note: 'These milestones EXCLUDE whales. Landing 1 whale at any point multiplies everything by 10-50x.',
   },
 
   // ════════════════════════════════════════════════════════════════════
@@ -208,61 +372,74 @@ const MEGA_PLAN = {
 const PHASES = {
 
   phase1: {
-    name:    '🩸 PHASE 1: PROVE IT (Months 1-3)',
+    name:    '🩸 PHASE 1: FIRST DOLLAR (Months 1-3)',
     months:  '1-3',
-    goal:    'Land first whale. Hit $20M/month by month 3.',
+    goal:    'Land first paying client. Get to $40K MRR by month 3.',
+    sending: '200 leads/mo (free Instantly plan, 1 account, 20/day cap)',
     actions: [
-      'Land 5-8 small clinics via cold outreach (prove the AI works)',
-      'Use Apollo to source leads — hospital revenue cycle VPs, clinic owners',
-      'Use small clinic results as case study for whale pitch',
-      'Cold-approach 3 regional hospitals — offer free pilot on 500 claims',
-      'Sign first whale hospital after pilot shows $5M+ recoverable',
-      'Recruit 5-8 billers — show them the 15% biller commission model',
-      'Build referral engine — happy providers refer other providers',
+      'Campaign LIVE — 5,000 leads auto-sending 2-step sequence Mon-Fri',
+      'AI auto-responder handles ALL replies 24/7 — zero manual inbox work',
+      'Positive replies → AI pushes toward $2,500 Guardian Pilot checkout',
+      'First $2,500 payment → fund Instantly Growth plan upgrade ($30/mo)',
+      'Recruit 2 billers from the same lead pool (title filters)',
+      'Build first case study from first clinic results (even small wins)',
+      'Monitor Stripe dashboard from Denmark — money flows automatically',
     ],
     revenue: {
-      direct_small:   8 * 35 * 3 * 8500 * 0.40 * 0.30,            // $857,280
-      direct_whale:   1 * 1500 * 2 * 45000 * 0.35 * 0.30,         // $14,175,000 (whale starts month 2)
-      phase_total:    857280 + 14175000,                            // ~$15M
-      monthly_avg:    15032280 / 3,                                 // ~$5M/month
+      month1:  0,          // Ramping sends, building reputation
+      month2:  2500,       // First Guardian Pilot sale
+      month3:  43300,      // $2,500 new sale + $40,800 recurring from first clinic
+      phase_total: 45800,
     },
+    key_unlock: 'First $2,500 sale → proves the model → funds scaling infrastructure',
   },
 
   phase2: {
     name:    '📈 PHASE 2: SCALE THE MACHINE (Months 4-6)',
     months:  '4-6',
-    goal:    'Hit $70M-$150M/month. Whale pipeline flowing. Billers scaling.',
+    goal:    'Hit $250K MRR. 5+ clinics. 4+ billers. Begin whale hunting.',
+    sending: '1,500 leads/mo (3 accounts on Growth plan)',
     actions: [
-      'Second and third whale hospitals signed from pipeline',
-      'Biller partners now at 15-18 — each one bringing 50-100 new providers',
-      'Automate everything: biller portal, claim intake, appeal generation, payout',
-      'Small clinic count hits 20 (mostly from referrals now)',
-      'Build whale case study: "Recovered $50M for [Hospital] in 90 days"',
-      'Apollo lead refills on auto-alert — keep the pipeline full',
+      'Upgrade Instantly to Growth plan — 3 sending accounts, 50/day each',
+      'Buy 2 more domains (northstarmedic.io, northstarmedclaim.com) for deliverability',
+      'Load 10,000 fresh Apollo leads (hospitals + billers mix)',
+      'Publish case study: "Recovered $XXK in denied claims in 30 days"',
+      'Start whale outreach — target regional hospitals (200-500 beds)',
+      'Offer FREE 500-claim pilot scan to 3 hospital CFOs',
+      'Biller referral loop: existing billers recruit other billers for you',
+      'Set up Stripe Connect for auto 3-way splits (you/biller/provider)',
     ],
     revenue: {
-      monthly_avg:    '$70M–$150M/month',
-      phase_total:    '$300M–$450M total',
+      monthly_range: '$80K-$250K/month',
+      phase_total:   '$350K-$750K',
     },
+    key_unlock: 'First whale pilot → if you show $5M+ recoverable → whale signs',
   },
 
   phase3: {
-    name:    '⚡ PHASE 3: $500M MONTHS (Months 7-12)',
+    name:    '⚡ PHASE 3: WHALE HUNTING + SCALE (Months 7-12)',
     months:  '7-12',
-    goal:    'Hit $500M/month. 10+ whales + 20 billers fully loaded. Machine mode.',
+    goal:    'Close first whale. Hit $1M-$10M/month. Full autopilot.',
+    sending: '3,000-7,500 leads/mo (5-10 accounts on Hypergrowth plan)',
     actions: [
-      '10+ whale hospital systems fully processing backlog + new denials',
-      '20+ biller partners with 400+ active providers between them',
-      '80+ small clinics active and referring others',
-      'AI success rate improving to 40%+ with real data training',
-      'Whale referrals: health systems talk to each other — pipeline builds itself',
-      'FULL AUTOPILOT: AI handles everything — edge cases, outreach, relationship management',
-      'You spend 0-15 min/day: glance at Stripe payouts, live life to the fullest',
+      'Whale pilot results → show CFO "$X million recoverable in your A/R"',
+      'Close whale on 30% commission — sign BAA + service agreement',
+      'Whale processing ramps: 500 claims/mo → 2,000 claims/mo → $7.3M/mo',
+      '12+ biller partners active — network recruiting itself',
+      '14+ small clinics generating steady $571K/mo recurring',
+      'Publish whale case study → inbound leads from other hospitals',
+      'Load 25,000+ fresh Apollo leads — saturate the market',
+      'Consider LLC formation (Delaware) once revenue justifies it',
+      'FULL AUTOPILOT: AI handles claims, appeals, inbox, and payouts',
+      'You: glance at Stripe dashboard, handle whale relationships, live life',
     ],
     revenue: {
-      monthly_avg:    '$200M–$500M/month',
-      phase_total:    '$1.5B–$2.5B total',
+      without_whale:  '$1M-$2M/month from clinics + billers alone',
+      with_1_whale:   '$7M-$10M/month',
+      with_2_whales:  '$15M-$20M/month',
+      phase_total:    '$6M-$60M (depending on whales)',
     },
+    key_unlock: 'First whale case study → other hospitals come inbound. Pipeline feeds itself.',
   },
 };
 
@@ -334,29 +511,33 @@ const BILLER_PLAYBOOK = {
 // SCENARIO ANALYSIS
 // ════════════════════════════════════════════════════════════════════
 const SCENARIOS = {
-  optimistic: {
-    label: '🚀 Optimistic',
-    month_6:   '$75M/month',
-    month_12:  '$500M/month',
-    year1:     '$352M',
+  bare_minimum: {
+    label: '⚠️ Bare Minimum (slow close rate, no whales)',
+    month_6:   '$80K/month',
+    month_12:  '$250K/month',
+    year1:     '$500K-$1M',
+    what_it_takes: '5 small clinics + 3 billers. Very achievable.',
   },
   realistic: {
-    label: '📊 Realistic (50% haircut)',
-    month_6:   '$37M/month',
-    month_12:  '$250M/month',
-    year1:     '$176M',
+    label: '📊 Realistic',
+    month_6:   '$250K/month',
+    month_12:  '$1M/month',
+    year1:     '$3M-$8M',
+    what_it_takes: '14 small clinics + 8 billers. Solid grind.',
   },
-  conservative: {
-    label: '🛡️ Conservative (75% haircut)',
-    month_6:   '$19M/month',
-    month_12:  '$125M/month',
-    year1:     '$88M',
+  optimistic: {
+    label: '🚀 Optimistic (land 1 whale)',
+    month_6:   '$500K/month',
+    month_12:  '$10M/month',
+    year1:     '$50M-$100M',
+    what_it_takes: '14 clinics + 12 billers + 1 whale hospital.',
   },
-  bare_minimum: {
-    label: '⚠️ Bare Minimum (no whales, small clinics only)',
-    month_6:   '$1M/month',
-    month_12:  '$3M/month',
-    year1:     '$20M',
+  moonshot: {
+    label: '🌙 Moonshot (2-3 whales + strong biller network)',
+    month_6:   '$2M/month',
+    month_12:  '$25M/month',
+    year1:     '$100M-$200M',
+    what_it_takes: 'Everything clicks. Hunt whales aggressively.',
   },
 };
 
@@ -365,29 +546,30 @@ const SCENARIOS = {
 // ════════════════════════════════════════════════════════════════════
 const DAILY_OPS = {
   ai_autopilot: {
+    cold_outreach:    'Instantly.ai sends 2-step email sequence Mon-Fri automatically',
+    inbox_ai:         'GPT-4 AI auto-responds to every reply — 24/7, handles objections, pushes to checkout',
     claim_processing: 'AI processes all claims automatically — zero manual review',
-    appeals: 'AI generates and submits appeals — fully automated',
-    payouts: 'Stripe auto-splits commissions when claims are recovered',
+    appeals:          'AI generates and submits appeals — fully automated',
+    payouts:          'Stripe auto-splits commissions when claims are recovered',
     biller_management: 'AI monitors biller performance, auto-escalates issues',
+    audit_logging:    'Every AI action logged to Neon DB — HIPAA compliant',
   },
-  apollo_lead_alerts: {
-    description: 'Apollo for lead sourcing — auto-alerts when lists need refilling',
-    platforms: ['SMS/Text', 'Email', 'Dashboard', 'Mobile Push'],
-    triggers: [
-      'Apollo lead list drops below 500 contacts → ALERT: Refill needed',
-      'Weekly lead quality score report → auto-sent to your phone',
-    ],
-    action: 'You top up Apollo when you get the alert. 5 minutes. Done.',
+  lead_engine: {
+    primary:          'Instantly.ai — cold email to 5,000 US hospital C-suite leads',
+    enrichment:       'Apollo.io — refresh leads when current pool exhausted',
+    webhook_flow:     'Instantly reply → webhook → GPT-4 response → auto-send → Stripe checkout',
+    platforms:        ['Instantly.ai', 'Apollo.io', 'Porkbun Email', 'Vercel'],
   },
   your_actual_day: {
-    duration: 'Hustle mode — as much as needed',
+    location:         'Denmark (remote, operating US market timezone)',
+    duration:         '15-60 min/day once system is running',
     tasks: [
-      'Sign new clinics and hospitals — Apollo-sourced leads',
-      'Recruit billers — they bring their own provider networks',
-      'Run free pilots for whale prospects',
-      'Monitor recoveries on the War Room dashboard',
-      'Refill Apollo leads when alerted',
-      'Scale. Grind. Close deals. Repeat.',
+      'Check Stripe dashboard: any new $2,500 payments? Any commission payouts?',
+      'Check Instantly analytics: open rates, reply rates, bounce rates',
+      'Review AI auto-reply audit log: any responses need manual override?',
+      'If lead pool running low → load new Apollo leads (5 min)',
+      'If whale opportunity appears in replies → handle personally',
+      'Everything else is automated. Live your life.',
     ]
   },
 };
@@ -396,13 +578,18 @@ const DAILY_OPS = {
 // TECH STACK
 // ════════════════════════════════════════════════════════════════════
 const TECH_STACK = {
-  website:        'northstarclaim.com (Next.js on Railway)',
-  ai_engine:      'Built-in AI — claim analysis, appeal generation, payer negotiation',
-  database:       'Neon PostgreSQL via Prisma ORM',
-  payments:       'Stripe Connect — auto commission splits',
-  auth:           'NextAuth v5 — provider portal',
-  monitoring:     'War Room dashboard — real-time recovery tracking',
-  cost:           '$46/month at launch → $301/month at scale',
+  website:        'northstarmedic.com (Next.js 16 on Vercel, auto-deploy from GitHub)',
+  ai_engine:      'GPT-4 Turbo — claim analysis, appeal generation, email auto-reply',
+  database:       'Neon PostgreSQL via Prisma ORM (13 models)',
+  payments:       'Stripe Connect — $2,500 checkout + auto commission splits',
+  auth:           'NextAuth v5 — provider portal login',
+  cold_email:     'Instantly.ai — 5,000 leads, 2-step sequence, automated outreach',
+  email_sender:   'joehary@northstarmedic.com via Porkbun (SMTP/IMAP)',
+  ai_responder:   'Webhook: Instantly reply → GPT-4 draft → auto-send (24/7)',
+  lead_source:    'Apollo.io — US hospital revenue cycle executives',
+  monitoring:     'Vercel Analytics + Speed Insights + HIPAA audit logs in Neon',
+  dns:            'Porkbun — SPF, DKIM, DMARC all configured',
+  cost:           '$6/month at launch → $96/month with Growth plan → $318/month at scale',
 };
 
 // ════════════════════════════════════════════════════════════════════
@@ -410,34 +597,41 @@ const TECH_STACK = {
 // ════════════════════════════════════════════════════════════════════
 const GROWTH_LEVERS = {
   lever1: {
-    name: '🐋 Whale Hunting',
-    how:  'Free pilot → show $XX million recoverable → close on 30% commission',
-    impact: 'ONE whale = $7M-$46M/month. This is the #1 lever.',
+    name: '🤖 AI Auto-Responder (Your Unfair Advantage)',
+    how:  'GPT-4 responds to every reply within seconds, 24/7. Handles objections, pushes to checkout link.',
+    impact: 'Most competitors take 24-48 hours to reply to cold email responses. You reply in SECONDS. This 50x your conversion rate.',
+    why_it_matters: 'A warm lead goes cold in 30 minutes. Your AI never sleeps, never forgets, never gets tired.',
   },
   lever2: {
+    name: '🐋 Whale Hunting',
+    how:  'Free pilot → show $XX million recoverable → close on 30% commission',
+    impact: 'ONE whale = $7M-$46M/month. This is the #1 revenue lever.',
+  },
+  lever3: {
     name: '🤝 Biller Network Effect',
     how:  'Each biller has 50-500 providers. Billers recruit billers when they see the money.',
     impact: '20 billers = instant access to 1,600+ providers without lifting a finger.',
   },
-  lever3: {
-    name: '🔄 Free Scan Funnel',
-    how:  'Upload 5 denied claims → AI shows recovery potential → They sign up',
-    impact: '15-25% conversion. Works for both clinics and hospital CFOs.',
-  },
   lever4: {
-    name: '📣 Whale Case Studies',
-    how:  '"We recovered $50M for [Hospital System] in 90 days." Share everywhere.',
-    impact: 'Other hospital CFOs see it → inbound leads → shorter sales cycle.',
+    name: '🔄 $2,500 Stripe Checkout Funnel',
+    how:  'AI auto-reply includes checkout link. Lead clicks → pays → onboards. Zero meetings.',
+    impact: 'Some percentage of warm replies will just click and pay. Pure automation.',
   },
   lever5: {
-    name: '💰 Biller Income Proof',
-    how:  'Show billers earning $510K/month. They recruit themselves.',
-    impact: 'Every medical biller wants in. Viral recruitment.',
+    name: '📧 Multi-Domain Sending Scale',
+    how:  'Add 3-5 sending domains + accounts. Go from 20/day to 750/day.',
+    impact: 'Linear increase in pipeline. 750 emails/day = 375 unique leads/day = 7,500/month.',
+    cost: '$78/mo Instantly Hypergrowth + $20/mo for domains',
   },
   lever6: {
-    name: '🎯 Apollo Lead Engine',
-    how:  'Apollo sources hospital VPs, clinic owners, billers — auto-refill pipeline',
-    impact: 'Never run out of prospects. Keep the funnel full.',
+    name: '📣 Case Study Flywheel',
+    how:  'Every successful recovery → case study → share in cold emails → higher conversion.',
+    impact: '"We recovered $XXK for [clinic name]" in email body → 2-3x reply rate.',
+  },
+  lever7: {
+    name: '💰 Biller Income Proof',
+    how:  'Show billers earning $500K+/month. They recruit themselves.',
+    impact: 'Every medical biller wants in. Viral recruitment.',
   },
 };
 
@@ -471,26 +665,44 @@ const RISKS = {
 // 90-DAY LAUNCH CHECKLIST
 // ════════════════════════════════════════════════════════════════════
 const LAUNCH_CHECKLIST = [
-  { week: 1,  task: 'Finalize northstarclaim.com — deploy Tailwind theme, fix all pages' },
-  { week: 1,  task: 'Set up Stripe Connect — enable 3-way splits (you/biller/provider)' },
-  { week: 2,  task: 'Write whale hospital pitch deck (AI-powered, free pilot offer)' },
-  { week: 2,  task: 'Write biller recruitment pitch (15% biller commission, passive income angle)' },
-  { week: 2,  task: 'Identify top 50 target hospitals (200-5000 beds) via Apollo' },
-  { week: 3,  task: 'Send first 50 cold emails to hospital revenue cycle VPs (Apollo leads)' },
-  { week: 3,  task: 'Land 3-5 small clinics for proof-of-concept results' },
-  { week: 3,  task: 'Recruit first 3-5 biller partners' },
-  { week: 4,  task: 'Process small clinic claims — build first case study with real numbers' },
-  { week: 5,  task: 'Pitch first whale hospital with case study — offer free 500-claim pilot' },
-  { week: 6,  task: 'First whale pilot results come back — show $5M+ recoverable' },
-  { week: 6,  task: 'Close whale #1 on 30% commission agreement' },
-  { week: 7,  task: 'Whale claims start processing at volume (1,500+/month)' },
-  { week: 8,  task: 'Build whale case study: "Recovered $XX million in 60 days"' },
-  { week: 8,  task: 'Publish case study on website and email to next whale targets' },
-  { week: 9,  task: 'Pipeline: 2-3 more whale hospitals in negotiation' },
-  { week: 9,  task: 'Biller network hits 10+ partners, 200+ providers connected' },
-  { week: 10, task: 'Small clinic count hits 15+ via referrals and Apollo outreach' },
-  { week: 11, task: 'Close whale #2 — monthly revenue crosses $70M+' },
-  { week: 12, task: 'Review Q1: optimize AI prompts, scale infrastructure, plan whale #3 pipeline' },
+  // ✅ COMPLETED (March 16, 2026)
+  { week: 0,  task: '✅ Website deployed at northstarmedic.com (Vercel, 41+ pages)', done: true },
+  { week: 0,  task: '✅ Stripe checkout LIVE ($2,500 Guardian Pilot)', done: true },
+  { week: 0,  task: '✅ 5,000 Apollo leads loaded to Instantly campaign', done: true },
+  { week: 0,  task: '✅ Email sender joehary@northstarmedic.com created (Porkbun)', done: true },
+  { week: 0,  task: '✅ DNS configured: SPF (-all), DKIM, DMARC', done: true },
+  { week: 0,  task: '✅ Instantly campaign ACTIVE — Mon-Fri 9am-5pm CT', done: true },
+  { week: 0,  task: '✅ AI auto-responder LIVE — GPT-4 webhook → auto-reply to all leads', done: true },
+  { week: 0,  task: '✅ Security audit passed — all OWASP Top 10 issues fixed', done: true },
+  { week: 0,  task: '✅ HIPAA audit logging for all AI actions', done: true },
+  { week: 0,  task: '✅ Mobile UI overlap fix pushed to production', done: true },
+
+  // 🔜 NEXT STEPS (Week 1-2)
+  { week: 1,  task: 'Monitor first 60 emails sent. Check open rates and reply volume.' },
+  { week: 1,  task: 'First AI auto-reply fires — verify it sends correctly via Instantly' },
+  { week: 1,  task: 'Review bounce rates — remove invalid emails from campaign' },
+  { week: 2,  task: 'Analyze reply sentiment — is the AI handling objections well?' },
+  { week: 2,  task: 'If first positive reply → push hard for $2,500 Guardian Pilot close' },
+  { week: 2,  task: 'First $2,500 hits Stripe → file for Delaware LLC formation' },
+
+  // 🎯 WEEKS 3-6
+  { week: 3,  task: 'Upgrade Instantly to Growth plan ($30/mo). Add 2 more sending accounts.' },
+  { week: 3,  task: 'Buy 2 secondary domains for email deliverability rotation' },
+  { week: 3,  task: 'Load first biller-focused lead list from Apollo (10,000 medical billers)' },
+  { week: 4,  task: 'First clinic submitting claims → track recovery rate → build case study' },
+  { week: 5,  task: 'First case study published → include in cold email Step 1 body' },
+  { week: 5,  task: 'Recruit first 2 biller partners using case study proof' },
+  { week: 6,  task: 'Review Month 2 results: how many replies, meetings, deals?' },
+
+  // 🐋 WEEKS 7-12
+  { week: 7,  task: 'Begin whale outreach — target 50 regional hospitals (200-500 beds)' },
+  { week: 7,  task: 'Offer FREE 500-claim AI recovery scan to 3 hospital CFOs' },
+  { week: 8,  task: 'Whale pilot results come back — show $XX million recoverable' },
+  { week: 9,  task: 'Close first whale BAA + service agreement' },
+  { week: 10, task: 'Whale claims processing ramps → revenue jumps 10-50x' },
+  { week: 10, task: 'Publish whale case study → inbound leads start flowing' },
+  { week: 11, task: 'Scale to 10 sending accounts on Hypergrowth plan' },
+  { week: 12, task: 'Q1 review: revenue trajectory, AI performance, pipeline health' },
 ];
 
 
@@ -504,19 +716,30 @@ function display() {
   const dash = '─'.repeat(94);
 
   console.log('\n' + line);
-  console.log('  💰 NORTHSTAR CLAIM — 1-YEAR HARDCORE REVENUE PUSH 2026');
-  console.log('  One Founder. One AI. Zero Employees. Billers + Whales + Clinics + Apollo Leads.');
-  console.log('  TARGET: $2B+ IN YEAR 1');
+  console.log('  💰 NORTHSTAR MEDIC — 1-YEAR REVENUE PLAN 2026');
+  console.log('  One Founder (Denmark). One AI. Zero Employees. Zero Meetings.');
+  console.log('  AI auto-responds to inbox. Stripe handles payments. You live your life.');
   console.log(line + '\n');
 
+  // ── Current State ──
+  console.log('📍 CURRENT STATE (March 16, 2026)\n');
+  console.log('  Leads loaded:       5,000 (US hospital C-suite: CFOs, VPs Revenue Cycle)');
+  console.log('  Emails sent:        0 (campaign just activated — first sends next business day)');
+  console.log('  Sending pace:       2/day → ramps +1/day → 20/day max');
+  console.log('  Schedule:           Mon-Fri, 9am-5pm Central Time');
+  console.log('  AI auto-responder:  ✅ LIVE — GPT-4 handles ALL reply emails 24/7');
+  console.log('  Stripe checkout:    ✅ LIVE — $2,500 Guardian Pilot');
+  console.log('  Monthly cost:       $6/month');
+  console.log('  Revenue so far:     $0 (Day 1 — starts now)\n');
+
   // ── The Play ──
+  console.log(dash);
   console.log('🎯 THE PLAY\n');
-  console.log('  STREAM 1 — Direct Recovery:   You sign clinics & hospitals → AI processes → You keep 30%');
-  console.log('  STREAM 2 — Biller Partners:   Billers bring their clients → AI processes → Biller gets 15%, you keep 15%');
-  console.log('  LEAD ENGINE:                  Apollo sources all leads — hospitals, clinics, billers');
-  console.log('  TARGET CLIENTS:               🐟 Small clinics ($8.5K avg)  +  🐋 Whale hospitals ($45K avg)');
-  console.log('  THE MULTIPLIER:               ONE whale hospital = 2,000-8,000 claims/month = $7M-$46M/month');
-  console.log('  THE ARMY:                     20 billers × 80 providers each = 1,600 providers, zero hiring\n');
+  console.log('  STREAM 1 — Direct Recovery:   Cold email → AI auto-reply → Stripe checkout → You keep 30%');
+  console.log('  STREAM 2 — Biller Partners:   Recruit billers → They bring clients → AI processes → 15% each');
+  console.log('  LEAD ENGINE:                  Instantly.ai (5,000 loaded) + Apollo.io (refills)');
+  console.log('  AI ADVANTAGE:                 GPT-4 replies to EVERY email in seconds — 24/7, no meetings');
+  console.log('  THE MULTIPLIER:               ONE whale hospital = 2,000-8,000 claims/month = $7M-$46M/month\n');
 
   // ── Unit Economics ──
   console.log(dash);
@@ -526,116 +749,118 @@ function display() {
   console.log('  Avg claim value:     $8,500                Avg claim value:     $45,000');
   console.log('  Success rate:        40%                   Success rate:        35%');
   console.log('  Direct commission:   $1,020/claim (30%)    Direct commission:   $4,725/claim (30%)');
-  console.log('  Biller deal (yours): $510/claim (15%)      Biller deal (yours): $2,362/claim (15%)');
-  console.log('  Biller earns:        $510/claim (15%)      Biller earns:        $2,362/claim (15%)\n');
+  console.log('  Biller deal (yours): $510/claim (15%)      Biller deal (yours): $2,362/claim (15%)\n');
 
   console.log('  ⚡ WHY WHALES CHANGE EVERYTHING:');
   console.log('  Family Practice (3 docs):     40 claims/mo  → $40,800/month');
   console.log('  Regional Hospital (200 beds):  2,000 claims  → $7,350,000/month');
   console.log('  Health System (5,000+ beds):   8,000 claims  → $46,200,000/month');
-  console.log('  → ONE whale = $46.2M/month. Two whales = ~$100M/month.\n');
+  console.log('  → ONE whale = $46.2M/month. This is the play.\n');
+
+  // ── Conversion Funnel ──
+  console.log(dash);
+  console.log('📧 COLD EMAIL CONVERSION FUNNEL (Per 1,000 Leads)\n');
+  console.log('  1,000 leads contacted');
+  console.log('    → 950 delivered (95%)');
+  console.log('    → 190 opened (20%)');
+  console.log('    → 30 replied (3%) ← AI auto-responds to ALL of these instantly');
+  console.log('    → 15 positive/interested');
+  console.log('    → 5 meetings/demos');
+  console.log('    → 1 deal closed ($2,500 upfront + $40,800/mo recurring)');
+  console.log('');
+  console.log('  Your 5,000 leads = ~5 deals = $12,500 upfront + $204K/mo recurring = $2.4M/year');
+  console.log('  + Whale bonus: If even 1 of those 5,000 leads is a hospital that signs = $7M+/mo\n');
 
   // ── Phase 1 ──
   console.log(dash);
-  console.log('🩸 PHASE 1: PROVE IT (Months 1-3)\n');
-  console.log('  Small clinics signed:      8        Biller partners:     5-8');
-  console.log('  Whale hospitals:           1        Providers via billers: 200+');
-  console.log('  Lead source:               Apollo');
-  console.log('  Phase revenue:             ~$15M+');
-  console.log('  Key win:                   First whale pilot → signed contract\n');
+  console.log('🩸 PHASE 1: FIRST DOLLAR (Months 1-3)\n');
+  console.log('  Sending:               200 leads/month (free plan, 20/day cap)');
+  console.log('  Expected deals:        1 Guardian Pilot ($2,500)');
+  console.log('  Billers recruited:     2');
+  console.log('  Phase revenue:         ~$46K');
+  console.log('  Key win:               First $2,500 hits Stripe → proves the model\n');
 
   // ── Phase 2 ──
   console.log(dash);
   console.log('📈 PHASE 2: SCALE THE MACHINE (Months 4-6)\n');
-  console.log('  Small clinics:             20       Biller partners:     15-18');
-  console.log('  Whale hospitals:           2-3      Providers via billers: 800+');
-  console.log('  Monthly profit:            $70M–$150M');
-  console.log('  Key win:                   $70M+ month achieved\n');
+  console.log('  Sending:               1,500 leads/month (Growth plan, 3 accounts)');
+  console.log('  Active clinics:        5+');
+  console.log('  Biller partners:       4+');
+  console.log('  Monthly revenue:       $80K–$250K/month');
+  console.log('  Key win:               First whale pilot underway\n');
 
   // ── Phase 3 ──
   console.log(dash);
-  console.log('⚡ PHASE 3: $500M MONTHS (Months 7-12)\n');
-  console.log('  Small clinics:             80+      Biller partners:     20+');
-  console.log('  Whale hospitals:           12+      Providers via billers: 1,600+');
-  console.log('  Monthly profit:            $200M–$500M');
-  console.log('  Key win:                   $500M single month\n');
+  console.log('⚡ PHASE 3: WHALE HUNTING + SCALE (Months 7-12)\n');
+  console.log('  Sending:               3,000-7,500 leads/month (Hypergrowth, 10 accounts)');
+  console.log('  Active clinics:        14+');
+  console.log('  Biller partners:       12+');
+  console.log('  Without whale:         $1M-$2M/month');
+  console.log('  With 1 whale:          $7M-$10M/month');
+  console.log('  Key win:               Full autopilot. AI handles everything.\n');
 
-  // ── Year 1 Totals ──
-  console.log(line);
-  console.log('  ⭐ YEAR 1 PROJECTIONS');
-  console.log(line);
-  console.log('  Stream 1 (Direct):         $352M');
-  console.log('  Stream 2 (Billers):        $1.77B');
-  console.log('  ──────────────────────────────────');
-  console.log('  TOTAL COMMISSION:          $2.13B');
-  console.log('  Operating costs:           $552');
-  console.log('  NET PROFIT:                $2.13B');
-  console.log('  Monthly avg:               $177M');
-  console.log('  Clinics (direct):          28');
-  console.log('  Biller partners:           20');
-  console.log('  Employees:                 0\n');
-
-  // ── Monthly Milestones ──
-  console.log(dash);
-  console.log('📅 MONTHLY PROFIT MILESTONES\n');
-  console.log('  Month  1:  $5M      ← 2 clinics + 1 whale pilot + 3 billers (Apollo leads)');
-  console.log('  Month  2:  $15M     ← 5 clinics + 1 whale active + 5 billers');
-  console.log('  Month  3:  $40M     ← 8 clinics + 2 whales + 8 billers');
-  console.log('  Month  4:  $70M     ← 🎯 $70M TARGET HIT');
-  console.log('  Month  5:  $100M    ← 9 figures/month');
-  console.log('  Month  6:  $150M    ← Referral engine ON');
-  console.log('  Month  8:  $200M    ← Machine mode');
-  console.log('  Month 10:  $350M    ← Whale backlogs fully loaded');
-  console.log('  Month 12:  $500M    ← 🎯 $500M TARGET HIT\n');
-
-  // ── Scenarios ──
+  // ── Year 1 Scenarios ──
   console.log(line);
   console.log('  📉 YEAR 1 SCENARIO ANALYSIS');
   console.log(line);
-  console.log('                         Optimistic    Realistic     Conservative  Bare Minimum');
-  console.log('  Month 6 profit:        $150M/mo      $75M/mo       $37M/mo       $3M/mo');
-  console.log('  Month 12 profit:       $500M/mo      $250M/mo      $125M/mo      $8M/mo');
-  console.log('  Year 1 total:          $2.13B        $1.06B        $531M         $50M\n');
+  console.log('                        Bare Min      Realistic     Optimistic    Moonshot');
+  console.log('  Clinics:              5             14            14            20');
+  console.log('  Billers:              3             8             12            20');
+  console.log('  Whales:               0             0             1             3');
+  console.log('  Month 12 MRR:         $250K/mo      $1M/mo        $10M/mo       $25M/mo');
+  console.log('  Year 1 total:         $500K-$1M     $3M-$8M       $50M-$100M    $200M+');
+  console.log('  Operating cost:       $1,152/year   $1,152/year   $1,152/year   $3,816/year');
+  console.log('  Margin:               99.9%+        99.9%+        99.9%+        99.9%+\n');
 
-  // ── Biller Economics ──
+  // ── Sending Capacity ──
   console.log(dash);
-  console.log('🤝 BILLER PARTNER ECONOMICS (15% each side)\n');
-  console.log('  Per biller (small clinic claims only):');
-  console.log('    Providers connected:    80 avg');
-  console.log('    Active submitting:      25 (~30%)');
-  console.log('    Claims/month:           1,000');
-  console.log('    BILLER earns:           $510,000/month (15%)');
-  console.log('    YOU earn:               $510,000/month (15%)');
-  console.log('    → 20 billers = $10.2M/month for you (small claims alone)');
-  console.log('    → Add biller whale clients and it goes to $100M+/month\n');
+  console.log('📧 SENDING CAPACITY TIERS\n');
+  console.log('  FREE (Now):     1 account × 20/day = 200 leads/month       $0/mo');
+  console.log('  GROWTH:         3 accounts × 50/day = 1,500 leads/month    $30/mo');
+  console.log('  HYPERGROWTH:    10 accounts × 75/day = 7,500 leads/month   $78/mo');
+  console.log('  → Upgrade to Growth after first $2,500 sale\n');
+
+  // ── AI Advantage ──
+  console.log(dash);
+  console.log('🤖 AI AUTO-RESPONDER — YOUR UNFAIR ADVANTAGE\n');
+  console.log('  Most competitors: Lead replies → sits in inbox 24-48 hours → goes cold');
+  console.log('  NorthStar Medic:  Lead replies → GPT-4 responds in SECONDS → pushes to checkout');
+  console.log('');
+  console.log('  The AI handles:');
+  console.log('     ✓ Objection handling (already have billing team, not interested, send info)');
+  console.log('     ✓ Unsubscribe requests (auto-marks as opted out, never pitches)');
+  console.log('     ✓ Meeting scheduling (pushes to checkout link instead — zero meetings)');
+  console.log('     ✓ Follow-up sequences (keeps conversation warm until they buy)');
+  console.log('     ✓ All replies logged to HIPAA-compliant audit trail\n');
 
   // ── Daily Schedule ──
   console.log(dash);
-  console.log('💪 YOUR DAILY HUSTLE\n');
+  console.log('💪 YOUR DAILY OPERATIONS (from Denmark)\n');
   console.log('  🤖 AI AUTO-HANDLES (24/7):');
+  console.log('     ✓ Cold email sends — Instantly fires Mon-Fri 9am-5pm CT');
+  console.log('     ✓ Reply handling — GPT-4 auto-responds within seconds');
   console.log('     ✓ Claim processing + appeals — fully automated');
-  console.log('     ✓ Stripe auto-splits commissions on every recovery');
-  console.log('     ✓ Biller performance monitoring\n');
-  console.log('  🔔 APOLLO LEAD ENGINE:');
-  console.log('     → Sources hospital VPs, clinic owners, billers');
-  console.log('     → Auto-alerts when lead list needs refilling');
-  console.log('     → Refill in 5 min when alerted\n');
-  console.log('  🔥 YOUR GRIND:');
-  console.log('     → Sign clinics & hospitals from Apollo leads');
-  console.log('     → Recruit billers — they bring provider networks');
-  console.log('     → Run free pilots for whale prospects');
-  console.log('     → Scale. Grind. Close deals. Repeat.\n');
+  console.log('     ✓ Stripe payouts — auto-splits on every recovery\n');
+  console.log('  👤 YOU DO (15-60 min/day):');
+  console.log('     → Check Stripe: any new $2,500 payments?');
+  console.log('     → Check Instantly analytics: opens, replies, bounces');
+  console.log('     → Review AI auto-reply audit log: any need manual override?');
+  console.log('     → Whale opportunities: handle personally when they appear');
+  console.log('     → Refill Apollo leads when pool gets low (5 min)\n');
 
   // ── 90-Day Checklist ──
   console.log(dash);
-  console.log('✅ 90-DAY LAUNCH CHECKLIST\n');
+  console.log('✅ LAUNCH CHECKLIST\n');
   LAUNCH_CHECKLIST.forEach(item => {
-    console.log(`  Week ${String(item.week).padStart(2)}: ${item.task}`);
+    const status = item.done ? '✅' : '🔜';
+    console.log(`  ${status} Week ${String(item.week).padStart(2)}: ${item.task}`);
   });
 
   console.log('\n' + line);
-  console.log('  "One year. One AI. Zero employees. Billers as my army. Apollo for leads. Whales for revenue."');
-  console.log('  — Joehary Illum, Founder, NorthStar Claim');
+  console.log('  "One year. One AI. Zero employees. Zero meetings.');
+  console.log('   AI handles the inbox. Stripe handles the money.');
+  console.log('   I handle the whales. From Denmark."');
+  console.log('  — Joehary Illum, Founder, NorthStar Medic');
   console.log(line + '\n');
 }
 
