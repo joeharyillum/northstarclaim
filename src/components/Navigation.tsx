@@ -44,10 +44,10 @@ export default function Navigation() {
                 padding: scrolled ? "1rem 0" : "1.5rem 0",
             }}
         >
-            <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
 
                 {/* Logo */}
-                <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: 'none' }}>
+                <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: 'none', flexShrink: 0 }}>
                     <img src="/logo.png" alt="NorthStar Medic" style={{ height: "36px" }} />
                     <span style={{ 
                         fontSize: "1.125rem", 
@@ -72,8 +72,8 @@ export default function Navigation() {
 
                 {/* CTA + Hamburger */}
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <Link href="/signup" className="nav-links" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem", display: "inline" }}>Sign In</Link>
-                    <Link href="/free-scan" style={{ 
+                    <Link href="/signup" className="nav-links" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem", whiteSpace: "nowrap" }}>Sign In</Link>
+                    <Link href="/free-scan" className="nav-links hover:scale-105" style={{ 
                         background: "var(--brand-primary)", 
                         color: "var(--bg-primary)", 
                         padding: "0.6rem 1.2rem", 
@@ -82,8 +82,8 @@ export default function Navigation() {
                         fontSize: "0.9rem", 
                         textDecoration: "none",
                         transition: 'transform 0.2s ease',
+                        whiteSpace: "nowrap",
                     }}
-                    className="hover:scale-105 nav-links"
                     >
                         Start Free Scan
                     </Link>

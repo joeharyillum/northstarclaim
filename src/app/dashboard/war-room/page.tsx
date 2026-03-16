@@ -202,7 +202,7 @@ export default function WarRoomDashboard() {
       </div>
 
       {/* ═══ KPI CARDS ═══ */}
-      <div className="stagger-children" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
+      <div className="stagger-children stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
         {kpis.map((kpi) => {
           const Icon = kpi.icon;
           return (
@@ -233,7 +233,7 @@ export default function WarRoomDashboard() {
       </div>
 
       {/* ═══ MAIN GRID: Pipeline + Activity Feed ═══ */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "1.5rem", marginBottom: "1.5rem" }}>
+      <div className="dash-content-grid" style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "1.5rem", marginBottom: "1.5rem" }}>
         {/* Claims Pipeline */}
         <div style={{ ...cardBase, padding: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>

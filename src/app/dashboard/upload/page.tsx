@@ -98,7 +98,7 @@ export default function UploadClaimsPage() {
                 </p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: "1.5rem", alignItems: "start" }}>
+            <div className="dash-content-grid" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: "1.5rem", alignItems: "start" }}>
                 {/* Upload Zone */}
                 <div
                     style={{

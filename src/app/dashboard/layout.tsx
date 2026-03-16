@@ -19,7 +19,7 @@ export default function DashboardLayout({
             }}>
 
                 <DashboardSidebar />
-                <div style={{
+                <div className="dash-main" style={{
                     flex: 1,
                     marginLeft: "var(--sidebar-width)",
                     display: "flex",

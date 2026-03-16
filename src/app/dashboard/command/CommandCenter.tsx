@@ -67,7 +67,7 @@ export default function CommandCenter() {
             </div>
 
             {/* MAIN HUD GRID */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 350px", gap: "2rem" }}>
+            <div className="dash-content-grid" style={{ display: "grid", gridTemplateColumns: "1fr 350px", gap: "2rem" }}>
 
                 {/* NEURAL GRID VISUALIZER */}
                 <div style={{ background: "rgba(0, 242, 255, 0.05)", padding: "1.5rem", borderRadius: "0.5rem", border: "1px solid #004c54" }}>

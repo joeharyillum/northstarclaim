@@ -35,7 +35,7 @@ export default function DashboardSidebar() {
     ];
 
     return (
-        <aside style={{
+        <aside className="dash-sidebar" style={{
             width: "var(--sidebar-width)",
             height: "100vh",
             position: "fixed",

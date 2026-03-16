@@ -215,7 +215,7 @@ export default function DashboardLeads() {
             </div>
 
             {/* Stat Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
+            <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
                 {[
                     { label: "Total Leads", value: totalLeads.toLocaleString(), icon: Users, color: "#a855f7" },
                     { label: "Contacted", value: totalContacted.toLocaleString(), icon: CheckCircle2, color: "#f59e0b" },
@@ -241,7 +241,7 @@ export default function DashboardLeads() {
             </div>
 
             {/* Main Grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: "1.5rem" }}>
+            <div className="dash-content-grid" style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: "1.5rem" }}>
                 {/* Pipeline Table */}
                 <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>

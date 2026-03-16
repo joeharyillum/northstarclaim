@@ -7,7 +7,7 @@ export default async function MyClaimsPage() {
     const claims = await prisma.claim.findMany({
         where: { batch: { userId: session.user.id } },
         include: {
-            appeal: { select: { status: true, createdAt: true } },
+            appeal: { select: { approvedByClinic: true, generatedAt: true } },
             payer: { select: { name: true } },
             batch: { select: { fileName: true, createdAt: true } },
         },
@@ -43,7 +43,7 @@ export default async function MyClaimsPage() {
             </div>
 
             {/* Stats Bar */}
-            <div style={{
+            <div className="stats-grid" style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(5, 1fr)",
                 gap: "0.75rem",

@@ -124,7 +124,7 @@ export default function WalletPage() {
         </div>
 
         {/* ─── Balance Cards Row ─── */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+        <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
           {/* Available Balance */}
           <div style={{ ...cardBase, padding: "1.75rem" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, #10b981, transparent)", opacity: 0.6 }} />
@@ -168,7 +168,7 @@ export default function WalletPage() {
         </div>
 
         {/* ─── Main Grid: Transactions + Payout ─── */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "1.5rem" }}>
+        <div className="dash-content-grid" style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "1.5rem" }}>
           {/* Transaction History */}
           <div style={{ ...cardBase, padding: "1.5rem" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>

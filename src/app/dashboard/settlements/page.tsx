@@ -130,7 +130,7 @@ export default function SettlementWarRoom() {
             </div>
 
             {/* Metric Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
+            <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
                 {[
                     { label: "Active Negotiations", value: negotiations.filter(n => n.status === 'ACTIVE').length.toString(), icon: Scale, color: "#3b82f6" },
                     { label: "Settlement Rate", value: "82.4%", icon: ArrowUpRight, color: "#10b981" },
@@ -156,7 +156,7 @@ export default function SettlementWarRoom() {
             </div>
 
             {/* Main Grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "1.5rem" }}>
+            <div className="dash-content-grid" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "1.5rem" }}>
                 {/* Negotiations */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                     <h2 style={{ fontSize: "1rem", fontWeight: "600", display: "flex", alignItems: "center", gap: "0.5rem" }}>

@@ -632,6 +632,12 @@ h1, h2, h3, h4, h5, h6 {
   .bento-grid .bento-span-2 {
     grid-column: span 2 !important;
   }
+
+  /* Nav links — reduce gap on tablet to prevent overlap */
+  .nav-links {
+    gap: 1rem !important;
+    font-size: 0.8rem !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -653,11 +659,11 @@ h1, h2, h3, h4, h5, h6 {
 
   /* Prevent nav links crashing into logo/CTA on mobile */
   nav .container {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.5rem;
   }
 
-  /* Hide nav links on mobile — show hamburger instead */
+  /* Hide nav links + Sign In + Free Scan on mobile — show hamburger instead */
   .nav-links {
     display: none !important;
   }
@@ -702,6 +708,25 @@ h1, h2, h3, h4, h5, h6 {
   /* Dashboard stat cards — 2 cols on mobile */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Dashboard sidebar — hidden on mobile */
+  .dash-sidebar {
+    display: none !important;
+  }
+
+  .dash-main {
+    margin-left: 0 !important;
+  }
+
+  /* Dashboard content grids with sidebar panels — stack */
+  .dash-content-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Fix dashboard main padding on mobile */
+  .dash-main main {
+    padding: 1rem !important;
   }
 }
 
