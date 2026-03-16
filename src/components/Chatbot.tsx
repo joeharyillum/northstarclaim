@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { MessageSquare, X, Send } from 'lucide-react';
@@ -14,9 +15,13 @@ function getMessageText(m: { parts?: Array<{ type: string; text?: string }> }): 
 }
 
 export default function Chatbot() {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    // Hide chatbot on dashboard — dashboard has its own UI
+    if (pathname.startsWith("/dashboard")) return null;
 
     const { messages, sendMessage, status } = useChat({
         transport: new DefaultChatTransport({ api: '/api/chat' }),

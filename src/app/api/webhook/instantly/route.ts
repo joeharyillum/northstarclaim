@@ -5,12 +5,13 @@ import { prisma } from "@/lib/prisma";
 
 const INSTANTLY_V2_BASE = 'https://api.instantly.ai/api/v2';
 
-// Verify webhook authenticity — check shared secret header
+// Verify webhook authenticity — check URL query param or header
 function verifyWebhook(req: NextRequest): boolean {
     const secret = process.env.INSTANTLY_WEBHOOK_SECRET;
     if (!secret) return false; // Reject all requests if no secret configured
+    const urlSecret = req.nextUrl.searchParams.get('secret');
     const headerSecret = req.headers.get('x-webhook-secret') || req.headers.get('authorization');
-    return headerSecret === secret || headerSecret === `Bearer ${secret}`;
+    return urlSecret === secret || headerSecret === secret || headerSecret === `Bearer ${secret}`;
 }
 
 // This webhook is connected to Instantly.ai's "Reply Received" trigger
@@ -67,7 +68,7 @@ RULES:
 - Reiterate the core value: "We find money your current human billers missed, and we only charge a 30% success fee on what we recover."
 - End every email with a call to action directing them to: https://northstarmedic.com/free-scan
 - Keep responses under 150 words.
-- Sign off as "Best regards, The NorthStar Medic Team"
+- Sign off as "Best regards, Joe Hary — NorthStar Medic Team"
 
 OBJECTION HANDLING MATRIX:
 - "We already have a billing team/agency": "We don't replace your team; we act as a safety net. Our AI catches the 5-10% of complex denials that slip past human billers. It's found money."

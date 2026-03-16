@@ -7,20 +7,20 @@ import sgMail from "@sendgrid/mail";
 /**
  * SendGrid Inbound Parse Webhook
  * 
- * Receives all emails sent to *@northstarclaim.com via SendGrid Inbound Parse.
+ * Receives all emails sent to *@northstarmedic.com via SendGrid Inbound Parse.
  * Routes to the correct AI persona based on the "to" address, generates a
  * GPT-4 response, sends the reply, and logs everything for HIPAA audit.
  * 
  * Setup required:
- * 1. Porkbun → MX record: northstarclaim.com → mx.sendgrid.net (priority 10)
- * 2. SendGrid → Inbound Parse → hostname: northstarclaim.com
+ * 1. Porkbun → MX record: northstarmedic.com → mx.sendgrid.net (priority 10)
+ * 2. SendGrid → Inbound Parse → hostname: northstarmedic.com
  *    → URL: https://www.northstarmedic.com/api/webhook/inbound-email
  *    → Check "POST the raw, full MIME message" = OFF (use parsed)
  */
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || "";
-const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || "noreply@northstarclaim.com";
-const FROM_NAME = process.env.SENDGRID_FROM_NAME || "NorthStar Claim";
+const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || "noreply@northstarmedic.com";
+const FROM_NAME = process.env.SENDGRID_FROM_NAME || "NorthStar Medic";
 const ADMIN_EMAIL = process.env.FOUNDER_ADMIN_EMAIL || "joehary@northstarmedic.com";
 
 if (SENDGRID_API_KEY) {
@@ -41,7 +41,7 @@ const MAILBOXES: MailboxConfig[] = [
   {
     address: "legal",
     fromName: "NorthStar Legal",
-    fromEmail: "legal@northstarclaim.com",
+    fromEmail: "legal@northstarmedic.com",
     forwardToAdmin: true,
     systemPrompt: `You are the Legal Department assistant for NorthStar Medic, an AI-powered medical claim denial recovery company.
 
@@ -59,7 +59,7 @@ GUIDELINES:
 - Sign off as "NorthStar Legal Team"
 
 COMPANY INFO:
-- NorthStar Medic operates under northstarclaim.com for email
+- NorthStar Medic operates under northstarmedic.com for email
 - 30% contingency fee on recovered medical claims
 - HIPAA compliant, BAA required before processing PHI
 - Florida jurisdiction, binding arbitration
@@ -68,7 +68,7 @@ COMPANY INFO:
   {
     address: "partners",
     fromName: "NorthStar Partnerships",
-    fromEmail: "partners@northstarclaim.com",
+    fromEmail: "partners@northstarmedic.com",
     forwardToAdmin: true,
     systemPrompt: `You are the Partnerships coordinator for NorthStar Medic, an AI-powered medical claim denial recovery company.
 
@@ -92,7 +92,7 @@ PARTNER MODEL:
   {
     address: "support",
     fromName: "NorthStar Support",
-    fromEmail: "support@northstarclaim.com",
+    fromEmail: "support@northstarmedic.com",
     forwardToAdmin: true,
     systemPrompt: `You are the Support assistant for NorthStar Medic, an AI-powered medical claim denial recovery platform.
 
@@ -111,7 +111,7 @@ GUIDELINES:
   {
     address: "privacy",
     fromName: "NorthStar Privacy",
-    fromEmail: "privacy@northstarclaim.com",
+    fromEmail: "privacy@northstarmedic.com",
     forwardToAdmin: true,
     systemPrompt: `You are the Privacy Officer assistant for NorthStar Medic.
 
@@ -139,7 +139,7 @@ const DEFAULT_MAILBOX: MailboxConfig = {
 GUIDELINES:
 - Be professional and helpful (under 150 words)
 - For general inquiries, provide brief info about the company and direct to https://www.northstarmedic.com
-- For specific department questions, suggest the right email: legal@, partners@, support@, or privacy@northstarclaim.com
+- For specific department questions, suggest the right email: legal@, partners@, support@, or privacy@northstarmedic.com
 - Sign off as "NorthStar Claim Team"`,
 };
 
@@ -198,7 +198,7 @@ export async function POST(req: NextRequest) {
     // Log inbound for HIPAA audit
     await logAudit(
       "INBOUND_EMAIL_RECEIVED",
-      `From: ${senderEmail} | To: ${targetAddress}@northstarclaim.com | Subject: ${subject} | Body: ${messageBody.substring(0, 300)}`
+      `From: ${senderEmail} | To: ${targetAddress}@northstarmedic.com | Subject: ${subject} | Body: ${messageBody.substring(0, 300)}`
     );
 
     // Generate AI response
@@ -236,7 +236,7 @@ Draft a professional email response.`,
         subject: `[${mailbox.address.toUpperCase()} INBOX] ${subject} — from ${senderEmail}`,
         html: `
           <div style="font-family:monospace;max-width:700px;padding:20px;background:#1a1a2e;color:#e0e0e0;">
-            <h2 style="color:#00d4ff;">Inbound Email — ${escapeHtml(mailbox.address)}@northstarclaim.com</h2>
+            <h2 style="color:#00d4ff;">Inbound Email — ${escapeHtml(mailbox.address)}@northstarmedic.com</h2>
             <table style="border-collapse:collapse;width:100%;margin:10px 0;">
               <tr><td style="padding:6px;color:#888;">From:</td><td style="padding:6px;">${escapeHtml(senderName)} &lt;${escapeHtml(senderEmail)}&gt;</td></tr>
               <tr><td style="padding:6px;color:#888;">Subject:</td><td style="padding:6px;">${escapeHtml(subject)}</td></tr>

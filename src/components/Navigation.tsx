@@ -2,10 +2,15 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Navigation() {
+    const pathname = usePathname();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+
+    // Hide global nav on dashboard — dashboard has its own sidebar/topnav
+    if (pathname.startsWith("/dashboard")) return null;
 
     useEffect(() => {
         const handleScroll = () => {
