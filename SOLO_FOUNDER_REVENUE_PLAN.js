@@ -10,11 +10,16 @@
  * BRANDING: NorthStar Medic
  * FOUNDER:  Joehary Illum (Solo, based in Denmark, operating US market remotely)
  *
+ * TARGET:   $50M–$500M PER MONTH by Month 12
+ *           The math: 1 whale hospital = $7M–$46M/month
+ *           3 whales = $50M/month. 10 whales = $500M/month.
+ *           Clinics + billers build credibility. WHALES build the empire.
+ *
  * PREMISE:
  *   One founder. One AI system. Zero employees. Zero meetings. Zero Zoom calls.
  *   AI auto-responds to every inbox reply. Stripe handles payments.
  *   TWO revenue streams: Direct Recovery (30%) + Biller Partnerships (15% each side)
- *   Timeline: 12-month scaling push
+ *   Timeline: 12-month aggressive scaling push — upgrade Instantly at every milestone
  *
  * CURRENT STATE (March 16, 2026):
  *   ✅ 5,000 leads loaded on Instantly.ai campaign (US hospital C-suite)
@@ -51,8 +56,14 @@
  *   ✅ BAA executed digitally before any PHI processing
  *   ✅ Web 4.0 AI Agent Governance (EU AI Act + US proposals)
  *
+ * SCALING PATH:
+ *   Free Plan (now)      → 200 leads/month — build sender reputation
+ *   Growth ($30/mo)       → 1,500 leads/month — after first $2,500 sale
+ *   Hypergrowth ($78/mo)  → 7,500 leads/month — after first whale pilot
+ *   Ultimate ($250+/mo)   → 50,000+ leads/month — whale hunting at scale
+ *
  * NO:  Hiring, SaaS selling, meetings, Zoom calls, manual inbox management
- * YES: You + AI + billers as distribution + whale hunting + Instantly cold email
+ * YES: You + AI + billers as distribution + AGGRESSIVE whale hunting + Instantly cold email
  * ══════════════════════════════════════════════════════════════════════════════
  */
 
@@ -225,11 +236,13 @@ const MEGA_PLAN = {
       // YEAR 1 TOTALS
       total_leads_contacted: 14100,
       total_deals_closed:    14,        // 14 small clinics + attempt at 1 whale
-      year1_no_whale:        '$2.5M',   // 14 clinics × $40.8K × 12 (averaged)
+      year1_no_whale:        '$2.5M',   // 14 clinics × $40.8K × 12 (averaged) — stepping stone only
       year1_with_1_whale:    '$50M+',   // 1 whale changes everything
-      year1_expected:        '$3M-$8M', // Most likely range
+      year1_with_3_whales:   '$250M+',  // 3 regional hospitals
+      year1_with_10_whales:  '$500M+',  // 10 whales = $500M/month target hit
+      year1_target:          '$50M-$500M/month by month 12',
 
-      note: 'Without a whale: solid $3M-$8M year. With ONE whale: $50M+ year.'
+      note: 'Clinics build credibility and fund upgrades. WHALES are the $50M-$500M play. Upgrade Instantly at every milestone to send more volume.'
     },
   },
 
@@ -274,37 +287,42 @@ const MEGA_PLAN = {
   // ══════════════════════════════════════════════════════════════════
   annual_totals: {
     year1_scenarios: {
-      bare_minimum: {
-        label:              '⚠️ Bare Minimum (no whales, slow close rate)',
-        small_clinics:      5,
-        biller_partners:    3,
-        annual_revenue:     '$500K-$1M',
-        monthly_by_dec:     '$80K/mo',
-        note:               'Still life-changing money for a solo founder'
-      },
-      realistic: {
-        label:              '📊 Realistic',
+      foundation: {
+        label:              '🏗️ Foundation (clinics only, no whales yet)',
         small_clinics:      14,
         biller_partners:    8,
+        whale_hospitals:    0,
         annual_revenue:     '$3M-$8M',
         monthly_by_dec:     '$500K-$1M/mo',
+        note:               'Clinics are the foundation that funds whale hunting'
       },
-      optimistic: {
-        label:              '🚀 Optimistic (1 whale hospital lands)',
+      target_floor: {
+        label:              '🎯 Target Floor — $50M/month (3 regional whales)',
         small_clinics:      14,
         biller_partners:    12,
-        whale_hospitals:    1,
-        annual_revenue:     '$50M-$100M',
-        monthly_by_dec:     '$7M-$10M/mo',
-        note:               'ONE whale hospital = game over. Everything changes.'
+        whale_hospitals:    3,
+        annual_revenue:     '$300M-$500M',
+        monthly_by_dec:     '$50M/mo',
+        note:               '3 regional hospitals (200 beds each) = $22M/month + clinics/billers'
       },
-      moonshot: {
-        label:              '🌙 Moonshot (2+ whales + strong biller network)',
+      target_mid: {
+        label:              '🚀 $100M-$200M/month (5-7 whales)',
         small_clinics:      20,
         biller_partners:    20,
-        whale_hospitals:    3,
-        annual_revenue:     '$200M+',
-        monthly_by_dec:     '$25M+/mo',
+        whale_hospitals:    5,
+        annual_revenue:     '$600M-$1.5B',
+        monthly_by_dec:     '$100M-$200M/mo',
+        note:               '5 regional hospitals = $36M/month + 2 health systems'
+      },
+      target_ceiling: {
+        label:              '👑 $500M/month (10+ whales, multiple health systems)',
+        small_clinics:      30,
+        biller_partners:    30,
+        whale_hospitals:    10,
+        health_systems:     3,
+        annual_revenue:     '$3B-$6B',
+        monthly_by_dec:     '$500M/mo',
+        note:               '10 regional hospitals + 3 large health systems. Upgrade Instantly along the way to feed the pipeline.'
       },
     },
     operating_costs_yearly: 96 * 12, // $1,152 at Growth plan level
@@ -316,22 +334,30 @@ const MEGA_PLAN = {
   // MONTHLY REVENUE MILESTONES — REALISTIC PATH
   // ════════════════════════════════════════════════════════════════════
   monthly_milestones: {
-    month_1:  { target: '$0-$2.5K',   sends: '~60 emails',   how: 'Ramp sending. 2/day → 20/day. Build sender reputation. First replies come in. AI handles them.' },
-    month_2:  { target: '$2.5K-$5K',  sends: '~400 emails',  how: 'First Guardian Pilot sale ($2,500 upfront). First biller recruited. AI closes warm leads.' },
-    month_3:  { target: '$40K/mo',    sends: '~400 emails',  how: 'First clinic starts submitting claims. Commission revenue begins. Upgrade to Instantly Growth plan.' },
-    month_4:  { target: '$80K/mo',    sends: '~1,500 emails', how: '2 clinics active + 1 biller bringing providers. Scale to 3 sending accounts.' },
-    month_5:  { target: '$120K/mo',   sends: '~1,500 emails', how: '3+ clinics + 2 billers. Referral engine starting. Load 10,000 fresh Apollo leads.' },
-    month_6:  { target: '$250K/mo',   sends: '~1,500 emails', how: '5+ clinics + 4 billers. First case study published. Pipeline building.' },
-    month_8:  { target: '$500K/mo',   sends: '~3,000 emails', how: '8+ clinics + 6 billers. Whale hospital pilot underway. 10 sending accounts.' },
-    month_10: { target: '$1M/mo',     sends: '~5,000 emails', how: '12+ clinics + 8 billers. If whale closes: jumps to $7M+/mo.' },
-    month_12: { target: '$1M-$10M/mo', sends: '~7,500 emails', how: '14+ clinics + 12 billers. With whale: $10M/mo. Without: $1M/mo.' },
+    month_1:  { target: '$0-$2.5K',    sends: '~60 emails',    how: 'Ramp sending 2/day → 20/day. Build sender reputation. First replies. AI handles them. Start whale research in parallel.' },
+    month_2:  { target: '$2.5K-$5K',   sends: '~400 emails',   how: 'First Guardian Pilot sale ($2,500). Upgrade to Growth plan. First biller recruited. Begin whale outreach.' },
+    month_3:  { target: '$40K/mo',     sends: '~1,500 emails', how: 'First clinic active. Growth plan live (3 accounts). 10,000 fresh leads loaded. Whale pilot offered to 5 hospitals.' },
+    month_4:  { target: '$250K/mo',    sends: '~1,500 emails', how: '3 clinics + 2 billers. First whale pilot running (500 free claims scanned). Case study in progress.' },
+    month_5:  { target: '$7M-$10M/mo', sends: '~3,000 emails', how: 'First whale CLOSES. Regional hospital signs BAA. Claims start flowing. Upgrade to Hypergrowth. Everything changes.' },
+    month_6:  { target: '$15M-$25M/mo', sends: '~7,500 emails', how: '2 whales active. 5+ clinics. 6+ billers. Whale case study published. Inbound starts.' },
+    month_7:  { target: '$25M-$50M/mo', sends: '~7,500 emails', how: '3 whales. 8+ billers. Network effect. Other hospitals see the case study and reach out.' },
+    month_8:  { target: '$50M/mo',     sends: '~15,000 emails', how: '$50M TARGET HIT. 3-4 whales + billers + clinics. Upgrade to unlimited sending. Load 50,000+ leads.' },
+    month_10: { target: '$100M-$200M/mo', sends: '~25,000 emails', how: '5-7 whales active. Biller network recruiting itself. Health system conversations started.' },
+    month_12: { target: '$500M/mo',    sends: '~50,000 emails', how: '10+ whales + 3 health systems. Full autopilot. $500M/month target. Upgrade Instantly to enterprise along the way.' },
 
-    first_dollar:    'Expected: Month 2 (first $2,500 Guardian Pilot sale)',
-    first_10k_month: 'Expected: Month 3-4 (first clinic submitting claims)',
-    first_100k_month: 'Expected: Month 5-6',
-    first_1m_month:   'Expected: Month 8-12 (with scale OR sooner with a whale)',
+    first_dollar:     'Expected: Month 2 (first $2,500 Guardian Pilot sale)',
+    first_10k_month:  'Expected: Month 3 (first clinic submitting claims)',
+    first_1m_month:   'Expected: Month 4-5 (first whale pilot or multiple clinics)',
+    first_50m_month:  'Expected: Month 7-8 (3+ whales active)',
+    first_500m_month: 'Expected: Month 12 (10+ whales + health systems)',
 
-    note: 'These milestones EXCLUDE whales. Landing 1 whale at any point multiplies everything by 10-50x.',
+    instantly_upgrade_triggers: {
+      growth:      'First $2,500 sale → upgrade to Growth plan ($30/mo, 3 accounts)',
+      hypergrowth: 'First whale pilot → upgrade to Hypergrowth ($78/mo, 10 accounts)',
+      enterprise:  '$50M/month hit → unlimited sending, 50+ accounts, enterprise deal',
+    },
+
+    note: 'Clinics are the foundation (months 1-3). Whales are the $50M-$500M engine (months 4-12). Upgrade Instantly at every revenue milestone.',
   },
 
   // ════════════════════════════════════════════════════════════════════
@@ -361,7 +387,9 @@ const MEGA_PLAN = {
       note: 'ONE whale = $46.2M/month. Two whales = nearly $100M/month. This is the play.',
     },
     comparison: {
-      to_make_50M_month: 'You need: 1 whale system OR 1,225 small clinics. Hunt whales.',
+      to_make_50M_month:  'You need: 1 large health system OR 7 regional hospitals. Hunt whales from day 1.',
+      to_make_100M_month: 'You need: 2 health systems OR 14 regional hospitals.',
+      to_make_500M_month: 'You need: 10 health systems OR 68 regional hospitals. Mix of both is optimal.',
     },
   },
 };
@@ -372,74 +400,87 @@ const MEGA_PLAN = {
 const PHASES = {
 
   phase1: {
-    name:    '🩸 PHASE 1: FIRST DOLLAR (Months 1-3)',
+    name:    '🩸 PHASE 1: BUILD THE FOUNDATION + START WHALE HUNTING (Months 1-3)',
     months:  '1-3',
-    goal:    'Land first paying client. Get to $40K MRR by month 3.',
-    sending: '200 leads/mo (free Instantly plan, 1 account, 20/day cap)',
+    goal:    'Land first clinic. Use it as proof. Start whale outreach IMMEDIATELY.',
+    sending: '200 → 1,500 leads/mo (free plan → Growth plan by month 2)',
     actions: [
       'Campaign LIVE — 5,000 leads auto-sending 2-step sequence Mon-Fri',
       'AI auto-responder handles ALL replies 24/7 — zero manual inbox work',
       'Positive replies → AI pushes toward $2,500 Guardian Pilot checkout',
-      'First $2,500 payment → fund Instantly Growth plan upgrade ($30/mo)',
-      'Recruit 2 billers from the same lead pool (title filters)',
+      'First $2,500 payment → upgrade to Instantly Growth plan ($30/mo, 3 accounts)',
+      'Load 10,000 fresh Apollo leads — mix of clinics, billers, AND hospital C-suite',
+      'Recruit 2 billers from lead pool (title filters)',
+      'WHALE HUNTING STARTS NOW: Research top 100 regional hospitals by bed count',
+      'Offer FREE 500-claim AI scan to 5 hospital CFOs — this is the whale hook',
       'Build first case study from first clinic results (even small wins)',
-      'Monitor Stripe dashboard from Denmark — money flows automatically',
     ],
     revenue: {
-      month1:  0,          // Ramping sends, building reputation
-      month2:  2500,       // First Guardian Pilot sale
-      month3:  43300,      // $2,500 new sale + $40,800 recurring from first clinic
+      month1:  0,
+      month2:  2500,        // First Guardian Pilot
+      month3:  43300,       // Clinic recurring + new sale
       phase_total: 45800,
     },
-    key_unlock: 'First $2,500 sale → proves the model → funds scaling infrastructure',
+    instantly_upgrade: 'Free → Growth ($30/mo) after first $2,500 sale',
+    key_unlock: 'First clinic signs → case study → credibility for whale pitches',
   },
 
   phase2: {
-    name:    '📈 PHASE 2: SCALE THE MACHINE (Months 4-6)',
+    name:    '🐋 PHASE 2: CLOSE FIRST WHALE + SCALE SENDING (Months 4-6)',
     months:  '4-6',
-    goal:    'Hit $250K MRR. 5+ clinics. 4+ billers. Begin whale hunting.',
-    sending: '1,500 leads/mo (3 accounts on Growth plan)',
+    goal:    'Close first whale hospital. Hit $25M MRR. 3 accounts → 10 accounts.',
+    sending: '1,500 → 7,500 leads/mo (Growth → Hypergrowth by month 5)',
     actions: [
-      'Upgrade Instantly to Growth plan — 3 sending accounts, 50/day each',
-      'Buy 2 more domains (northstarmedic.io, northstarmedclaim.com) for deliverability',
-      'Load 10,000 fresh Apollo leads (hospitals + billers mix)',
-      'Publish case study: "Recovered $XXK in denied claims in 30 days"',
-      'Start whale outreach — target regional hospitals (200-500 beds)',
-      'Offer FREE 500-claim pilot scan to 3 hospital CFOs',
-      'Biller referral loop: existing billers recruit other billers for you',
+      'Whale pilot results come back — show hospital CFO "$XX million recoverable"',
+      'Close whale on 30% commission — BAA + service agreement signed',
+      'Whale processing ramps: 500 claims/month → 2,000 claims/month = $7.3M/month',
+      'REVENUE JUMP: From $40K/month to $7M+/month in ONE deal',
+      'Upgrade to Instantly Hypergrowth — 10 sending accounts, 75/day each',
+      'Buy 5 more sending domains for deliverability rotation',
+      'Load 25,000 fresh Apollo leads — heavy hospital focus now',
+      'Publish whale case study: "Recovered $14M in denied claims in 60 days"',
+      'Whale #2 and #3 outreach — use case study as proof',
+      'Biller referral loop accelerates: billers see the money, recruit themselves',
       'Set up Stripe Connect for auto 3-way splits (you/biller/provider)',
     ],
     revenue: {
-      monthly_range: '$80K-$250K/month',
-      phase_total:   '$350K-$750K',
+      without_whale: '$250K/month from clinics + billers',
+      with_1_whale:  '$7M-$10M/month',
+      with_2_whales: '$15M-$25M/month',
+      phase_total:   '$20M-$75M',
     },
-    key_unlock: 'First whale pilot → if you show $5M+ recoverable → whale signs',
+    instantly_upgrade: 'Growth → Hypergrowth ($78/mo) after whale pilot starts',
+    key_unlock: 'First whale case study → every other hospital wants in',
   },
 
   phase3: {
-    name:    '⚡ PHASE 3: WHALE HUNTING + SCALE (Months 7-12)',
+    name:    '👑 PHASE 3: $50M-$500M ENGINE (Months 7-12)',
     months:  '7-12',
-    goal:    'Close first whale. Hit $1M-$10M/month. Full autopilot.',
-    sending: '3,000-7,500 leads/mo (5-10 accounts on Hypergrowth plan)',
+    goal:    '$50M/month by month 8. $500M/month by month 12. Full autopilot.',
+    sending: '7,500 → 50,000+ leads/mo (Hypergrowth → Enterprise unlimited)',
     actions: [
-      'Whale pilot results → show CFO "$X million recoverable in your A/R"',
-      'Close whale on 30% commission — sign BAA + service agreement',
-      'Whale processing ramps: 500 claims/mo → 2,000 claims/mo → $7.3M/mo',
-      '12+ biller partners active — network recruiting itself',
-      '14+ small clinics generating steady $571K/mo recurring',
-      'Publish whale case study → inbound leads from other hospitals',
-      'Load 25,000+ fresh Apollo leads — saturate the market',
-      'Consider LLC formation (Delaware) once revenue justifies it',
+      '3+ whales active, each generating $7M-$46M/month',
+      'Whale case study published → inbound leads from hospital systems',
+      'Target HEALTH SYSTEMS (5,000+ beds, multiple facilities) — $46M/month EACH',
+      'Upgrade Instantly to enterprise/unlimited — 50+ sending accounts',
+      'Load 100,000+ fresh Apollo leads — saturate the entire US hospital market',
+      '20+ biller partners active — network recruiting itself virally',
+      '30+ small clinics generating steady $1.2M/month base revenue',
+      'Health system conversations: offer free pilot → show $50M+ recoverable',
+      'Close 3 health systems by month 12 = $138M/month from systems alone',
+      'Total pipeline: 10 regional whales + 3 health systems + clinics + billers',
       'FULL AUTOPILOT: AI handles claims, appeals, inbox, and payouts',
-      'You: glance at Stripe dashboard, handle whale relationships, live life',
+      'You: monitor Stripe dashboard from Denmark. Handle whale relationships. Live life.',
     ],
     revenue: {
-      without_whale:  '$1M-$2M/month from clinics + billers alone',
-      with_1_whale:   '$7M-$10M/month',
-      with_2_whales:  '$15M-$20M/month',
-      phase_total:    '$6M-$60M (depending on whales)',
+      month_7:       '$25M-$50M/month (3 whales + clinics + billers)',
+      month_8:       '$50M/month TARGET HIT',
+      month_10:      '$100M-$200M/month (5-7 whales + health system pilots)',
+      month_12:      '$500M/month TARGET (10 whales + 3 health systems)',
+      phase_total:   '$500M-$2B+',
     },
-    key_unlock: 'First whale case study → other hospitals come inbound. Pipeline feeds itself.',
+    instantly_upgrade: 'Hypergrowth → Enterprise unlimited ($250+/mo) at $50M/month',
+    key_unlock: 'Health systems come inbound. Pipeline feeds itself. $500M/month on autopilot.',
   },
 };
 
@@ -511,33 +552,33 @@ const BILLER_PLAYBOOK = {
 // SCENARIO ANALYSIS
 // ════════════════════════════════════════════════════════════════════
 const SCENARIOS = {
-  bare_minimum: {
-    label: '⚠️ Bare Minimum (slow close rate, no whales)',
-    month_6:   '$80K/month',
-    month_12:  '$250K/month',
-    year1:     '$500K-$1M',
-    what_it_takes: '5 small clinics + 3 billers. Very achievable.',
-  },
-  realistic: {
-    label: '📊 Realistic',
+  foundation: {
+    label: '🏗️ Foundation (clinics + billers only, no whales yet)',
     month_6:   '$250K/month',
     month_12:  '$1M/month',
     year1:     '$3M-$8M',
-    what_it_takes: '14 small clinics + 8 billers. Solid grind.',
+    what_it_takes: '14 small clinics + 8 billers. The base that funds whale hunting.',
   },
-  optimistic: {
-    label: '🚀 Optimistic (land 1 whale)',
-    month_6:   '$500K/month',
-    month_12:  '$10M/month',
-    year1:     '$50M-$100M',
-    what_it_takes: '14 clinics + 12 billers + 1 whale hospital.',
+  target_floor: {
+    label: '🎯 $50M/month Target Floor (3 regional whales)',
+    month_6:   '$10M/month',
+    month_12:  '$50M/month',
+    year1:     '$300M-$500M',
+    what_it_takes: '3 regional hospitals (200 beds each) + 12 billers + clinics. Upgrade Instantly to Hypergrowth by month 4.',
   },
-  moonshot: {
-    label: '🌙 Moonshot (2-3 whales + strong biller network)',
-    month_6:   '$2M/month',
-    month_12:  '$25M/month',
-    year1:     '$100M-$200M',
-    what_it_takes: 'Everything clicks. Hunt whales aggressively.',
+  target_mid: {
+    label: '🚀 $100M-$200M/month (5-7 whales + health systems)',
+    month_6:   '$25M/month',
+    month_12:  '$200M/month',
+    year1:     '$600M-$1.5B',
+    what_it_takes: '5 regional hospitals + 2 health system pilots. Upgrade Instantly to enterprise by month 6.',
+  },
+  target_ceiling: {
+    label: '👑 $500M/month (10+ whales + 3 health systems)',
+    month_6:   '$50M/month',
+    month_12:  '$500M/month',
+    year1:     '$3B-$6B',
+    what_it_takes: '10 regional hospitals + 3 large health systems. Enterprise Instantly + 50,000+ leads/month.',
   },
 };
 
@@ -680,29 +721,40 @@ const LAUNCH_CHECKLIST = [
   // 🔜 NEXT STEPS (Week 1-2)
   { week: 1,  task: 'Monitor first 60 emails sent. Check open rates and reply volume.' },
   { week: 1,  task: 'First AI auto-reply fires — verify it sends correctly via Instantly' },
-  { week: 1,  task: 'Review bounce rates — remove invalid emails from campaign' },
+  { week: 1,  task: 'START WHALE RESEARCH: Identify top 100 regional hospitals by bed count (AHA Database)' },
+  { week: 1,  task: 'Build whale target list: VP Revenue Cycle, CFO, Dir of Billing for top 50 hospitals' },
+  { week: 2,  task: 'Review bounce rates — remove invalid emails from campaign' },
   { week: 2,  task: 'Analyze reply sentiment — is the AI handling objections well?' },
   { week: 2,  task: 'If first positive reply → push hard for $2,500 Guardian Pilot close' },
-  { week: 2,  task: 'First $2,500 hits Stripe → file for Delaware LLC formation' },
+  { week: 2,  task: 'Load whale hospital leads into a separate Instantly campaign (hospital-specific copy)' },
+  { week: 2,  task: 'First $2,500 hits Stripe → upgrade to Instantly Growth plan ($30/mo)' },
 
   // 🎯 WEEKS 3-6
   { week: 3,  task: 'Upgrade Instantly to Growth plan ($30/mo). Add 2 more sending accounts.' },
   { week: 3,  task: 'Buy 2 secondary domains for email deliverability rotation' },
-  { week: 3,  task: 'Load first biller-focused lead list from Apollo (10,000 medical billers)' },
+  { week: 3,  task: 'Load 10,000 fresh Apollo leads — HEAVY hospital C-suite focus' },
+  { week: 3,  task: 'Send FREE 500-claim pilot scan offer to 5 hospital CFOs directly' },
   { week: 4,  task: 'First clinic submitting claims → track recovery rate → build case study' },
+  { week: 4,  task: 'First whale pilot accepted → begin processing 500 denied claims for free' },
   { week: 5,  task: 'First case study published → include in cold email Step 1 body' },
   { week: 5,  task: 'Recruit first 2 biller partners using case study proof' },
-  { week: 6,  task: 'Review Month 2 results: how many replies, meetings, deals?' },
+  { week: 6,  task: 'Whale pilot results: show CFO "$XX million recoverable in your A/R"' },
+  { week: 6,  task: 'Close first whale BAA + service agreement → $7M+/month begins' },
 
-  // 🐋 WEEKS 7-12
-  { week: 7,  task: 'Begin whale outreach — target 50 regional hospitals (200-500 beds)' },
-  { week: 7,  task: 'Offer FREE 500-claim AI recovery scan to 3 hospital CFOs' },
-  { week: 8,  task: 'Whale pilot results come back — show $XX million recoverable' },
-  { week: 9,  task: 'Close first whale BAA + service agreement' },
-  { week: 10, task: 'Whale claims processing ramps → revenue jumps 10-50x' },
-  { week: 10, task: 'Publish whale case study → inbound leads start flowing' },
-  { week: 11, task: 'Scale to 10 sending accounts on Hypergrowth plan' },
-  { week: 12, task: 'Q1 review: revenue trajectory, AI performance, pipeline health' },
+  // 🐋 WEEKS 7-12 — SCALE TO $50M-$500M
+  { week: 7,  task: 'Upgrade to Instantly Hypergrowth ($78/mo, 10 accounts, 75/day each)' },
+  { week: 7,  task: 'Load 25,000+ fresh Apollo leads — target ALL regional hospitals (200+ beds)' },
+  { week: 7,  task: 'Whale case study published → "Recovered $14M in 60 days" → send to 50 hospitals' },
+  { week: 8,  task: 'Close whale #2 and #3 from case study pipeline → $20M+/month' },
+  { week: 8,  task: 'Begin health system outreach (5,000+ bed systems) → $46M/month each' },
+  { week: 9,  task: 'Scale to 20+ sending accounts — upgrade Instantly enterprise if needed' },
+  { week: 9,  task: 'Load 50,000+ leads from Apollo — saturate US hospital market' },
+  { week: 10, task: '5+ whales active → $50M/month TARGET HIT' },
+  { week: 10, task: 'Health system pilot offered → free scan of 5,000 denied claims' },
+  { week: 11, task: 'Close first health system → $46M/month from ONE system' },
+  { week: 11, task: '7-10 whales active + health system → $100M-$200M/month' },
+  { week: 12, task: 'Q1 review: 10+ whales + 3 health systems → $500M/month target path' },
+  { week: 12, task: 'Full autopilot. AI handles everything. Living in Denmark. $500M/month.' },
 ];
 
 
@@ -717,8 +769,10 @@ function display() {
 
   console.log('\n' + line);
   console.log('  💰 NORTHSTAR MEDIC — 1-YEAR REVENUE PLAN 2026');
+  console.log('  TARGET: $50M–$500M PER MONTH by Month 12');
   console.log('  One Founder (Denmark). One AI. Zero Employees. Zero Meetings.');
-  console.log('  AI auto-responds to inbox. Stripe handles payments. You live your life.');
+  console.log('  Clinics build the base. WHALES build the empire.');
+  console.log('  Upgrade Instantly at every milestone to send more leads.');
   console.log(line + '\n');
 
   // ── Current State ──
@@ -737,9 +791,11 @@ function display() {
   console.log('🎯 THE PLAY\n');
   console.log('  STREAM 1 — Direct Recovery:   Cold email → AI auto-reply → Stripe checkout → You keep 30%');
   console.log('  STREAM 2 — Biller Partners:   Recruit billers → They bring clients → AI processes → 15% each');
-  console.log('  LEAD ENGINE:                  Instantly.ai (5,000 loaded) + Apollo.io (refills)');
+  console.log('  LEAD ENGINE:                  Instantly.ai (5,000 loaded) + Apollo.io (scale to 100,000+)');
   console.log('  AI ADVANTAGE:                 GPT-4 replies to EVERY email in seconds — 24/7, no meetings');
-  console.log('  THE MULTIPLIER:               ONE whale hospital = 2,000-8,000 claims/month = $7M-$46M/month\n');
+  console.log('  THE MULTIPLIER:               ONE whale hospital = 2,000-8,000 claims/month = $7M-$46M/month');
+  console.log('  THE TARGET:                   3 whales = $50M/month. 10 whales = $500M/month.');
+  console.log('  UPGRADE PATH:                 Free → Growth → Hypergrowth → Enterprise (upgrade at every milestone)\n');
 
   // ── Unit Economics ──
   console.log(dash);
@@ -769,56 +825,64 @@ function display() {
   console.log('    → 1 deal closed ($2,500 upfront + $40,800/mo recurring)');
   console.log('');
   console.log('  Your 5,000 leads = ~5 deals = $12,500 upfront + $204K/mo recurring = $2.4M/year');
-  console.log('  + Whale bonus: If even 1 of those 5,000 leads is a hospital that signs = $7M+/mo\n');
+  console.log('  + Whale bonus: If even 1 of those 5,000 leads is a hospital that signs = $7M+/mo');
+  console.log('  + Scale: Upgrade Instantly → 50,000+ leads → 50+ deals → 10+ whales → $500M/mo\n');
 
   // ── Phase 1 ──
   console.log(dash);
-  console.log('🩸 PHASE 1: FIRST DOLLAR (Months 1-3)\n');
-  console.log('  Sending:               200 leads/month (free plan, 20/day cap)');
-  console.log('  Expected deals:        1 Guardian Pilot ($2,500)');
-  console.log('  Billers recruited:     2');
-  console.log('  Phase revenue:         ~$46K');
-  console.log('  Key win:               First $2,500 hits Stripe → proves the model\n');
+  console.log('🩸 PHASE 1: BUILD FOUNDATION + START WHALE HUNTING (Months 1-3)\n');
+  console.log('  Sending:               200 → 1,500 leads/month (free → Growth plan)');
+  console.log('  Expected deals:        1 Guardian Pilot ($2,500) + 2 billers');
+  console.log('  Whale hunting:         Research top 100 hospitals. Offer free pilots.');
+  console.log('  Phase revenue:         ~$46K (foundation money)');
+  console.log('  Instantly upgrade:     Free → Growth ($30/mo) after first $2,500');
+  console.log('  Key win:               First clinic case study → credibility for whale pitches\n');
 
   // ── Phase 2 ──
   console.log(dash);
-  console.log('📈 PHASE 2: SCALE THE MACHINE (Months 4-6)\n');
-  console.log('  Sending:               1,500 leads/month (Growth plan, 3 accounts)');
+  console.log('🐋 PHASE 2: CLOSE FIRST WHALE + SCALE (Months 4-6)\n');
+  console.log('  Sending:               1,500 → 7,500 leads/month (Growth → Hypergrowth)');
   console.log('  Active clinics:        5+');
-  console.log('  Biller partners:       4+');
-  console.log('  Monthly revenue:       $80K–$250K/month');
-  console.log('  Key win:               First whale pilot underway\n');
+  console.log('  Biller partners:       6+');
+  console.log('  Whale targets:         Close first whale from pilot → $7M+/month');
+  console.log('  Monthly revenue:       $7M–$25M/month (with 1-2 whales)');
+  console.log('  Instantly upgrade:     Growth → Hypergrowth ($78/mo) when whale pilot starts');
+  console.log('  Key win:               First whale case study → pipeline explodes\n');
 
   // ── Phase 3 ──
   console.log(dash);
-  console.log('⚡ PHASE 3: WHALE HUNTING + SCALE (Months 7-12)\n');
-  console.log('  Sending:               3,000-7,500 leads/month (Hypergrowth, 10 accounts)');
-  console.log('  Active clinics:        14+');
-  console.log('  Biller partners:       12+');
-  console.log('  Without whale:         $1M-$2M/month');
-  console.log('  With 1 whale:          $7M-$10M/month');
-  console.log('  Key win:               Full autopilot. AI handles everything.\n');
+  console.log('👑 PHASE 3: $50M–$500M ENGINE (Months 7-12)\n');
+  console.log('  Sending:               7,500 → 50,000+ leads/month (Hypergrowth → Enterprise)');
+  console.log('  Active whales:         3 → 10+ regional hospitals');
+  console.log('  Health systems:        1 → 3 (5,000+ bed systems, $46M/month each)');
+  console.log('  Biller partners:       20+');
+  console.log('  Month 8 target:        $50M/month ← 3-4 whales + clinics + billers');
+  console.log('  Month 12 target:       $500M/month ← 10 whales + 3 health systems');
+  console.log('  Instantly upgrade:     Enterprise unlimited ($250+/mo) at $50M/month');
+  console.log('  Key win:               Full autopilot. $500M/month. Denmark.\n');
 
   // ── Year 1 Scenarios ──
   console.log(line);
-  console.log('  📉 YEAR 1 SCENARIO ANALYSIS');
+  console.log('  📉 YEAR 1 SCENARIO ANALYSIS — TARGET: $50M–$500M/MONTH');
   console.log(line);
-  console.log('                        Bare Min      Realistic     Optimistic    Moonshot');
-  console.log('  Clinics:              5             14            14            20');
-  console.log('  Billers:              3             8             12            20');
-  console.log('  Whales:               0             0             1             3');
-  console.log('  Month 12 MRR:         $250K/mo      $1M/mo        $10M/mo       $25M/mo');
-  console.log('  Year 1 total:         $500K-$1M     $3M-$8M       $50M-$100M    $200M+');
-  console.log('  Operating cost:       $1,152/year   $1,152/year   $1,152/year   $3,816/year');
-  console.log('  Margin:               99.9%+        99.9%+        99.9%+        99.9%+\n');
+  console.log('                        Foundation    $50M Target   $200M Target  $500M Target');
+  console.log('  Clinics:              14            14            20            30');
+  console.log('  Billers:              8             12            20            30');
+  console.log('  Whales:               0             3             5-7           10+');
+  console.log('  Health Systems:       0             0             2             3');
+  console.log('  Month 12 MRR:         $1M/mo        $50M/mo       $200M/mo      $500M/mo');
+  console.log('  Year 1 total:         $3M-$8M       $300M-$500M   $600M-$1.5B   $3B-$6B');
+  console.log('  Operating cost:       $1,152/year   $1,152/year   $3,000/year   $3,816/year');
+  console.log('  Margin:               99.9%+        99.99%+       99.99%+       99.99%+\n');
 
   // ── Sending Capacity ──
   console.log(dash);
   console.log('📧 SENDING CAPACITY TIERS\n');
   console.log('  FREE (Now):     1 account × 20/day = 200 leads/month       $0/mo');
-  console.log('  GROWTH:         3 accounts × 50/day = 1,500 leads/month    $30/mo');
-  console.log('  HYPERGROWTH:    10 accounts × 75/day = 7,500 leads/month   $78/mo');
-  console.log('  → Upgrade to Growth after first $2,500 sale\n');
+  console.log('  GROWTH:         3 accounts × 50/day = 1,500 leads/month    $30/mo     ← After first $2,500 sale');
+  console.log('  HYPERGROWTH:    10 accounts × 75/day = 7,500 leads/month   $78/mo     ← After first whale pilot');
+  console.log('  ENTERPRISE:     50+ accounts = 50,000+ leads/month        $250+/mo   ← After $50M/month');
+  console.log('  → Upgrade at every revenue milestone. More leads = more whales = more revenue.\n');
 
   // ── AI Advantage ──
   console.log(dash);
@@ -858,8 +922,9 @@ function display() {
 
   console.log('\n' + line);
   console.log('  "One year. One AI. Zero employees. Zero meetings.');
-  console.log('   AI handles the inbox. Stripe handles the money.');
-  console.log('   I handle the whales. From Denmark."');
+  console.log('   $50M/month by month 8. $500M/month by month 12.');
+  console.log('   Clinics build the base. Whales build the empire.');
+  console.log('   Upgrade Instantly along the way. From Denmark."');
   console.log('  — Joehary Illum, Founder, NorthStar Medic');
   console.log(line + '\n');
 }
