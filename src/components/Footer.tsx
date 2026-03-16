@@ -11,7 +11,7 @@ export default function Footer() {
         <footer style={{
             background: "#010413",
             color: "var(--text-secondary)",
-            padding: "10rem 0 6rem",
+            padding: "clamp(3rem, 8vw, 10rem) 0 clamp(2rem, 4vw, 6rem)",
             marginTop: "auto",
             borderTop: "1px solid rgba(255,255,255,0.03)",
             position: "relative",
@@ -24,11 +24,11 @@ export default function Footer() {
                 pointerEvents: "none", zIndex: 0
             }} />
 
-            <div className="container" style={{
+            <div className="container footer-grid" style={{
                 display: "grid",
                 gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
-                gap: "5rem",
-                marginBottom: "6rem",
+                gap: "clamp(1.5rem, 4vw, 5rem)",
+                marginBottom: "clamp(2rem, 4vw, 6rem)",
                 position: "relative",
                 zIndex: 1
             }}>
@@ -97,14 +97,14 @@ export default function Footer() {
                 </div>
             </div>
 
-            <div className="container" style={{
+            <div className="container footer-bottom" style={{
                 borderTop: "1px solid rgba(255,255,255,0.05)",
-                paddingTop: "3rem",
+                paddingTop: "clamp(1.5rem, 2vw, 3rem)",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 flexWrap: "wrap",
-                gap: "2rem",
+                gap: "1rem",
                 color: "rgba(255,255,255,0.3)",
                 fontSize: "0.85rem",
                 position: "relative",
@@ -113,7 +113,7 @@ export default function Footer() {
                 <div style={{ display: "flex", gap: "2rem" }}>
                     <p>&copy; {new Date().getFullYear()} Northstar Medic Alliance. All rights reserved.</p>
                 </div>
-                <div style={{ display: "flex", gap: "3rem", fontWeight: "700" }}>
+                <div style={{ display: "flex", gap: "clamp(1rem, 2vw, 3rem)", fontWeight: "700", flexWrap: "wrap" }}>
                     <p style={{ color: "var(--brand-accent)" }}>// GRID SECURED</p>
                     <p style={{ color: "var(--brand-primary)" }}>// PHI PROTECTED</p>
                     <p style={{ color: "rgba(255,255,255,0.6)" }}>v4.1 Autonomous</p>

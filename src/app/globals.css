@@ -69,6 +69,8 @@ html, body {
   font-family: 'Outfit', sans-serif;
   font-size: 15px;
   line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -660,6 +662,11 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 14px;
   }
 
+  /* Prevent iOS Safari auto-zoom on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
   h1 { font-size: 1.75rem !important; }
   h2 { font-size: 1.375rem !important; }
 
@@ -667,9 +674,66 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 1rem !important;
   }
 
+  .section-padding {
+    padding: 2rem 0;
+  }
+
   .glass-panel {
     padding: 1rem !important;
     border-radius: var(--radius-lg) !important;
+  }
+
+  /* Footer — stack on mobile */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    text-align: center;
+  }
+
+  .footer-bottom > div {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
+
+  /* Features page — stack 2-col grids */
+  .features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Dashboard tables — horizontal scroll */
+  .dash-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* War room second row */
+  .war-room-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Chatbot mobile sizing */
+  .chatbot-window {
+    width: calc(100vw - 1rem) !important;
+    height: calc(100dvh - 6rem) !important;
+    right: 0.5rem !important;
+    bottom: 0.5rem !important;
+    border-radius: var(--radius-lg) !important;
+  }
+
+  /* Safe area padding for fixed elements */
+  .nav-safe {
+    padding-top: env(safe-area-inset-top) !important;
+  }
+
+  .chatbot-fab {
+    bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
   }
 
   /* Prevent nav links crashing into logo/CTA on mobile */

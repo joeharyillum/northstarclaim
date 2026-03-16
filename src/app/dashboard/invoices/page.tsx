@@ -19,14 +19,14 @@ export default async function InvoicesPage() {
     return (
         <div className="animate-fade-in" style={{ maxWidth: "1000px", margin: "0 auto" }}>
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "3rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "3rem", flexWrap: "wrap", gap: "1.5rem" }}>
                 <div>
                     <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>Billing & Invoices</h1>
                     <p style={{ color: "var(--text-secondary)", marginTop: "0.25rem", fontSize: "0.875rem" }}>
                         Our 30% success fee is only invoiced <strong>after</strong> the funds have cleared into your bank account.
                     </p>
                 </div>
-                <div style={{ background: "white", padding: "1rem 2rem", borderRadius: "var(--radius-md)", border: "1px solid rgba(0,0,0,0.1)", textAlign: "right" }}>
+                <div style={{ background: "white", padding: "1rem clamp(1rem, 2vw, 2rem)", borderRadius: "var(--radius-md)", border: "1px solid rgba(0,0,0,0.1)", textAlign: "right" }}>
                     <div style={{ fontSize: "0.875rem", color: "var(--text-secondary)", textTransform: "uppercase", marginBottom: "0.25rem" }}>Current Balance Due</div>
                     <div style={{ fontSize: "1.5rem", fontWeight: "700", color: "var(--brand-alert)" }}>
                         ${totalBalanceDue.toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -34,8 +34,8 @@ export default async function InvoicesPage() {
                 </div>
             </div>
 
-            <div className="glass-panel" style={{ overflow: "hidden" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <div className="glass-panel dash-table-wrap" style={{ overflow: "hidden" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "700px" }}>
                     <thead>
                         <tr style={{ background: "rgba(0,0,0,0.02)", textAlign: "left" }}>
                             <th style={{ padding: "1.5rem 1rem", borderBottom: "1px solid rgba(0,0,0,0.05)", fontWeight: "600", color: "var(--text-secondary)" }}>Invoice ID</th>

@@ -35,6 +35,7 @@ export default function Navigation() {
 
     return (
         <nav
+            className="nav-safe"
             style={{
                 position: "fixed",
                 top: 0,

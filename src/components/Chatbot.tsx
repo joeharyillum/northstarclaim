@@ -46,7 +46,7 @@ export default function Chatbot() {
             <div style={{
                 position: "fixed", bottom: "1.5rem", right: "1.5rem", zIndex: 999,
                 display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.75rem",
-            }}>
+            }} className="chatbot-fab">
                 {/* Attention Bubble */}
                 <div
                     onClick={() => setIsOpen(true)}
@@ -106,7 +106,7 @@ export default function Chatbot() {
     }
 
     return (
-        <div style={{
+        <div className="chatbot-window" style={{
             position: "fixed", bottom: "1.5rem", right: "1.5rem",
             width: "380px", height: "560px",
             display: "flex", flexDirection: "column",

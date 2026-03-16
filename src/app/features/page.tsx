@@ -22,7 +22,7 @@ export default function FeaturesPage() {
 
             <section className="section-padding">
                 <div className="container">
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+                    <div className="features-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(2rem, 4vw, 4rem)", alignItems: "center" }}>
                         <div className="animate-fade-in">
                             <h2 style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>Zero-Touch Appeals</h2>
                             <p style={{ color: "var(--text-secondary)", fontSize: "1.125rem", marginBottom: "1.5rem" }}>

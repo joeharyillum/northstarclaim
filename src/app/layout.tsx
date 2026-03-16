@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -7,6 +7,13 @@ import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import CopyProtection from "@/components/CopyProtection";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://northstarmedic.com"),
@@ -166,7 +173,7 @@ export default function RootLayout({
       <body>
         <ErrorBoundary>
           <Navigation />
-          <main style={{ minHeight: "100vh" }}>
+          <main style={{ minHeight: "100dvh" }}>
             {children}
           </main>
           <Footer />

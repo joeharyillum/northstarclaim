@@ -19,10 +19,10 @@ export default function Home() {
       <section style={{
         position: "relative",
         overflow: "hidden",
-        minHeight: "100vh",
+        minHeight: "100dvh",
         display: "flex",
         alignItems: "center",
-        padding: "8rem 0",
+        padding: "clamp(4rem, 8vw, 8rem) 0",
         background: "var(--bg-primary)",
         perspective: "1200px",
       }}>
