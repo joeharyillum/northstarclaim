@@ -8,8 +8,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 });
 
 export async function POST(req: Request) {
-    // AML GATE: Only authenticated founder can trigger payouts
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Rate limit: max 3 payouts per minute
     if (!checkRateLimit(session.user.id, 3)) {

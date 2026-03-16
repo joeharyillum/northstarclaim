@@ -8,8 +8,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 });
 
 export async function POST(req: Request) {
-    // AUTH GATE: Only authenticated users can initiate checkout
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Rate limit: max 5 checkout attempts per minute
     if (!checkRateLimit(session.user.id, 5)) {

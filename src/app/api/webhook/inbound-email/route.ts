@@ -146,6 +146,15 @@ GUIDELINES:
 // ─── Webhook Handler ────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
+  // Webhook auth: verify shared secret to prevent unauthorized access
+  const webhookSecret = process.env.INBOUND_EMAIL_SECRET;
+  if (webhookSecret) {
+    const authHeader = req.headers.get("authorization");
+    if (authHeader !== `Basic ${webhookSecret}`) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+  }
+
   try {
     // SendGrid Inbound Parse sends multipart/form-data
     const formData = await req.formData();

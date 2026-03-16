@@ -15,9 +15,10 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Rate Limit: 20 ingestions per minute per user
-    if (!checkRateLimit(session.user?.id || "unknown", 20)) {
+    if (!checkRateLimit(session.user.id, 20)) {
         return NextResponse.json({ error: "High upload frequency detected. System cooling in progress." }, { status: 429 });
     }
 

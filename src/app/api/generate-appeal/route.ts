@@ -14,9 +14,10 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Rate Limit: 10 generation requests per minute (very heavy operation)
-    if (!checkRateLimit(session.user?.id || "unknown", 10)) {
+    if (!checkRateLimit(session.user.id, 10)) {
         return NextResponse.json({ error: "System capacity reached for your session. Try again in 1 minute." }, { status: 429 });
     }
 

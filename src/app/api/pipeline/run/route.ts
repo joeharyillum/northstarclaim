@@ -12,6 +12,7 @@
 import { NextResponse } from 'next/server';
 import { searchHealthcareLeads, type ApolloLead } from '@/lib/apollo-client';
 import { addLeadsToCampaign, type InstantlyLead } from '@/lib/instantly-client';
+import { getOwnerSession } from '@/lib/owner-session';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // Allow up to 60s for pipeline execution
@@ -53,6 +54,9 @@ function generatePersonalization(lead: ApolloLead): string {
 }
 
 export async function POST(request: Request) {
+    const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     const startTime = Date.now();
     const log: string[] = [];
 
@@ -155,13 +159,11 @@ export async function POST(request: Request) {
         });
 
     } catch (error: any) {
-        log.push(`[ERROR] Pipeline failed: ${error.message}`);
         console.error('[PIPELINE ERROR]', error);
 
         return NextResponse.json({
             success: false,
-            error: error.message,
-            log,
+            error: 'Pipeline execution failed',
             duration: `${Date.now() - startTime}ms`,
         }, { status: 500 });
     }
@@ -171,16 +173,10 @@ export async function POST(request: Request) {
  * GET: Quick health check for the pipeline
  */
 export async function GET() {
+    const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     return NextResponse.json({
         status: 'PIPELINE_READY',
-        apolloConfigured: !!process.env.APOLLO_API_KEY,
-        instantlyConfigured: !!process.env.INSTANTLY_API_KEY,
-        instantlyCampaign: process.env.INSTANTLY_CAMPAIGN_ID || 'NOT_SET',
-        sendgridConfigured: !!process.env.SENDGRID_API_KEY,
-        instructions: {
-            dryRun: 'POST with { "dryRun": true } to test Apollo fetch without sending emails',
-            fullRun: 'POST with { "states": ["Florida", "Texas"], "count": 25 } to run the full pipeline',
-            paginate: 'Add "page": 2, 3, 4... to paginate through Apollo results',
-        },
     });
 }

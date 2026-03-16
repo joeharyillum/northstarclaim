@@ -12,6 +12,7 @@ import { NegotiationEngine } from "@/lib/negotiation-engine";
 
 export async function POST(req: Request) {
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
         const { claimId, billedAmount, adjusterInput } = await req.json();
@@ -94,8 +95,7 @@ export async function POST(req: Request) {
         // ZERO-ERROR POLICY: Always return valid JSON
         return NextResponse.json({
             success: false,
-            error: "Neural Matrix Synchronization Lag",
-            details: error.message
+            error: "Negotiation processing error"
         }, { status: 500 });
     }
 }

@@ -7,8 +7,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 });
 
 export async function GET() {
-    // PRIVATE: Only authenticated company users can see wallet balance
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     try {
         if (!process.env.STRIPE_SECRET_KEY) {
             return NextResponse.json({

@@ -13,9 +13,10 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Rate Limit: 30 requests per minute per user for analysis
-    if (!checkRateLimit(session.user?.id || "unknown", 30)) {
+    if (!checkRateLimit(session.user.id, 30)) {
         return NextResponse.json({ error: "High-frequency analysis detected. Please wait 60 seconds." }, { status: 429 });
     }
 
@@ -24,14 +25,7 @@ export async function POST(request: Request) {
         const { procedureCode, modifier, denialReasonCode, extractedTextRaw } = body;
 
         if (!process.env.OPENAI_API_KEY) {
-            // MOCK RESPONSE IF NO API KEY IS SET (To keep the demo working)
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            return NextResponse.json({
-                isRecoverable: true,
-                confidenceScore: 98,
-                payerGuidelineFound: `CMS NCCI manual chapter 11 allows modifier ${modifier} with CPT ${procedureCode}.`,
-                medicalNecessityJustification: "The clinical documentation supports a distinct and separate procedural service, rendering the unbundling denial invalid."
-            });
+            return NextResponse.json({ error: 'AI analysis engine not configured' }, { status: 503 });
         }
 
         // REAL OPENAI CALL WITH STRUCTURED OUTPUT (JSON MODE)

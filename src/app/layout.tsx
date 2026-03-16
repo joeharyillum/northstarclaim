@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import CopyProtection from "@/components/CopyProtection";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://northstarmedic.com"),
@@ -172,6 +173,7 @@ export default function RootLayout({
           <Chatbot />
           <Analytics />
           <SpeedInsights />
+          <CopyProtection />
         </ErrorBoundary>
       </body>
     </html>

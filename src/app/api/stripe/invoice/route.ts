@@ -19,6 +19,7 @@ const PARTNER_REVENUE_SPLIT = 0.50;
 
 export async function POST(request: Request) {
     const session = await getOwnerSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Rate limit: max 10 invoices per minute
     if (!checkRateLimit(session.user.id, 10)) {
@@ -31,14 +32,19 @@ export async function POST(request: Request) {
 
         const body = await request.json();
 
-        // claimAmount is the TOTAL amount the insurance company paid the clinic.
-        // E.g., The AI appealed and won $1,000.
-        // connectedAccountId is the Biller's Stripe ID (from /api/stripe/onboard)
-        // clinicCustomerId is the Clinic's Stripe Customer ID (who pays the bill)
         const { claimAmount, connectedAccountId, clinicCustomerId } = body;
 
-        // --- THE MATH ---
-        // We create an invoice on the Clinic's actual Stripe account. 
+        // Input validation for financial parameters
+        if (typeof claimAmount !== 'number' || claimAmount <= 0 || claimAmount > 10000000) {
+            return NextResponse.json({ error: 'Invalid claim amount' }, { status: 400 });
+        }
+        if (typeof connectedAccountId !== 'string' || !connectedAccountId.startsWith('acct_')) {
+            return NextResponse.json({ error: 'Invalid connected account' }, { status: 400 });
+        }
+        if (typeof clinicCustomerId !== 'string' || !clinicCustomerId.startsWith('cus_')) {
+            return NextResponse.json({ error: 'Invalid customer ID' }, { status: 400 });
+        }
+
         const totalFeeAmount = claimAmount * TOTAL_FEE_PERCENTAGE; // $1000 * 30% = $300
         const feeInCents = Math.round(totalFeeAmount * 100);
 

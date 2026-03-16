@@ -2,9 +2,14 @@
 // Vercel requires: A @ -> 76.76.21.21, CNAME www -> cname.vercel-dns.com
 // Proxy OFF (DNS only) so Vercel can handle SSL
 
-const CF_API_KEY = '9fb1e1e4951ea58c81ad3f4aca589f67b2e3b';
-const CF_EMAIL = 'joeharyillum85@gmail.com';
+const CF_API_KEY = process.env.CF_API_KEY;
+const CF_EMAIL = process.env.CF_EMAIL;
 const DOMAIN = 'northstarmedic.com';
+
+if (!CF_API_KEY || !CF_EMAIL) {
+    console.error('Set CF_API_KEY and CF_EMAIL environment variables');
+    process.exit(1);
+}
 
 async function cfApi(path, method = 'GET', body = null) {
     const opts = {

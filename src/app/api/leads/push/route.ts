@@ -38,6 +38,7 @@ function generatePitch(lead: { firstName: string; lastName: string; company: str
 
 export async function POST(request: NextRequest) {
   const session = await getOwnerSession();
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
     const body = await request.json();
@@ -114,7 +115,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('Bulk push error:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to push leads' },
+      { error: 'Failed to push leads' },
       { status: 500 }
     );
   }
@@ -122,6 +123,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   const session = await getOwnerSession();
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const [total, newLeads, contacted, bySource, byState] = await Promise.all([
     prisma.lead.count(),
