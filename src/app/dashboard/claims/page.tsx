@@ -116,7 +116,7 @@ export default async function MyClaimsPage() {
                     textTransform: "uppercase",
                     letterSpacing: "0.04em",
                     minWidth: "600px",
-                }>
+                }}>
                     <span>CPT / Denial</span>
                     <span>Payer</span>
                     <span>Billed</span>

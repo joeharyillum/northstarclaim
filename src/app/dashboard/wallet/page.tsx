@@ -323,7 +323,7 @@ export default function WalletPage() {
         </div>
 
         {/* Commission Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+        <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
           <div style={{ ...cardBase, padding: "1.75rem" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, #10b981, transparent)", opacity: 0.6 }} />
             <div style={{ fontSize: "0.65rem", fontWeight: "600", color: "#10b981", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.75rem" }}>Commission Earned</div>
@@ -348,7 +348,7 @@ export default function WalletPage() {
         </div>
 
         {/* Payout + Transactions */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "1.5rem" }}>
+        <div className="dash-content-grid" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "1.5rem" }}>
           <div style={{ ...cardBase, padding: "1.5rem" }}>
             <h3 style={{ fontSize: "1rem", fontWeight: "700", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <Receipt size={18} style={{ color: "#38bdf8" }} /> Payout History

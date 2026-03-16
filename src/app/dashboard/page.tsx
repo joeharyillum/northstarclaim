@@ -99,10 +99,12 @@ export default async function DashboardOverview() {
                         Welcome back, {session.user.name}
                     </p>
                 </div>
+                {session.user.role === "admin" && (
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                     <Button href="/dashboard/war-room" size="sm">War Room</Button>
                     <Button href="/dashboard/upload" variant="outline" size="sm">Upload</Button>
                 </div>
+                )}
             </div>
 
             {/* KPI Cards */}
@@ -184,7 +186,7 @@ export default async function DashboardOverview() {
                     alignItems: "center",
                 }}>
                     <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>Recent Claims</span>
-                    <Button href="/dashboard/review" variant="outline" size="sm">View All</Button>
+                    <Button href="/dashboard/claims" variant="outline" size="sm">View All</Button>
                 </div>
                 <div>
                     {recentActivity.length === 0 ? (

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -13,10 +14,29 @@ export default function DashboardSidebar() {
     const userName = session?.user?.name || "User";
     const initials = userName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
 
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    useEffect(() => {
+        const toggle = () => setSidebarOpen(prev => !prev);
+        window.addEventListener("toggle-dashboard-sidebar", toggle);
+        return () => window.removeEventListener("toggle-dashboard-sidebar", toggle);
+    }, []);
+
+    useEffect(() => {
+        if (sidebarOpen) document.body.style.overflow = "hidden";
+        else document.body.style.overflow = "";
+        return () => { document.body.style.overflow = ""; };
+    }, [sidebarOpen]);
+
+    const closeSidebar = () => setSidebarOpen(false);
+
     const mainLinks = [
         { name: "Overview", href: "/dashboard", icon: "◎" },
         ...(!isAdmin && !isBiller ? [
             { name: "My Claims", href: "/dashboard/claims", icon: "◈" },
+        ] : []),
+        ...(isBiller ? [
+            { name: "Client Claims", href: "/dashboard/claims", icon: "◈" },
         ] : []),
         ...(isAdmin ? [
             { name: "Upload Claims", href: "/dashboard/upload", icon: "⬆" },
@@ -31,11 +51,25 @@ export default function DashboardSidebar() {
             { name: "Lead Engine", href: "/dashboard/leads", icon: "◆" },
         ] : []),
         { name: "Wallet", href: "/dashboard/wallet", icon: "◇" },
-        ...(!isBiller ? [{ name: "Invoices", href: "/dashboard/invoices", icon: "▤" }] : []),
+        { name: "Invoices", href: "/dashboard/invoices", icon: "▤" },
     ];
 
     return (
-        <aside className="dash-sidebar" style={{
+        <>
+        {sidebarOpen && (
+            <div
+                className="dash-sidebar-backdrop"
+                onClick={closeSidebar}
+                style={{
+                    position: "fixed",
+                    inset: 0,
+                    background: "rgba(0,0,0,0.6)",
+                    zIndex: 199,
+                    backdropFilter: "blur(4px)",
+                }}
+            />
+        )}
+        <aside className={`dash-sidebar${sidebarOpen ? " sidebar-open" : ""}`} style={{
             width: "var(--sidebar-width)",
             height: "100vh",
             position: "fixed",
@@ -170,6 +204,7 @@ export default function DashboardSidebar() {
                         <Link
                             key={link.href}
                             href={link.href}
+                            onClick={closeSidebar}
                             className={`sidebar-nav-link${isActive ? " active" : ""}`}
                         >
                             <span style={{
@@ -201,6 +236,7 @@ export default function DashboardSidebar() {
                         <Link
                             key={link.href}
                             href={link.href}
+                            onClick={closeSidebar}
                             className={`sidebar-nav-link${isActive ? " active" : ""}`}
                         >
                             <span style={{
@@ -270,5 +306,6 @@ export default function DashboardSidebar() {
                 </div>
             </div>
         </aside>
+        </>
     );
 }

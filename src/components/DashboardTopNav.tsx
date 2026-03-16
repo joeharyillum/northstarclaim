@@ -39,7 +39,7 @@ export default function DashboardTopNav() {
     };
 
     return (
-        <header style={{
+        <header className="dash-topnav" style={{
             background: "var(--bg-secondary)",
             borderBottom: "1px solid var(--border-subtle)",
             padding: "0 2rem",
@@ -52,6 +52,27 @@ export default function DashboardTopNav() {
             zIndex: 50,
         }}>
             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <button
+                    className="dash-mobile-toggle"
+                    onClick={() => window.dispatchEvent(new Event("toggle-dashboard-sidebar"))}
+                    style={{
+                        background: "none",
+                        border: "none",
+                        color: "var(--text-primary)",
+                        cursor: "pointer",
+                        padding: "0.5rem",
+                        display: "none",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                    aria-label="Toggle menu"
+                >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
                 <h1 style={{
                     fontSize: "1.125rem",
                     margin: 0,
@@ -89,7 +110,8 @@ export default function DashboardTopNav() {
                 </div>
             </div>
 
-            <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            <div className="dash-topnav-actions" style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+                <span className="dash-hide-mobile">
                 <Button
                     variant="secondary"
                     size="sm"
@@ -98,6 +120,7 @@ export default function DashboardTopNav() {
                 >
                     {isExporting ? "Exporting..." : "Export CSV"}
                 </Button>
+                </span>
 
                 <div style={{
                     display: "flex",
@@ -120,7 +143,7 @@ export default function DashboardTopNav() {
                     }}>
                         {initials}
                     </div>
-                    <div style={{ lineHeight: 1.3 }}>
+                    <div className="dash-hide-mobile" style={{ lineHeight: 1.3 }}>
                         <div style={{ fontSize: "0.8rem", fontWeight: "600" }}>{userName}</div>
                     </div>
                     <button
