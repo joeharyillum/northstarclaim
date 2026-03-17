@@ -90,16 +90,32 @@ export default auth((req) => {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // LAYER 4: API route authentication — open access
+    // LAYER 4: Dashboard auth — require login for /dashboard/*
     // ═══════════════════════════════════════════════════════════════
+    if (nextUrl.pathname.startsWith('/dashboard') && !isLoggedIn) {
+        return NextResponse.redirect(new URL('/login', nextUrl));
+    }
 
     // ═══════════════════════════════════════════════════════════════
-    // LAYER 5: BAA enforcement — disabled for owner access
+    // LAYER 5: Admin route guard — only admin role can access
     // ═══════════════════════════════════════════════════════════════
+    if (isAdminRoute && isLoggedIn && req.auth?.user?.role !== 'admin') {
+        return NextResponse.redirect(new URL('/dashboard', nextUrl));
+    }
 
     // ═══════════════════════════════════════════════════════════════
-    // LAYER 6: Dashboard — open access (no auth required)
+    // LAYER 6: Admin API guard — only admin role can call these APIs
     // ═══════════════════════════════════════════════════════════════
+    if (isAdminApiRoute && (!isLoggedIn || req.auth?.user?.role !== 'admin')) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 7: Protected API routes — require login
+    // ═══════════════════════════════════════════════════════════════
+    if (isApiRoute && !isPublicApiRoute && !isWebhookRoute && !isLoggedIn) {
+        return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
 
     // Redirect logged-in users away from signup
     if (isLoggedIn && nextUrl.pathname === '/signup') {
