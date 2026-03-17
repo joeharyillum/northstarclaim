@@ -32,6 +32,15 @@ export async function POST(request: Request) {
 
         const fileBuffer = Buffer.from(await file.arrayBuffer());
 
+        // --- FILE SIZE VALIDATION: 20MB MAX ---
+        const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+        if (fileBuffer.byteLength > MAX_FILE_SIZE) {
+            return NextResponse.json(
+                { error: 'File too large. Maximum allowed size is 20MB.' },
+                { status: 413 }
+            );
+        }
+
         // --- ENTERPRISE SECURITY: TEMP VAULT STORAGE ---
         // Write to /tmp for serverless compatibility (Vercel/Railway)
         const tmpDir = path.join('/tmp', 'claims');
