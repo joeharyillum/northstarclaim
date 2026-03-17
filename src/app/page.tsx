@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import CheckoutButton from "@/components/CheckoutButton";
 import Link from "next/link";
 import { Metadata } from "next";
 import LiveRevenueTicker from "@/components/LiveRevenueTicker";
@@ -360,9 +361,7 @@ export default function Home() {
                 <li>✓ HIPAA Compliant + BAA Included</li>
                 <li>✓ 48-Hour Processing</li>
               </ul>
-              <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "block", padding: "0.85rem", border: "1px solid var(--brand-primary)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "var(--brand-primary)", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }}>
-                Start Pilot
-              </a>
+              <CheckoutButton tier="guardian-pilot" label="Start Pilot — $2,500" variant="outline" />
             </div>
 
             {/* Plan 2: Growth Lattice — Featured */}
@@ -384,9 +383,7 @@ export default function Home() {
                 <li>✓ Dedicated Recovery Dashboard</li>
                 <li>✓ Stripe Auto-Payout Integration</li>
               </ul>
-              <a href="/auth/register" style={{ display: "block", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", textDecoration: "none", fontWeight: "700", transition: "all 0.2s" }}>
-                Get Started
-              </a>
+              <CheckoutButton tier="growth-lattice" label="Get Started — $7,500" variant="gradient" />
             </div>
 
             {/* Plan 3: Network Core */}
