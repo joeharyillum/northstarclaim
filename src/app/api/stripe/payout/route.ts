@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { getOwnerSession } from '@/lib/owner-session';
 import { checkRateLimit, validateFinancialConsent, logAudit } from '@/lib/security';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim(), {
     apiVersion: '2023-10-16' as any,
 });
 

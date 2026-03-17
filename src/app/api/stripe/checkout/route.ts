@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { getOwnerSession } from '@/lib/owner-session';
 import { checkRateLimit } from '@/lib/security';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim(), {
     apiVersion: '2025-04-30.basil' as Stripe.LatestApiVersion,
 });
 
