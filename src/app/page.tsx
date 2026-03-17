@@ -28,11 +28,11 @@ export default function Home() {
       }}>
 
         {/* Background Image - Neon Medical Future */}
-        <div style={{
+        <div className="hero-bg-image" style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
           backgroundImage: "url('/hero-neon-medical.webp')",
           backgroundSize: "cover",
-          backgroundPosition: "center top",
+          backgroundPosition: "center center",
           zIndex: 0,
           filter: "brightness(0.45) contrast(1.15) saturate(1.1)",
           transform: "scale(1.05)"
@@ -153,11 +153,11 @@ export default function Home() {
       <section className="section-padding" style={{ background: "var(--bg-primary)", position: "relative", borderTop: "none", overflow: "hidden" }}>
         {/* Surgeons & Medical Tech Background */}
         {/* Surgeons & Medical Tech Background */}
-        <div style={{
+        <div className="section-bg-image" style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
           backgroundImage: "url('/surgeons-technology.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "center center",
           zIndex: 0,
           filter: "brightness(0.35) contrast(1.15) saturate(1.1)",
         }} />
@@ -168,7 +168,7 @@ export default function Home() {
         }} />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
             <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 4rem" }}>
-              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1.5rem", lineHeight: "1.2" }}>The <span className="text-gradient">NorthStar Medic</span> Advantage</h2>
+              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1.5rem", lineHeight: "1.2" }}>The <span className="text-gradient">NORTHSTAR MEDIC</span> Advantage</h2>
               <p style={{ color: "var(--text-secondary)", fontSize: "1.125rem" }}>
                 Our platform is more than a tool—it's a complete AI-powered revenue recovery engine built for modern healthcare.
               </p>
@@ -254,7 +254,7 @@ export default function Home() {
               See the <span className="text-gradient">Aha Moment</span>
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "1.1rem", lineHeight: "1.7" }}>
-              Watch how NorthStar Medic transforms denied claims into recovered revenue — in minutes, not months.
+              Watch how NORTHSTAR MEDIC transforms denied claims into recovered revenue — in minutes, not months.
             </p>
           </div>
 
@@ -295,7 +295,7 @@ export default function Home() {
             <div style={{ position: "relative", minHeight: "420px", display: "flex", alignItems: "center", justifyContent: "center", padding: "3rem 2rem" }}>
               <img
                 src="/data-dashboard-hero.png"
-                alt="NorthStar Medic Dashboard — AI Claim Recovery Platform"
+                alt="NORTHSTAR MEDIC Dashboard — AI Claim Recovery Platform"
                 style={{
                   width: "100%",
                   maxWidth: "860px",
@@ -450,7 +450,7 @@ export default function Home() {
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", marginBottom: "1.5rem", fontWeight: "700" }}>Ready to Get Started?</h2>
           <p style={{ color: "var(--text-secondary)", fontSize: "1.1rem", marginBottom: "3rem", maxWidth: "600px", margin: "0 auto 3rem" }}>
-            Join healthcare providers across the country who trust NorthStar Medic to protect their bottom line.
+            Join healthcare providers across the country who trust NORTHSTAR MEDIC to protect their bottom line.
           </p>
           <Button href="/auth/register" size="lg" variant="primary" style={{ background: "linear-gradient(to right, var(--brand-primary), var(--brand-accent))", color: "var(--bg-primary)", padding: "1.25rem 3rem", borderRadius: "var(--radius-full)", fontWeight: "700" }}>
             Create Your Account

@@ -68,7 +68,7 @@ export default function Navigation() {
                         WebkitTextFillColor: "transparent",
                         animation: "shimmer 3s ease-in-out infinite",
                     }}>
-                        NorthStar Medic ✦
+                        NORTHSTAR MEDIC ✦
                     </span>
                 </Link>
 

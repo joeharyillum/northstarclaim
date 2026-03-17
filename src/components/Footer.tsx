@@ -47,7 +47,7 @@ export default function Footer() {
                             <img src="/logo.png" alt="N" style={{ width: "24px" }} />
                         </div>
                         <span style={{ fontSize: "1.5rem", fontWeight: "900", color: "white", letterSpacing: "-0.04em" }}>
-                            NorthStar <span className="text-gradient">Medic</span>
+                            NORTHSTAR <span className="text-gradient">MEDIC</span>
                         </span>
                     </div>
                     <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: "1.7", marginBottom: "2.5rem", fontSize: "0.95rem", maxWidth: "400px" }}>
@@ -81,9 +81,9 @@ export default function Footer() {
                     <h4 style={{ color: "white", marginBottom: "2rem", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "2px", fontWeight: "900" }}>Protocol</h4>
                     <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem", fontSize: "0.9rem" }}>
                         <li><Link href="/about" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Mission Design</Link></li>
-                        <li><Link href="/about" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Privacy Policy</Link></li>
-                        <li><Link href="/about" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>HIPAA Compliance</Link></li>
-                        <li><Link href="/about" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Security</Link></li>
+                        <li><Link href="/privacy" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Privacy Policy</Link></li>
+                        <li><Link href="/baa" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>HIPAA Compliance</Link></li>
+                        <li><Link href="/terms" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Terms &amp; Security</Link></li>
                     </ul>
                 </div>
 
@@ -111,7 +111,7 @@ export default function Footer() {
                 zIndex: 1
             }}>
                 <div style={{ display: "flex", gap: "2rem" }}>
-                    <p>&copy; {new Date().getFullYear()} Northstar Medic Alliance. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} NORTHSTAR MEDIC Alliance. All rights reserved.</p>
                 </div>
                 <div style={{ display: "flex", gap: "clamp(1rem, 2vw, 3rem)", fontWeight: "700", flexWrap: "wrap" }}>
                     <p style={{ color: "var(--brand-accent)" }}>// GRID SECURED</p>

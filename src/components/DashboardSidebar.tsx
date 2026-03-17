@@ -123,7 +123,7 @@ export default function DashboardSidebar() {
                             lineHeight: 1.2,
                             whiteSpace: "nowrap",
                         }}>
-                            NorthStar <span className="text-gradient">Medic</span>
+                            NORTHSTAR <span className="text-gradient">MEDIC</span>
                         </div>
                         <div style={{
                             fontSize: "0.6rem",

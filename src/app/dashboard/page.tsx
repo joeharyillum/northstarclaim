@@ -76,7 +76,7 @@ export default async function DashboardOverview() {
     };
 
     return (
-        <div style={{ maxWidth: "1200px" }}>
+        <div style={{ maxWidth: "1200px", width: "100%", overflowX: "hidden" }}>
             {/* Header */}
             <div style={{
                 display: "flex",

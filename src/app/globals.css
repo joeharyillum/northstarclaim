@@ -830,6 +830,19 @@ h1, h2, h3, h4, h5, h6 {
   .dash-main main {
     padding: 1rem !important;
   }
+
+  /* Background images — fit properly on mobile */
+  .hero-bg-image,
+  .section-bg-image {
+    background-size: cover !important;
+    background-position: center center !important;
+    transform: scale(1.1) !important;
+  }
+
+  /* Lead Engine / Overview — prevent horizontal overflow */
+  .dash-main {
+    overflow-x: hidden !important;
+  }
 }
 
 @media (max-width: 480px) {

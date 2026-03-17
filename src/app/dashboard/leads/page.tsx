@@ -197,7 +197,7 @@ export default function DashboardLeads() {
     const totalContacted = dbStats.contacted || stats.contacted;
 
     return (
-        <div style={{ maxWidth: "1200px" }}>
+        <div style={{ maxWidth: "1200px", width: "100%", overflowX: "hidden" }}>
             {/* Header */}
             <div style={{ marginBottom: "1.5rem" }}>
                 <h1 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "0.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -297,7 +297,8 @@ export default function DashboardLeads() {
                         </div>
 
                         {/* Table */}
-                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                        <div className="dash-table-wrap">
+                        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "500px" }}>
                             <thead>
                                 <tr style={{ borderBottom: "1px solid var(--border-subtle)", background: "rgba(0,0,0,0.15)" }}>
                                     {["Lead", "Status", "Company", ""].map(h => (
@@ -350,6 +351,7 @@ export default function DashboardLeads() {
                                 )}
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
 
