@@ -19,9 +19,7 @@ export default function Chatbot() {
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
-
-    // Hide chatbot on dashboard — dashboard has its own UI
-    if (pathname.startsWith("/dashboard")) return null;
+    const isDashboard = pathname.startsWith("/dashboard");
 
     const { messages, sendMessage, status } = useChat({
         transport: new DefaultChatTransport({ api: '/api/chat' }),
@@ -40,6 +38,9 @@ export default function Chatbot() {
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
+
+    // Hide chatbot on dashboard — dashboard has its own UI
+    if (isDashboard) return null;
 
     if (!isOpen) {
         return (

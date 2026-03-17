@@ -8,23 +8,26 @@ export default function Navigation() {
     const pathname = usePathname();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-
-    // Hide global nav on dashboard — dashboard has its own sidebar/topnav
-    if (pathname.startsWith("/dashboard")) return null;
+    const isDashboard = pathname.startsWith("/dashboard");
 
     useEffect(() => {
+        if (isDashboard) return;
         const handleScroll = () => {
             setScrolled(window.scrollY > 20);
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [isDashboard]);
 
     // Lock body scroll when mobile menu is open
     useEffect(() => {
+        if (isDashboard) return;
         document.body.style.overflow = menuOpen ? "hidden" : "";
         return () => { document.body.style.overflow = ""; };
-    }, [menuOpen]);
+    }, [menuOpen, isDashboard]);
+
+    // Hide global nav on dashboard — dashboard has its own sidebar/topnav
+    if (isDashboard) return null;
 
     const navLinkItems = [
         { href: "/features", label: "Features" },
