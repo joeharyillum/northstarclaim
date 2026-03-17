@@ -6,6 +6,15 @@ const nextConfig: NextConfig = {
   },
   // Disable x-powered-by header (don't reveal tech stack)
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: '/auth/register',
+        destination: '/signup',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
