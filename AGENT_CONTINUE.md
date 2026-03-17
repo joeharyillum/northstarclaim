@@ -136,11 +136,11 @@ ADMIN ONLY:
   FOUNDER_ADMIN_EMAIL               → joehary@northstarmedic.com
   NEXT_PUBLIC_APP_URL               → https://www.northstarmedic.com
 
-⚠️ ACTION REQUIRED:
-  STRIPE_WEBHOOK_SECRET = whsec_REPLACE_ME  ← GET FROM: Stripe Dashboard → Developers → Webhooks → Signing Secret
-  FOUNDER_ADMIN_ID                          ← SET TO: founder's user UUID from database
+⚠️ ALL SET — NO ACTION REQUIRED:
+  STRIPE_WEBHOOK_SECRET              ← CONFIGURED (webhook at https://www.northstarmedic.com/api/webhook/stripe)
+  FOUNDER_ADMIN_ID                   ← SET TO: 56116cd1-1794-4c03-8040-c5f6943a4263
 
-📝 WHERE TO SET: Vercel Dashboard → Project Settings → Environment Variables
+📝 These values are in .env locally. ALSO set them in Vercel Dashboard → Project Settings → Environment Variables
 ```
 
 ## WHAT WAS FIXED (March 17, 2026)
@@ -154,8 +154,7 @@ ADMIN ONLY:
 
 ## WHAT STILL NEEDS DOING (Priority Order)
 ### BLOCKING — Must fix before first dollar flows:
-1. **Set `STRIPE_WEBHOOK_SECRET`** — Go to Stripe Dashboard → Developers → Webhooks → create endpoint for `https://www.northstarmedic.com/api/webhook/stripe` → copy the signing secret → paste in Vercel env vars
-2. **Set `FOUNDER_ADMIN_ID`** — Query the Neon database for the founder's user UUID, set in Vercel env vars
+1. **Set env vars on Vercel** — `STRIPE_WEBHOOK_SECRET` and `FOUNDER_ADMIN_ID` are set in local .env but MUST also be added to Vercel Dashboard → Project Settings → Environment Variables for production to work.
 
 ### HIGH PRIORITY:
 3. **Partner/Biller dashboard** — No UI at `/dashboard/partner/` yet. Billers need to see their referred clients, commissions earned, and payout history.
