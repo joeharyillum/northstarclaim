@@ -74,6 +74,7 @@ export default auth((req) => {
         '/api/auth',
         '/api/chat',
         '/api/stripe/checkout',
+        '/api/free-scan',
     ].some(p => nextUrl.pathname.startsWith(p));
 
     // ═══════════════════════════════════════════════════════════════
