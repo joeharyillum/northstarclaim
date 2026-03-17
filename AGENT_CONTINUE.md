@@ -24,9 +24,9 @@ Cold email leads → AI auto-reply → Stripe checkout → AI processes claims �
 | Payments | Stripe (Checkout + Connect + Webhooks) |
 | AI | OpenAI GPT-4o (14-agent pipeline) |
 | Email | SendGrid (transactional) + Porkbun SMTP (sender) |
-| Cold Email | Instantly.ai (5,000 leads loaded, campaign active) |
+| Cold Email | Instantly.ai (250 leads loaded, campaign "NorthStar Denied Claims Recovery", email account SMTP disconnected — needs manual reconnect) |
 | Lead Source | Apollo.io |
-| Deployment | Vercel (auto-deploys from GitHub push) |
+| Deployment | Railway (auto-deploys from GitHub push via Dockerfile, Node 22) |
 | Domain | northstarmedic.com |
 | GitHub | github.com/joeharyillum/northstarclaim.git (branch: master) |
 
@@ -162,7 +162,7 @@ ADMIN ONLY:
 5. **Referral link generation** — No unique partner referral URLs exist yet. Billers need shareable links that track attributions.
 
 ### MEDIUM PRIORITY:
-6. **Verify SendGrid MX record** — Porkbun DNS needs MX record for inbound email parsing
+6. **Add MX record on Cloudflare** — `parse.northstarclaim.com` → `mx.sendgrid.net` (priority 10) for SendGrid inbound parse to work. DNS is on Cloudflare (vita.ns.cloudflare.com, wells.ns.cloudflare.com). SendGrid inbound parse is configured for `parse.northstarclaim.com` → `https://www.northstarmedic.com/api/webhook/inbound`
 7. **Wire file upload to claim ingest** — The free-scan upload UI doesn't actually process uploaded files through the claim pipeline yet (it uses GPT estimates)
 8. **Vapi/Bland phone integration** — War Room live negotiation queues claims but can't make calls yet
 
