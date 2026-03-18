@@ -13,6 +13,18 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
  */
 async function processCommissionSplit(customerEmail: string, amount: number, sessionId: string) {
     try {
+        // Idempotency guard — prevent duplicate commission transfers on webhook retries
+        const alreadyProcessed = await prisma.auditLog.findFirst({
+            where: {
+                action: 'COMMISSION_TRANSFERRED',
+                details: { contains: sessionId },
+            },
+        });
+        if (alreadyProcessed) {
+            console.log(`[COMMISSION] Session ${sessionId} already processed — skipping duplicate`);
+            return;
+        }
+
         // Find the user by email to check if they have a biller/partner referrer
         const user = await prisma.user.findUnique({
             where: { email: customerEmail },
@@ -53,7 +65,9 @@ async function processCommissionSplit(customerEmail: string, amount: number, ses
                     currency: 'usd',
                     destination: billerUser.stripeAccountId,
                     description: `Commission for claim ${invoice.claimId}`,
-                });
+                    metadata: { sessionId, invoiceId: invoice.id },
+                },
+                { idempotencyKey: `commission-${sessionId}-${invoice.id}` });
 
                 // Mark invoice as paid
                 await prisma.invoice.update({
@@ -228,8 +242,8 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json({ received: true });
-    } catch (error) {
-        console.error('[STRIPE WEBHOOK] Processing error:', error);
+    } catch (error: any) {
+        console.error('[STRIPE WEBHOOK] Processing error:', error?.message || 'Unknown error');
         return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 });
     }
 }

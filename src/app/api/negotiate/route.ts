@@ -91,7 +91,7 @@ export async function POST(req: Request) {
         });
 
     } catch (error: any) {
-        console.error("Negotiation API Error:", error);
+        console.error("Negotiation API Error:", error?.message || 'Unknown error');
         // ZERO-ERROR POLICY: Always return valid JSON
         return NextResponse.json({
             success: false,

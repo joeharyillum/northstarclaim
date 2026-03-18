@@ -159,7 +159,7 @@ export async function POST(request: Request) {
         });
 
     } catch (error: any) {
-        console.error('[PIPELINE ERROR]', error);
+        console.error('[PIPELINE ERROR]', error?.message || 'Unknown error');
 
         return NextResponse.json({
             success: false,

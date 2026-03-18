@@ -55,7 +55,7 @@ export async function GET() {
             }
         });
     } catch (error: any) {
-        console.error('System Stats Error:', error);
+        console.error('System Stats Error:', error?.message || 'Unknown error');
         return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
     }
 }

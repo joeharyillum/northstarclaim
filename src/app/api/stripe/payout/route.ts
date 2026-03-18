@@ -53,7 +53,7 @@ export async function POST(req: Request) {
         });
 
     } catch (error: any) {
-        console.error('Payout Error:', error);
+        console.error('Payout Error:', error?.message || 'Unknown error');
         return NextResponse.json({
             success: false,
             error: 'Payout processing failed'

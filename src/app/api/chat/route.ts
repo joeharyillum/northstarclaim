@@ -114,8 +114,8 @@ export async function POST(req: Request) {
 
         return result.toUIMessageStreamResponse();
 
-    } catch (error: unknown) {
-        console.error("Chat API Error:", error);
+    } catch (error: any) {
+        console.error("Chat API Error:", error?.message || 'Unknown error');
         return NextResponse.json({
             error: "Connection issue"
         }, { status: 500 });

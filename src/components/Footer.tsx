@@ -68,12 +68,12 @@ export default function Footer() {
                 </div>
 
                 <div>
-                    <h4 style={{ color: "white", marginBottom: "2rem", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "2px", fontWeight: "900" }}>Grid Node</h4>
+                    <h4 style={{ color: "white", marginBottom: "2rem", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "2px", fontWeight: "900" }}>Explore</h4>
                     <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem", fontSize: "0.9rem" }}>
-                        <li><Link href="/dashboard/leads" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Lead Machine</Link></li>
-                        <li><Link href="/dashboard/wallet" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Revenue Vault</Link></li>
-                        <li><Link href="/free-scan" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Neural Simulator</Link></li>
-                        <li><Link href="/pricing" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Node Participation</Link></li>
+                        <li><Link href="/features" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>How It Works</Link></li>
+                        <li><Link href="/free-scan" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Free Claim Scan</Link></li>
+                        <li><Link href="/pricing" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Pricing Plans</Link></li>
+                        <li><Link href="/login" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Client Dashboard</Link></li>
                     </ul>
                 </div>
 
@@ -90,7 +90,7 @@ export default function Footer() {
                 <div>
                     <h4 style={{ color: "white", marginBottom: "2rem", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "2px", fontWeight: "900" }}>Connect</h4>
                     <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem", fontSize: "0.9rem" }}>
-                        <li><Link href="/signup" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Partner Login</Link></li>
+                        <li><Link href="/login" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Partner Login</Link></li>
                         <li><Link href="/pricing" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Agency Access</Link></li>
                         <li><a href="mailto:support@northstarmedic.com" style={{ transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "white"} onMouseOut={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>Contact Support</a></li>
                     </ul>

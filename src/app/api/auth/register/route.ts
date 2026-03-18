@@ -100,7 +100,7 @@ export async function POST(req: Request) {
         });
 
     } catch (error: any) {
-        console.error("Registration Error:", error);
+        console.error("Registration Error:", error?.message || 'Unknown error');
         return NextResponse.json({ error: "Failed to register user" }, { status: 500 });
     }
 }

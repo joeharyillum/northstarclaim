@@ -5,12 +5,44 @@ import { checkBlacklist, checkRateLimit, getClientIp } from './lib/security';
 
 const { auth } = NextAuth(authConfig);
 
+// ═══════════════════════════════════════════════════════════════════════════
+// THREAT SIGNATURES — block known malicious path patterns at the edge
+// WordPress probes, phishing landers, random hash scanners, etc.
+// ═══════════════════════════════════════════════════════════════════════════
+const BLOCKED_PATH_PREFIXES = [
+    '/wp-', '/wordpress', '/wp/', '/.env', '/xmlrpc',
+    '/lander/', '/cabinet', '/sbr', '/sberbank', '/sberchat',
+    '/rosneft', '/sovkombank',
+    '/phpmyadmin', '/admin.php', '/cgi-bin',
+    '/.git', '/.svn', '/.htaccess', '/.htpasswd',
+    '/config.php', '/install.php', '/setup.php',
+    '/eval-stdin', '/vendor/',
+];
+
+// Random 6-10 char alphanumeric hash paths (bot URL shortener probes)
+const RANDOM_HASH_REGEX = /^\/[A-Za-z0-9]{6,10}$/;
+
+function isMaliciousPath(pathname: string): boolean {
+    const lower = pathname.toLowerCase();
+    if (BLOCKED_PATH_PREFIXES.some(prefix => lower.startsWith(prefix))) return true;
+    if (lower.endsWith('.php')) return true;
+    if (RANDOM_HASH_REGEX.test(pathname)) return true;
+    return false;
+}
+
 export default auth((req) => {
     const { nextUrl } = req;
     const ip = getClientIp(req);
 
     // ═══════════════════════════════════════════════════════════════
-    // LAYER 0: IP Blacklist — immediately reject banned IPs
+    // LAYER 0a: Malicious path blocking — reject known attack patterns
+    // ═══════════════════════════════════════════════════════════════
+    if (isMaliciousPath(nextUrl.pathname)) {
+        return new Response('', { status: 403 });
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // LAYER 0b: IP Blacklist — immediately reject banned IPs
     // ═══════════════════════════════════════════════════════════════
     const blacklist = checkBlacklist(ip);
     if (blacklist.isBlocked) {
@@ -65,7 +97,7 @@ export default auth((req) => {
     // Public pages — no auth required
     const isPublicRoute = [
         '/', '/signup', '/login', '/features', '/pricing', '/free-scan', '/about', '/baa',
-        '/privacy', '/terms',
+        '/privacy', '/terms', '/auth/register',
         '/robots.txt', '/sitemap.xml',
     ].includes(nextUrl.pathname);
 
@@ -112,15 +144,33 @@ export default auth((req) => {
     }
 
     // ═══════════════════════════════════════════════════════════════
+    // LAYER 6b: BAA enforcement — PHI endpoints require signed BAA
+    // ═══════════════════════════════════════════════════════════════
+    if (isBaaRequiredApi && isLoggedIn) {
+        const baaSignedAt = (req.auth?.user as any)?.baaSignedAt;
+        if (!baaSignedAt) {
+            return NextResponse.json(
+                { error: 'Business Associate Agreement must be signed before accessing PHI data. Visit /baa to sign.' },
+                { status: 403 }
+            );
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
     // LAYER 7: Protected API routes — require login
     // ═══════════════════════════════════════════════════════════════
     if (isApiRoute && !isPublicApiRoute && !isWebhookRoute && !isLoggedIn) {
         return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
-    // Redirect logged-in users away from signup
-    if (isLoggedIn && nextUrl.pathname === '/signup') {
+    // Redirect logged-in users away from signup/login
+    if (isLoggedIn && (nextUrl.pathname === '/signup' || nextUrl.pathname === '/login')) {
         return Response.redirect(new URL('/dashboard', nextUrl));
+    }
+
+    // Redirect /auth/register to /signup
+    if (nextUrl.pathname === '/auth/register') {
+        return NextResponse.redirect(new URL('/signup', nextUrl));
     }
 
     const response = NextResponse.next();
@@ -189,5 +239,5 @@ function addSecurityHeaders(response: NextResponse) {
 }
 
 export const config = {
-    matcher: ['/((?!_next/static|_next/image|.*\\.png$|.*\\.ico$|.*\\.svg$).*)'],
+    matcher: ['/((?!_next/static|_next/image|.*\\.png$|.*\\.ico$|.*\\.svg$|.*\\.woff2?$|.*\\.css$|.*\\.js$).*)'],
 };

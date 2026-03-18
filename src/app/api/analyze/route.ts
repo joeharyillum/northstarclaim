@@ -58,8 +58,8 @@ export async function POST(request: Request) {
 
         return NextResponse.json(analysis);
 
-    } catch (error) {
-        console.error("Analysis Error:", error);
+    } catch (error: any) {
+        console.error("Analysis Error:", error?.message || 'Unknown error');
         return NextResponse.json({ error: 'Failed to analyze claim data' }, { status: 500 });
     }
 }

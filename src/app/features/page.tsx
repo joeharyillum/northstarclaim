@@ -49,7 +49,7 @@ export default function FeaturesPage() {
             <section className="section-padding" style={{ background: "var(--bg-primary)" }}>
                 <div className="container text-center">
                     <h2 style={{ fontSize: "2rem", marginBottom: "3rem" }}>Ready to recover your denied revenue?</h2>
-                    <Button href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" size="lg">Start Pilot — $2,500</Button>
+                    <Button href="/pricing" size="lg">View Pricing Plans</Button>
                 </div>
             </section>
         </>

@@ -60,8 +60,8 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json({ url: checkoutSession.url });
-    } catch (error) {
-        console.error('Stripe checkout error:', error);
+    } catch (error: any) {
+        console.error('Stripe checkout error:', error?.message || 'Unknown error');
         return NextResponse.json({ error: 'Checkout failed' }, { status: 500 });
     }
 }

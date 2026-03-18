@@ -248,7 +248,7 @@ If it is perfect, output "PASS". If it has a flaw, output the flaw starting with
         });
 
     } catch (error: any) {
-        console.error("Appeal Generation Error:", error);
-        return NextResponse.json({ error: error.message || 'Failed to generate appeal draft' }, { status: 503 });
+        console.error("Appeal Generation Error:", error?.message || 'Unknown error');
+        return NextResponse.json({ error: 'Failed to generate appeal draft' }, { status: 503 });
     }
 }

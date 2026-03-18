@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
       campaignId,
     });
   } catch (error: any) {
-    console.error('Bulk push error:', error);
+    console.error('Bulk push error:', error?.message || 'Unknown error');
     return NextResponse.json(
       { error: 'Failed to push leads' },
       { status: 500 }

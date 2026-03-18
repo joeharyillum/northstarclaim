@@ -184,10 +184,10 @@ export async function POST(req: NextRequest) {
     }
 
     console.log(`\n📧 [INBOUND] Email received`);
-    console.log(`   From: ${senderEmail} (${senderName})`);
+    console.log(`   From: ${senderEmail}`);
     console.log(`   To: ${toRaw}`);
     console.log(`   Subject: ${subject}`);
-    console.log(`   Body: ${messageBody.substring(0, 100)}...`);
+    console.log(`   Body: ${messageBody.length} chars [REDACTED]`);
 
     // Route to the correct mailbox
     const targetAddress = extractLocalPart(toRaw);
@@ -195,10 +195,10 @@ export async function POST(req: NextRequest) {
 
     console.log(`   Routed to: ${mailbox.address}@ mailbox`);
 
-    // Log inbound for HIPAA audit
+    // Log inbound for HIPAA audit — redact body content to prevent PHI in audit logs
     await logAudit(
       "INBOUND_EMAIL_RECEIVED",
-      `From: ${senderEmail} | To: ${targetAddress}@northstarmedic.com | Subject: ${subject} | Body: ${messageBody.substring(0, 300)}`
+      `From: ${senderEmail} | To: ${targetAddress}@northstarmedic.com | Subject: ${subject} | Body length: ${messageBody.length} chars [REDACTED for PHI compliance]`
     );
 
     // Generate AI response
@@ -252,10 +252,10 @@ Draft a professional email response.`,
       });
     }
 
-    // Log outbound reply for audit
+    // Log outbound reply for audit — redact response content for PHI safety
     await logAudit(
       "INBOUND_EMAIL_AUTO_REPLIED",
-      `To: ${senderEmail} | From: ${mailbox.fromEmail} | Subject: Re: ${subject} | Response: ${aiResponse.substring(0, 300)}`
+      `To: ${senderEmail} | From: ${mailbox.fromEmail} | Subject: Re: ${subject} | Response length: ${aiResponse.length} chars [REDACTED for PHI compliance]`
     );
 
     return NextResponse.json({

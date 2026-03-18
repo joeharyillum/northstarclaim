@@ -133,7 +133,7 @@ export async function POST(request: Request) {
         });
 
     } catch (error: any) {
-        console.error("Stripe Invoicing Error:", error);
+        console.error("Stripe Invoicing Error:", error?.message || 'Unknown error');
         return NextResponse.json(
             { error: 'Invoice processing failed' },
             { status: 500 }

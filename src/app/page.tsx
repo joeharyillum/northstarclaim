@@ -118,7 +118,7 @@ export default function Home() {
                 <Button href="/pricing" size="lg" variant="primary" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
                     View Pricing
                 </Button>
-                <Button href="/auth/register" size="lg" variant="outline" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
+                <Button href="/signup" size="lg" variant="outline" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
                     Get Started
                 </Button>
             </div>
@@ -449,7 +449,7 @@ export default function Home() {
           <p style={{ color: "var(--text-secondary)", fontSize: "1.1rem", marginBottom: "3rem", maxWidth: "600px", margin: "0 auto 3rem" }}>
             Join healthcare providers across the country who trust NORTHSTAR MEDIC to protect their bottom line.
           </p>
-          <Button href="/auth/register" size="lg" variant="primary" style={{ background: "linear-gradient(to right, var(--brand-primary), var(--brand-accent))", color: "var(--bg-primary)", padding: "1.25rem 3rem", borderRadius: "var(--radius-full)", fontWeight: "700" }}>
+          <Button href="/signup" size="lg" variant="primary" style={{ background: "linear-gradient(to right, var(--brand-primary), var(--brand-accent))", color: "var(--bg-primary)", padding: "1.25rem 3rem", borderRadius: "var(--radius-full)", fontWeight: "700" }}>
             Create Your Account
           </Button>
         </div>

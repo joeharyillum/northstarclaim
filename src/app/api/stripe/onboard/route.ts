@@ -70,7 +70,7 @@ export async function POST(request: Request) {
         });
 
     } catch (error: any) {
-        console.error("Stripe Onboarding Error:", error);
+        console.error("Stripe Onboarding Error:", error?.message || 'Unknown error');
         return NextResponse.json(
             { error: 'Failed to create payment account' },
             { status: 500 }

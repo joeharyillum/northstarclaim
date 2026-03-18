@@ -53,8 +53,21 @@ export async function POST(request: Request) {
         console.log("🔒 Document Vaulted Securely:", vaultUrl);
 
         // 1. Process File based on type
+        // Validate filename length to prevent filesystem issues
+        if (safeFileName.length > 255) {
+            return NextResponse.json({ error: 'Filename too long' }, { status: 400 });
+        }
+
         let textData = '';
         if (file.type === 'application/pdf') {
+            // Validate actual PDF magic bytes, not just MIME type
+            const pdfMagic = Buffer.from([0x25, 0x50, 0x44, 0x46]); // %PDF
+            if (!fileBuffer.subarray(0, 4).equals(pdfMagic)) {
+                return NextResponse.json(
+                    { error: 'Invalid PDF file — file header does not match PDF format.' },
+                    { status: 400 }
+                );
+            }
             const pdfParse = require('pdf-parse');
             const data = await pdfParse(fileBuffer);
             textData = data.text;
@@ -163,8 +176,8 @@ You must respond in strict JSON format with ONLY these keys:
             analysis: extractedClaim
         });
 
-    } catch (error) {
-        console.error("Ingestion Error:", error);
+    } catch (error: any) {
+        console.error("Ingestion Error:", error?.message || 'Unknown error');
         return NextResponse.json({ error: 'Failed to ingest document' }, { status: 500 });
     }
 }

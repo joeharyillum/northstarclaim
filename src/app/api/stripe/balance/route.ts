@@ -36,7 +36,7 @@ export async function GET() {
             total: (available + pending) / 100
         });
     } catch (error) {
-        console.error('Error fetching Stripe balance:', error);
+        console.error('Error fetching Stripe balance:', error?.message || 'Unknown error');
         return NextResponse.json({
             available: 0,
             pending: 0,

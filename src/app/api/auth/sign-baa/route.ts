@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ success: true, message: 'BAA signed successfully' });
     } catch (error: any) {
-        console.error('BAA signing error:', error);
+        console.error('BAA signing error:', error?.message || 'Unknown error');
         return NextResponse.json({ error: 'Failed to sign BAA' }, { status: 500 });
     }
 }

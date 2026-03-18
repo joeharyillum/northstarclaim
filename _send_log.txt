@@ -1,0 +1,12 @@
+[2026-03-18T14:00:07.084Z] === DAILY AUTO-SEND STARTING ===
+[2026-03-18T14:00:18.059Z] ERROR: 
+Invalid `prisma.lead.findMany()` invocation in
+C:\Users\illum\Desktop\mediclaim-ai\_daily_send.js:88:41
+
+  85 async function run() {
+  86     log('=== DAILY AUTO-SEND STARTING ===');
+  87 
+→ 88     const remaining = await prisma.lead.findMany(
+Can't reach database server at `ep-calm-bread-ai6hw1ld-pooler.c-4.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-calm-bread-ai6hw1ld-pooler.c-4.us-east-1.aws.neon.tech:5432`.
