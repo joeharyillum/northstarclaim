@@ -104,6 +104,54 @@ function personalize(lead) {
 }
 
 // ═══════════════════════════════════════════
+// FAKE LEAD FILTER
+// ═══════════════════════════════════════════
+const BANNED_PATTERNS = [
+    'test', 'dummy', 'fake', 'example', 'abc.com', 'xyz.com', 'noreply', 'support@'
+];
+
+function isNotFake(lead) {
+    const email = (lead.Email || lead.email || '').toLowerCase();
+    if (!email || !email.includes('@')) return false;
+    
+    // Check patterns
+    for (const pat of BANNED_PATTERNS) {
+        if (email.includes(pat)) return false;
+    }
+
+    // Basic length/format checks (e.g. at least one '.' after '@')
+    const parts = email.split('@');
+    if (parts.length !== 2 || !parts[1].includes('.')) return false;
+
+    return true;
+}
+
+async function setCampaignStatus(status) {
+    const apiKey = process.env.INSTANTLY_API_KEY;
+    const campaignId = process.env.INSTANTLY_CAMPAIGN_ID;
+    console.log(`\n🔄 Attempting to set campaign status to ${status === 1 ? 'ACTIVE' : 'PAUSED'}...`);
+    
+    try {
+        const res = await fetch(`https://api.instantly.ai/api/v2/campaigns/${campaignId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({ status: status }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+            console.log(`✅ Success! Campaign is now ${status === 1 ? 'ACTIVE' : 'PAUSED'}.`);
+        } else {
+            console.warn(`⚠️  Failed to update status (API responded ${res.status}):`, data);
+        }
+    } catch (e) {
+        console.error(`❌ Error updating status: ${e.message}`);
+    }
+}
+
+// ═══════════════════════════════════════════
 // INSTANTLY UPLOAD (one-by-one with speed)
 // ═══════════════════════════════════════════
 async function uploadLeads(leads) {
@@ -123,65 +171,75 @@ async function uploadLeads(leads) {
     const total = leads.length;
     console.log(`\n🚀 Uploading ${total.toLocaleString()} leads to campaign ${campaignId}...\n`);
 
-    for (let i = 0; i < leads.length; i++) {
-        const lead = leads[i];
-        const payload = {
-            email: lead.Email,
-            first_name: lead.FirstName,
-            last_name: lead.LastName,
-            company_name: lead.CompanyName,
-            campaign_id: campaignId,
-            skip_if_in_workspace: true,
-            custom_variables: {
-                title: lead.Title || '',
-                city: lead.City || '',
-                state: lead.State || '',
-                personalization: personalize(lead),
-            },
-        };
-
-        try {
-            const res = await fetch('https://api.instantly.ai/api/v2/leads', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`,
+    // PARALLEL BATCHING ENGINE
+    const CONCURRENCY = 15; // 15 parallel requests
+    for (let i = 0; i < leads.length; i += CONCURRENCY) {
+        const batchLeads = leads.slice(i, i + CONCURRENCY);
+        
+        const batchPromises = batchLeads.map(async (lead) => {
+            const payload = {
+                email: lead.Email,
+                first_name: lead.FirstName,
+                last_name: lead.LastName,
+                company_name: lead.CompanyName,
+                campaign_id: campaignId,
+                skip_if_in_workspace: true,
+                custom_variables: {
+                    title: lead.Title || '',
+                    city: lead.City || '',
+                    state: lead.State || '',
+                    personalization: personalize(lead),
                 },
-                body: JSON.stringify(payload),
-            });
+            };
 
-            if (res.ok) {
-                added++;
-            } else {
-                const errText = await res.text();
-                if (errText.includes('Lead limit reached') || errText.includes('limit')) {
-                    console.log(`\n\n🛑 LEAD LIMIT REACHED after ${added} uploads. Stopping.`);
-                    limitHit = true;
-                    break;
+            try {
+                const res = await fetch('https://api.instantly.ai/api/v2/leads', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`,
+                    },
+                    body: JSON.stringify(payload),
+                    timeout: 5000, // 5s timeout
+                });
+
+                if (res.ok) {
+                    added++;
+                } else if (res.status === 409) {
+                    skipped++;
+                } else {
+                    const errText = await res.text();
+                    if (errText.includes('Lead limit reached') || errText.includes('limit')) {
+                        limitHit = true;
+                    } else {
+                        errors++;
+                    }
                 }
-                skipped++;
+            } catch (e) {
+                errors++;
             }
-        } catch (e) {
-            errors++;
+        });
+
+        await Promise.all(batchPromises);
+
+        if (limitHit) {
+            console.log(`\n\n🛑 LEAD LIMIT REACHED after ${added} uploads. Stopping.`);
+            break;
         }
 
-        // Progress display every 25 leads
-        if ((i + 1) % 25 === 0 || i === leads.length - 1) {
-            const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-            const rate = (added / (elapsed || 1)).toFixed(1);
-            const pct = ((i + 1) / total * 100).toFixed(1);
-            const remaining = ((total - i - 1) / (rate || 1)).toFixed(0);
-            process.stdout.write(`\r   📊 [${pct}%] ${added} added | ${skipped} skipped | ${errors} errors | ${rate}/s | ~${remaining}s remaining   `);
-        }
+        // Progress display 
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+        const rate = (added / (elapsed || 0.1)).toFixed(1);
+        const pct = ((Math.min(i + CONCURRENCY, total)) / total * 100).toFixed(1);
+        const remaining = ((total - i) / (rate || 10)).toFixed(0);
+        process.stdout.write(`\r   📊 [${pct}%] ${added} added | ${skipped} skipped | ${errors} errors | ${rate}/s | ~${remaining}s remaining   `);
 
-        // Throttle to avoid hammering the API
-        if ((i + 1) % BATCH_SIZE === 0) {
-            await new Promise(r => setTimeout(r, DELAY_MS));
-        }
+        // Small delay between parallel waves to respect API
+        await new Promise(r => setTimeout(r, 200));
 
         // Save checkpoint every 100 leads
-        if ((i + 1) % 100 === 0) {
-            saveState({ lastIndex: SKIP_ROWS + i + 1, added, skipped, errors, timestamp: new Date().toISOString() });
+        if ((i + CONCURRENCY) % 150 === 0) {
+            saveState({ lastIndex: SKIP_ROWS + i + CONCURRENCY, added, skipped, errors, timestamp: new Date().toISOString() });
         }
     }
 
@@ -231,6 +289,14 @@ async function main() {
     let leads = parseCSV(csvPath);
     console.log(`   Found ${leads.length.toLocaleString()} total leads in CSV`);
 
+    // CLEAN FAKE LEADS
+    const originalCount = leads.length;
+    leads = leads.filter(isNotFake);
+    const cleanedCount = originalCount - leads.length;
+    if (cleanedCount > 0) {
+        console.log(`   🧹 Cleaned ${cleanedCount.toLocaleString()} fake/invalid leads from the list.`);
+    }
+
     // Apply skip
     if (SKIP_ROWS > 0) {
         leads = leads.slice(SKIP_ROWS);
@@ -268,6 +334,11 @@ async function main() {
     const startTime = Date.now();
     const result = await uploadLeads(leads);
     const totalTime = ((Date.now() - startTime) / 1000).toFixed(1);
+
+    // AUTO-START CAMPAIGN
+    if (IS_LIVE) {
+        await setCampaignStatus(1); // 1 = ACTIVE
+    }
 
     console.log('══════════════════════════════════════════════════════════');
     console.log('  📊 UPLOAD COMPLETE');

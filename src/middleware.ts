@@ -146,7 +146,7 @@ export default auth((req) => {
     // ═══════════════════════════════════════════════════════════════
     // LAYER 6b: BAA enforcement — PHI endpoints require signed BAA
     // ═══════════════════════════════════════════════════════════════
-    if (isBaaRequiredApi && isLoggedIn) {
+    if (isBaaRequiredApi && isLoggedIn && req.auth?.user?.role !== 'admin') {
         const baaSignedAt = (req.auth?.user as any)?.baaSignedAt;
         if (!baaSignedAt) {
             return NextResponse.json(

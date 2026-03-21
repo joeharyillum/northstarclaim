@@ -2,13 +2,21 @@
 
 export default function CheckoutButton({ tier, label, variant }: { tier: string; label: string; variant: "outline" | "gradient" }) {
     const handleCheckout = async () => {
-        const res = await fetch('/api/stripe/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ tier }),
-        });
-        const data = await res.json();
-        if (data.url) window.location.href = data.url;
+        try {
+            const res = await fetch('/api/stripe/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tier }),
+            });
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert('Stripe link creation failed: ' + (data.error || 'Unknown error'));
+            }
+        } catch (e) {
+            alert('Checkout unreachable');
+        }
     };
 
     const style = variant === "gradient"

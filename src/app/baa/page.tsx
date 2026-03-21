@@ -1,12 +1,22 @@
 "use client";
 
 import Button from "@/components/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function BAAPage() {
     const [agreed, setAgreed] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [error, setError] = useState("");
+    const { data: session } = useSession();
+
+    useEffect(() => {
+        if (session?.user?.role === "admin") {
+            window.location.href = "/dashboard";
+        }
+    }, [session]);
+
+    if (session?.user?.role === "admin") return null;
 
     const handleSign = async () => {
         if (!agreed || isProcessing) return;
