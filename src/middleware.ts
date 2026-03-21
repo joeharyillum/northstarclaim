@@ -97,7 +97,7 @@ export default auth((req) => {
     // Public pages — no auth required
     const isPublicRoute = [
         '/', '/signup', '/login', '/features', '/pricing', '/free-scan', '/about', '/baa',
-        '/privacy', '/terms', '/auth/register',
+        '/privacy', '/terms', '/auth/register', '/partner', '/biller-agreement',
         '/robots.txt', '/sitemap.xml',
     ].includes(nextUrl.pathname);
 

@@ -18,6 +18,8 @@ export async function POST(req: Request) {
         const password = typeof body.password === 'string' ? body.password : '';
         const clinicName = typeof body.clinicName === 'string' ? sanitizeInput(body.clinicName, 200) : '';
         const baaAccepted = body.baaAccepted;
+        const requestedRole = body.role === 'biller' ? 'biller' : null;
+        const referralCode = typeof body.referralCode === 'string' ? sanitizeInput(body.referralCode, 20).toUpperCase().trim() : null;
 
         if (!email || !password || !clinicName) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -60,7 +62,21 @@ export async function POST(req: Request) {
 
         // First user gets admin role automatically
         const userCount = await prisma.user.count();
-        const assignedRole = userCount === 0 ? 'admin' : 'client';
+        const assignedRole = userCount === 0 ? 'admin' : (requestedRole || 'client');
+
+        // Validate referral code if provided
+        let validReferralCode: string | null = null;
+        if (referralCode) {
+            const referrer = await prisma.user.findFirst({
+                where: { referralCode: referralCode },
+            });
+            if (referrer) validReferralCode = referralCode;
+        }
+
+        // Generate referral code for billers
+        const generatedRefCode = assignedRole === 'biller'
+            ? `NS-${email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '').slice(0, 6).toUpperCase()}${Math.random().toString(36).slice(2, 5).toUpperCase()}`
+            : null;
 
         const user = await prisma.user.create({
             data: {
@@ -68,6 +84,8 @@ export async function POST(req: Request) {
                 password: hashedPassword,
                 clinicName,
                 role: assignedRole,
+                referralCode: generatedRefCode,
+                referredBy: validReferralCode,
                 baaSignedAt: new Date(),
                 baaSignedIp: ip !== 'unknown' ? ip : null,
             }

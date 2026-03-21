@@ -44,17 +44,16 @@ export async function POST(req: Request) {
                         currency: 'usd',
                         product_data: {
                             name: name,
-                            description: 'Monthly SaaS Access & AI Guardian Recovery',
+                            description: tier === 'guardian-pilot'
+                                ? 'One-time pilot fee — 500 claims AI scan + 30% recovery commission'
+                                : 'Setup fee — unlimited claims + reduced 20% recovery commission',
                         },
                         unit_amount: amount,
-                        recurring: {
-                            interval: 'month',
-                        },
                     },
                     quantity: 1,
                 },
             ],
-            mode: 'subscription',
+            mode: 'payment',
             success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/signup?payment=success&session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing`,
         });

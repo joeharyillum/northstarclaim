@@ -24,6 +24,8 @@ model User {
   baaSignedIp     String?       // IP address at time of BAA signing
   twoFactorSecret String?       // TOTP secret for 2FA
   twoFactorEnabled Boolean      @default(false) // Whether 2FA is active
+  referralCode    String?       @unique // Unique partner referral code
+  referredBy      String?       // Referral code used at signup
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   

@@ -1,9 +1,6 @@
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Pricing | NorthStar Medic",
-  description: "Transparent, performance-based pricing. Zero upfront cost — pay only when we recover your denied claims.",
-};
+import CheckoutButton from "@/components/CheckoutButton";
 
 export default function PricingPage() {
   return (
@@ -40,7 +37,7 @@ export default function PricingPage() {
               <li>✓ HIPAA Compliant + BAA Included</li>
               <li>✓ 48-Hour Processing Window</li>
             </ul>
-            <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--brand-primary)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "var(--brand-primary)", background: "transparent", fontWeight: "600", textDecoration: "none", fontSize: "1rem", transition: "all 0.2s" }}>Start Pilot — $2,500</a>
+            <CheckoutButton tier="guardian-pilot" label="Start Pilot — $2,500" variant="outline" />
           </div>
 
           {/* Card 2: Growth Lattice — Featured */}
@@ -62,7 +59,7 @@ export default function PricingPage() {
               <li>✓ Dedicated Recovery Dashboard</li>
               <li>✓ Stripe Auto-Payout Integration</li>
             </ul>
-            <a href="https://buy.stripe.com/dRm9AT5EVeIs4793140Ny06" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", textDecoration: "none", fontSize: "1rem", transition: "all 0.2s" }}>Start Recovery — $7,500</a>
+            <CheckoutButton tier="growth-lattice" label="Start Recovery — $7,500" variant="gradient" />
           </div>
 
           {/* Card 3: Network Core */}

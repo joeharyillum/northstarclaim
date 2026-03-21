@@ -1,7 +1,8 @@
 "use client";
 
 import Button from "@/components/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { authenticate } from "@/app/lib/actions";
 
 export default function SignupPage() {
@@ -11,6 +12,13 @@ export default function SignupPage() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [formData, setFormData] = useState({ clinicName: "", email: "", password: "" });
     const [errorMessage, setErrorMessage] = useState("");
+    const [refCode, setRefCode] = useState<string | null>(null);
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const ref = searchParams.get("ref");
+        if (ref) setRefCode(ref);
+    }, [searchParams]);
 
     // ── LOGIN: just email + password → dashboard ──
     const handleLogin = async (e: React.FormEvent) => {

@@ -10,8 +10,8 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^3.0.30",
-    "@ai-sdk/react": "^3.0.99",
+    "@ai-sdk/openai": "^3.0.47",
+    "@ai-sdk/react": "^3.0.136",
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/client": "^5.22.0",
     "@sendgrid/mail": "^8.1.6",
@@ -19,12 +19,14 @@
     "@types/qrcode": "^1.5.6",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "ai": "^6.0.97",
+    "ai": "^6.0.134",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.3.1",
     "framer-motion": "^12.35.0",
+    "lightningcss": "^1.32.0",
+    "lightningcss-win32-x64-msvc": "^1.32.0",
     "lucide-react": "^0.577.0",
-    "next": "16.1.6",
+    "next": "^16.1.6",
     "next-auth": "^5.0.0-beta.30",
     "openai": "^6.22.0",
     "otpauth": "^9.5.0",
@@ -35,7 +37,7 @@
     "react-dom": "19.2.3",
     "stripe": "^20.3.1",
     "tailwindcss": "^4.2.1",
-    "zustand": "^5.0.11"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20",
