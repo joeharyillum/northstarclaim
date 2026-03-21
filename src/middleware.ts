@@ -24,6 +24,10 @@ const RANDOM_HASH_REGEX = /^\/[A-Za-z0-9]{6,10}$/;
 
 function isMaliciousPath(pathname: string): boolean {
     const lower = pathname.toLowerCase();
+    // NEVER block legitimate app routes
+    const WHITELIST = ['/dashboard', '/pricing', '/signup', '/login', '/about', '/features', '/baa', '/free-scan'];
+    if (WHITELIST.some(p => lower.startsWith(p) || lower === p)) return false;
+
     if (BLOCKED_PATH_PREFIXES.some(prefix => lower.startsWith(prefix))) return true;
     if (lower.endsWith('.php')) return true;
     if (RANDOM_HASH_REGEX.test(pathname)) return true;
