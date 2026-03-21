@@ -12,30 +12,6 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
         maxAge: 8 * 60 * 60,       // 8 hours — HIPAA-appropriate session lifetime
         updateAge: 30 * 60,         // Refresh token every 30 minutes
     },
-    cookies: {
-        sessionToken: {
-            name: process.env.NODE_ENV === 'production'
-                ? '__Secure-next-auth.session-token'
-                : 'next-auth.session-token',
-            options: {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'lax',
-                path: '/',
-            },
-        },
-        csrfToken: {
-            name: process.env.NODE_ENV === 'production'
-                ? '__Host-next-auth.csrf-token'
-                : 'next-auth.csrf-token',
-            options: {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'lax',
-                path: '/',
-            },
-        },
-    },
     providers: [
         Credentials({
             name: "Credentials",

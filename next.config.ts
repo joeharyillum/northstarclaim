@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 
+// LATEST DEPLOYMENT: 2026-03-22T00:00:00Z - FORCED REFRESH
 const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,

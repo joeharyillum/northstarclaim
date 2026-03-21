@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 import Button from "@/components/Button";
 import LiveBalance from "@/components/LiveBalance";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function DashboardOverview() {
     const session = await getOwnerSession();
     if (!session) redirect("/signup");
