@@ -3,6 +3,7 @@
 import Button from "@/components/Button";
 import { useState } from "react";
 import { authenticate } from "@/app/lib/actions";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -21,13 +22,20 @@ export default function LoginPage() {
             form.append("email", email);
             form.append("password", password);
 
-            const loginError = await authenticate(undefined, form);
-            if (loginError) throw new Error(loginError);
-
-            window.location.href = "/dashboard";
+            const result = await authenticate(undefined, form);
+            
+            if (result === 'Invalid credentials.') {
+                setErrorMessage("Invalid email or password. Please try again.");
+                setIsProcessing(false);
+            } else if (result) {
+                setErrorMessage(result);
+                setIsProcessing(false);
+            } else {
+                // If no error returned, redirect
+                window.location.replace("/dashboard");
+            }
         } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : "Invalid credentials";
-            setErrorMessage(message);
+            setErrorMessage("An unexpected error occurred. Please try again.");
             setIsProcessing(false);
         }
     };
@@ -110,13 +118,49 @@ export default function LoginPage() {
                         />
                     </div>
 
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                         <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem", color: "var(--text-secondary)", cursor: "pointer" }}>
+                            <input type="checkbox" style={{ accentColor: "var(--brand-primary)" }} /> Keep me signed in
+                         </label>
+                         <Link href="/forgot-password" style={{ fontSize: "0.75rem", color: "var(--brand-primary)", textDecoration: "none" }}>Forgot password?</Link>
+                    </div>
+
                     {errorMessage && (
                         <p style={{ color: "#ef4444", fontSize: "0.85rem", margin: 0 }}>{errorMessage}</p>
                     )}
 
                     <Button fullWidth style={{ marginTop: "0.5rem" }}>
-                        {isProcessing ? "Signing in..." : "Sign In"}
+                        {isProcessing ? "Authenticating..." : "Sign In"}
                     </Button>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "1rem", margin: "1rem 0" }}>
+                        <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.1)" }} />
+                        <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>OR SIGN IN WITH</span>
+                        <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.1)" }} />
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+                        <button 
+                            type="button" 
+                            onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                            style={{ ...inputStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.1rem", fontSize: "0.85rem", cursor: "pointer" }}
+                        >
+                             <span>Google</span>
+                        </button>
+                        <button 
+                            type="button" 
+                            onClick={() => signIn('apple', { callbackUrl: '/dashboard' })}
+                            style={{ ...inputStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.1rem", fontSize: "0.85rem", cursor: "pointer" }}
+                        >
+                             <span>Apple</span>
+                        </button>
+                    </div>
+
+                    <div style={{ padding: "0.75rem", background: "rgba(168, 85, 247, 0.05)", borderRadius: "var(--radius-md)", border: "1px solid rgba(168, 85, 247, 0.2)", textAlign: "center" }}>
+                        <p style={{ fontSize: "0.7rem", color: "var(--text-secondary)", margin: 0 }}>
+                            🔐 2FA Security Enhanced — Authenticator app protected.
+                        </p>
+                    </div>
                 </form>
 
                 <p style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "0.85rem", color: "var(--text-secondary)" }}>

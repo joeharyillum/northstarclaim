@@ -139,6 +139,23 @@ export default function BillerAgreementPage() {
             NorthStar Medic<br />
             Email: partners@northstarclaim.com
           </Section>
+
+          <div style={{ marginTop: "4rem", textAlign: "center", padding: "3rem", borderRadius: "1.5rem", background: "rgba(56,189,248,0.05)", border: "1px solid rgba(56,189,248,0.2)" }}>
+             <h2 style={{ fontSize: "1.75rem", marginBottom: "1rem" }}>Ready to become a partner?</h2>
+             <p style={{ color: "var(--text-secondary)", marginBottom: "2rem" }}>Start earning 15% override commission on every recovered claim from your referrals.</p>
+             <a href="/partner" style={{ 
+                display: "inline-block", 
+                padding: "1rem 3rem", 
+                background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", 
+                color: "#000", 
+                borderRadius: "var(--radius-full)", 
+                textDecoration: "none", 
+                fontWeight: "700", 
+                fontSize: "1.1rem" 
+             }}>
+                Accept & Join Program
+             </a>
+          </div>
         </div>
       </section>
     </main>

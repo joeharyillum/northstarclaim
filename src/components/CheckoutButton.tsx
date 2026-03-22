@@ -1,7 +1,11 @@
 "use client";
 
-export default function CheckoutButton({ tier, label, variant }: { tier: string; label: string; variant: "outline" | "gradient" }) {
+export default function CheckoutButton({ tier, label, variant, directUrl }: { tier: string; label: string; variant: "outline" | "gradient"; directUrl?: string }) {
     const handleCheckout = async () => {
+        if (directUrl) {
+            window.location.href = directUrl;
+            return;
+        }
         try {
             const res = await fetch('/api/stripe/checkout', {
                 method: 'POST',
@@ -29,3 +33,4 @@ export default function CheckoutButton({ tier, label, variant }: { tier: string;
         </button>
     );
 }
+

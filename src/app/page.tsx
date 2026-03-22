@@ -361,7 +361,7 @@ export default function Home() {
                 <li>✓ HIPAA Compliant + BAA Included</li>
                 <li>✓ 48-Hour Processing</li>
               </ul>
-               <CheckoutButton tier="guardian-pilot" label="Get Started — $2,500" variant="gradient" />
+               <CheckoutButton tier="guardian-pilot" label="Get Started — $2,500" variant="gradient" directUrl="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" />
             </div>
 
             {/* Plan 2: Growth Lattice — Featured */}
@@ -383,7 +383,7 @@ export default function Home() {
                 <li>✓ Dedicated Recovery Dashboard</li>
                 <li>✓ Stripe Auto-Payout Integration</li>
               </ul>
-              <CheckoutButton tier="growth-lattice" label="Get Started — $7,500" variant="gradient" />
+              <CheckoutButton tier="growth-lattice" label="Get Started — $7,500" variant="gradient" directUrl="https://buy.stripe.com/dRm9AT5EVeIs4793140Ny06" />
             </div>
 
             {/* Plan 3: Network Core */}

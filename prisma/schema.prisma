@@ -24,8 +24,14 @@ model User {
   baaSignedIp     String?       // IP address at time of BAA signing
   twoFactorSecret String?       // TOTP secret for 2FA
   twoFactorEnabled Boolean      @default(false) // Whether 2FA is active
+  
+  // Referral System
   referralCode    String?       @unique // Unique partner referral code
-  referredBy      String?       // Referral code used at signup
+  referredBy      String?       // Referral code used at signup (stored as code)
+  
+  referrer        User?         @relation("UserReferrals", fields: [referredBy], references: [referralCode])
+  referrals       User[]        @relation("UserReferrals")
+
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   
@@ -82,6 +88,7 @@ model UploadBatch {
   userId    String
   fileName  String
   status    String      @default("COMPLETED")
+  isPilot   Boolean     @default(false)      // Whether this is a free pilot batch (e.g., first 500 claims)
   createdAt DateTime    @default(now())
 
   // Relations
@@ -260,6 +267,7 @@ model Lead {
   source      String   @default("csv")          // csv, apollo, manual
   status      String   @default("new")          // new, contacted, replied, converted, failed
   campaignId  String?                            // Instantly.ai campaign ID if pushed
+  referredBy  String?                            // Referral code of the biller who provided this lead
   pushedAt    DateTime?                          // When pushed to Instantly
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

@@ -32,8 +32,9 @@ export default function Navigation() {
     const navLinkItems = [
         { href: "/features", label: "Features" },
         { href: "/pricing", label: "Pricing" },
+        { href: "/partner", label: "Partners" },
         { href: "/about", label: "About" },
-        { href: "/dashboard", label: "Dashboard" },
+        { href: "/dashboard", label: "Portal" },
     ];
 
     return (
@@ -81,7 +82,7 @@ export default function Navigation() {
 
                 {/* CTA + Hamburger */}
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <Link href="/signup" className="nav-links" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem", whiteSpace: "nowrap" }}>Sign In</Link>
+                    <Link href="/login" className="nav-links" style={{ color: "var(--text-primary)", fontWeight: "500", fontSize: "0.9rem", whiteSpace: "nowrap" }}>Sign In</Link>
                     <Link href="/free-scan" className="nav-links hover:scale-105" style={{ 
                         background: "var(--brand-primary)", 
                         color: "var(--bg-primary)", 

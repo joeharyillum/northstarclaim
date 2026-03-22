@@ -102,12 +102,10 @@ export default async function DashboardOverview() {
                         Welcome back, {session.user.name}
                     </p>
                 </div>
-                {session.user.role === "admin" && (
                 <div style={{ display: "flex", gap: "0.5rem" }}>
-                    <Button href="/dashboard/war-room" size="sm">War Room</Button>
-                    <Button href="/dashboard/upload" variant="outline" size="sm">Upload</Button>
+                    {session.user.role === "admin" && <Button href="/dashboard/war-room" size="sm">War Room</Button>}
+                    <Button href="/dashboard/upload" variant="outline" size="sm">Upload ERA/EOB</Button>
                 </div>
-                )}
             </div>
 
             {/* KPI Cards */}

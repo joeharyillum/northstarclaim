@@ -78,7 +78,6 @@ export default auth((req) => {
     const isAdminRoute = [
         '/dashboard/war-room',
         '/dashboard/leads',
-        '/dashboard/upload',
         '/dashboard/review',
         '/dashboard/settlements',
     ].some(p => nextUrl.pathname.startsWith(p));
@@ -111,6 +110,7 @@ export default auth((req) => {
         '/api/chat',
         '/api/stripe/checkout',
         '/api/free-scan',
+        '/api/register',
     ].some(p => nextUrl.pathname.startsWith(p));
 
     // ═══════════════════════════════════════════════════════════════
@@ -137,7 +137,8 @@ export default auth((req) => {
     // LAYER 5: Admin route guard — only admin role can access
     // ═══════════════════════════════════════════════════════════════
     if (isAdminRoute && isLoggedIn && req.auth?.user?.role !== 'admin') {
-        return NextResponse.redirect(new URL('/dashboard', nextUrl));
+        const dashboardUrl = new URL('/dashboard', nextUrl);
+        return NextResponse.redirect(dashboardUrl);
     }
 
     // ═══════════════════════════════════════════════════════════════

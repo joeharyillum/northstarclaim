@@ -55,7 +55,7 @@ export default function SignupPage() {
         setErrorMessage("");
 
         try {
-            const regRes = await fetch("/api/auth/register", {
+            const regRes = await fetch("/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
