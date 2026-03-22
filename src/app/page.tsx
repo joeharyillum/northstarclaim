@@ -402,7 +402,7 @@ export default function Home() {
                 <li>✓ SLA Guarantees (99.9% Uptime)</li>
                 <li>✓ Custom API Access</li>
               </ul>
-              <a href="mailto:sales@northstarmedic.com" style={{ display: "block", padding: "0.85rem", border: "1px solid #a855f7", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#a855f7", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }}>
+              <a href="mailto:joehary@northstarmedic.com" style={{ display: "block", padding: "0.85rem", border: "1px solid #a855f7", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#a855f7", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }}>
                 Contact Sales
               </a>
             </div>

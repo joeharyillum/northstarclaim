@@ -3,9 +3,7 @@ import Stripe from 'stripe';
 import { prisma } from '@/lib/prisma';
 import { sendPaymentReceiptEmail, sendPaymentFailedEmail, sendAdminNotification } from '@/lib/sendgrid-client';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2025-04-30.basil' as Stripe.LatestApiVersion,
-});
+const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim());
 
 /**
  * Commission Split: When a claim recovery payment arrives,

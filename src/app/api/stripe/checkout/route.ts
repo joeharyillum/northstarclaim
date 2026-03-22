@@ -2,9 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { checkRateLimit, getClientIp } from '@/lib/security';
 
-const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim(), {
-    apiVersion: '2025-04-30.basil' as Stripe.LatestApiVersion,
-});
+const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim());
 
 export async function POST(req: Request) {
     // PUBLIC endpoint — cold email leads checkout without login
