@@ -156,7 +156,7 @@ export default function Home() {
         {/* Surgeons & Medical Tech Background */}
         <div className="section-bg-image" style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "url('/surgeons-technology.jpg')",
+          backgroundImage: "url('/bento-bg.png')",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           zIndex: 0,
@@ -361,7 +361,7 @@ export default function Home() {
                 <li>✓ HIPAA Compliant + BAA Included</li>
                 <li>✓ 48-Hour Processing</li>
               </ul>
-              <CheckoutButton tier="guardian-pilot" label="Start Pilot — $2,500" variant="outline" />
+               <CheckoutButton tier="guardian-pilot" label="Get Started — $2,500" variant="gradient" />
             </div>
 
             {/* Plan 2: Growth Lattice — Featured */}
