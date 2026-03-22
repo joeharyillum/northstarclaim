@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import Google from 'next-auth/providers/google';
+import Apple from 'next-auth/providers/apple';
 import { authConfig } from './auth.config';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
@@ -13,11 +15,20 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
         updateAge: 30 * 60,         // Refresh token every 30 minutes
     },
     providers: [
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
+        Apple({
+            clientId: process.env.APPLE_CLIENT_ID,
+            clientSecret: process.env.APPLE_CLIENT_SECRET,
+        }),
         Credentials({
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
+                code: { label: "2FA Code", type: "text" }
             },
             async authorize(credentials, req) {
                 if (!credentials?.email || !credentials?.password) return null;
@@ -47,6 +58,14 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
                     return null;
                 }
 
+                // If 2FA enabled, verify code
+                if (user.twoFactorEnabled) {
+                    if (!credentials.code) {
+                        throw new Error("2FA_REQUIRED");
+                    }
+                    // TODO: Implement TOTP verification with user.twoFactorSecret
+                }
+
                 // Success — clear any login failure records
                 clearLoginFailures(ip);
 
@@ -65,9 +84,9 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
         async jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = user.id;
-                token.stripeAccountId = user.stripeAccountId;
-                token.role = user.role || 'client';
-                token.baaSignedAt = user.baaSignedAt || null;
+                token.stripeAccountId = (user as any).stripeAccountId;
+                token.role = (user as any).role || 'client';
+                token.baaSignedAt = (user as any).baaSignedAt || null;
             }
             return token;
         },

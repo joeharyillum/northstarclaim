@@ -11,24 +11,52 @@ export default async function DashboardOverview() {
     const session = await getOwnerSession();
     if (!session) redirect("/signup");
 
+    const userId = session.user.id;
+    const role = session.user.role || 'client';
+    const isAdmin = role === 'admin';
+    const isBiller = role === 'biller';
+
+    // Build the query filter based on role
+    let claimFilter: any = { batch: { userId } };
+    let userFilter: any = { id: userId };
+
+    if (isAdmin) {
+        claimFilter = {}; // Admins see everything
+        userFilter = {};
+    } else if (isBiller) {
+        // Billers see their own claims + claims of users they referred
+        const biller = await prisma.user.findUnique({ where: { id: userId }, select: { referralCode: true } });
+        if (biller?.referralCode) {
+            claimFilter = {
+                OR: [
+                    { batch: { userId: userId } },
+                    { batch: { user: { referredBy: biller.referralCode } } }
+                ]
+            };
+        }
+    }
+
     const [totalClaims, pendingClaims, recoveredInvoices, recentActivity] = await Promise.all([
         prisma.claim.count({
-            where: { batch: { userId: session.user.id } }
+            where: claimFilter
         }),
         prisma.claim.count({
             where: {
-                batch: { userId: session.user.id },
+                ...claimFilter,
                 status: { in: ["PENDING_ANALYSIS", "RECOVERABLE"] }
             }
         }),
         prisma.invoice.aggregate({
             _sum: { amountEarned: true },
-            where: { claim: { batch: { userId: session.user.id } }, status: "PAID" }
+            where: { claim: claimFilter, status: "PAID" }
         }),
         prisma.claim.findMany({
-            where: { batch: { userId: session.user.id } },
+            where: claimFilter,
             orderBy: { createdAt: 'desc' },
-            take: 6
+            take: 6,
+            include: {
+                batch: { include: { user: { select: { clinicName: true } } } }
+            }
         })
     ]);
 
@@ -38,7 +66,7 @@ export default async function DashboardOverview() {
     const kpis = [
         {
             label: "Total Recovered",
-            value: `$${(totalRecovered / 1000000).toFixed(1)}M`,
+            value: `$${(totalRecovered / 100).toLocaleString()}`, // Corrected from 1M to actual value, assuming cents
             sub: "Revenue collected",
             color: "#10b981",
             borderColor: "rgba(16, 185, 129, 0.2)",
@@ -96,14 +124,14 @@ export default async function DashboardOverview() {
                         marginBottom: "0.25rem",
                         letterSpacing: "-0.02em",
                     }}>
-                        Operations Center
+                        {role.toUpperCase()} Operations Center
                     </h1>
                     <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
                         Welcome back, {session.user.name}
                     </p>
                 </div>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
-                    {session.user.role === "admin" && <Button href="/dashboard/war-room" size="sm">War Room</Button>}
+                    {isAdmin && <Button href="/dashboard/war-room" size="sm">War Room</Button>}
                     <Button href="/dashboard/upload" variant="outline" size="sm">Upload ERA/EOB</Button>
                 </div>
             </div>
@@ -152,27 +180,29 @@ export default async function DashboardOverview() {
             </div>
 
             {/* Stripe Wallet */}
-            <div style={{
-                background: "rgba(16, 185, 129, 0.05)",
-                border: "1px solid rgba(16, 185, 129, 0.15)",
-                borderRadius: "var(--radius-xl)",
-                padding: "1.25rem",
-                marginBottom: "1.5rem",
-            }}>
+            {(isAdmin || isBiller) && (
                 <div style={{
-                    fontSize: "0.8rem",
-                    fontWeight: "600",
-                    marginBottom: "0.5rem",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
+                    background: "rgba(16, 185, 129, 0.05)",
+                    border: "1px solid rgba(16, 185, 129, 0.15)",
+                    borderRadius: "var(--radius-xl)",
+                    padding: "1.25rem",
+                    marginBottom: "1.5rem",
                 }}>
-                    💳 Stripe Wallet Balance
+                    <div style={{
+                        fontSize: "0.8rem",
+                        fontWeight: "600",
+                        marginBottom: "0.5rem",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                    }}>
+                        💳 {isAdmin ? "Platform Global Wallet" : "Biller Commission Wallet"}
+                    </div>
+                    <LiveBalance />
                 </div>
-                <LiveBalance />
-            </div>
+            )}
 
-            {/* Recent Claims */}
+            {/* Recent Table */}
             <div style={{
                 background: "var(--bg-card)",
                 border: "1px solid var(--border-subtle)",
@@ -186,7 +216,7 @@ export default async function DashboardOverview() {
                     justifyContent: "space-between",
                     alignItems: "center",
                 }}>
-                    <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>Recent Claims</span>
+                    <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>Recent Pipeline Activity</span>
                     <Button href="/dashboard/claims" variant="outline" size="sm">View All</Button>
                 </div>
                 <div>
@@ -215,7 +245,7 @@ export default async function DashboardOverview() {
                                         fontSize: "0.85rem",
                                         marginBottom: "0.125rem",
                                     }}>
-                                        {claim.patientId}
+                                        {isAdmin ? claim.patientId : "HIDDEN (HIPAA)"} — {claim.batch.user.clinicName}
                                     </div>
                                     <div style={{
                                         display: "inline-block",

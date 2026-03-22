@@ -147,6 +147,29 @@ export async function sendRecoveryUpdateEmail(
   });
 }
 
+export async function sendPasswordResetEmail(to: string, resetUrl: string) {
+  await sgMail.send({
+    to,
+    from,
+    subject: 'Reset Your Password — NorthStar Claim',
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+        <h1 style="color:#1a365d;">Reset Your Password</h1>
+        <p>A request to reset your password was made. Click the button below to choose a new password:</p>
+        <p style="margin:30px 0;">
+          <a href="${resetUrl}" style="background:#1a365d;color:#ffffff;padding:14px 28px;text-decoration:none;border-radius:6px;font-weight:bold;display:inline-block;">Reset Password</a>
+        </p>
+        <p>If you did not request this, you can safely ignore this email. This link will expire in 1 hour.</p>
+        <p style="font-size:12px;color:#666;margin-top:30px;word-break:break-all;">
+          Or copy and paste this link: <br>
+          <a href="${resetUrl}">${resetUrl}</a>
+        </p>
+        <p style="color:#666;font-size:12px;margin-top:30px;">NorthStar Claim — AI-Powered Medical Claim Recovery</p>
+      </div>
+    `,
+  });
+}
+
 export async function sendAdminNotification(subject: string, message: string) {
   const adminEmail = process.env.FOUNDER_ADMIN_EMAIL || 'joehary@northstarmedic.com';
 

@@ -1,5 +1,4 @@
-"use client";
-import CheckoutButton from "@/components/CheckoutButton";
+import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -90,6 +89,46 @@ export default function PricingPage() {
               <li>✓ Custom API Access</li>
             </ul>
             <a href="mailto:joehary@northstarmedic.com" style={{ display: "block", padding: "0.85rem", border: "1px solid #a855f7", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#a855f7", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }}>Contact Sales</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Enterprise & Settlement Recovery */}
+      <section style={{ maxWidth: "1200px", margin: "0 auto 5rem", padding: "0 1.5rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <h2 style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "1rem" }}>Enterprise & <span className="text-gradient">Settlement Recovery</span></h2>
+          <p style={{ color: "var(--text-secondary)", fontSize: "1.1rem" }}>High-volume solutions and multi-year claim settlements managed by dedicated AI clusters.</p>
+        </div>
+        
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>
+           {/* Tier 25k */}
+           <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "rgba(255,255,255,0.02)", display: "flex", flexDirection: "column" }}>
+            <h3 style={{ fontSize: "1.25rem", fontWeight: "700", marginBottom: "0.5rem" }}>MediClaim AI Pilot</h3>
+            <div style={{ marginBottom: "1.5rem" }}>
+              <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "var(--brand-primary)" }}>$25,000</span>
+            </div>
+            <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Full-scale deployment for clinical networks. AI-managed recovery with 15% commission fee.</p>
+            <a href="https://buy.stripe.com/5kAcN5gbbdEo7jmcMV0Ny03" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Select $25k Tier</a>
+          </div>
+
+          {/* Tier 50k */}
+          <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "rgba(255,255,255,0.02)", display: "flex", flexDirection: "column" }}>
+            <h3 style={{ fontSize: "1.25rem", fontWeight: "700", marginBottom: "0.5rem" }}>Initial Recovery Retainer</h3>
+            <div style={{ marginBottom: "1.5rem" }}>
+              <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "var(--brand-primary)" }}>$50,000</span>
+            </div>
+            <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Deep historical recovery scan. Multi-year lookback managed by dedicated legal-AI agents. 10% commission.</p>
+            <a href="https://buy.stripe.com/fZebJ16IZ43O9rqbIT0Ny04" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Select $50k Tier</a>
+          </div>
+
+          {/* Tier 70k */}
+          <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "linear-gradient(135deg, rgba(56,189,248,0.05), rgba(168,85,247,0.05))", boxShadow: "0 0 40px rgba(168,85,247,0.1)", display: "flex", flexDirection: "column" }}>
+            <h3 style={{ fontSize: "1.25rem", fontWeight: "700", marginBottom: "0.5rem" }}>Final Settlement Pack</h3>
+            <div style={{ marginBottom: "1.5rem" }}>
+              <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "#a855f7" }}>$70,000</span>
+            </div>
+            <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Maximum recovery priority. Complete insurance network bulk settlement negotiation. 5% commission.</p>
+            <a href="https://buy.stripe.com/14k7sz5EV0Ru9rqbIU0Ny05" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, #a855f7, #6366f1)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", fontWeight: "700", textDecoration: "none" }}>Select $70k Tier</a>
           </div>
         </div>
       </section>

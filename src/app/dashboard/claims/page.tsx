@@ -6,12 +6,34 @@ export default async function MyClaimsPage() {
     const session = await getOwnerSession();
     if (!session) redirect("/signup");
 
+    const userId = session.user.id;
+    const role = session.user.role || 'client';
+    const isAdmin = role === 'admin';
+    const isBiller = role === 'biller';
+
+    // Build the query filter based on role
+    let claimFilter: any = { batch: { userId } };
+
+    if (isAdmin) {
+        claimFilter = {}; // Admins see everything
+    } else if (isBiller) {
+        const biller = await prisma.user.findUnique({ where: { id: userId }, select: { referralCode: true } });
+        if (biller?.referralCode) {
+            claimFilter = {
+                OR: [
+                    { batch: { userId: userId } },
+                    { batch: { user: { referredBy: biller.referralCode } } }
+                ]
+            };
+        }
+    }
+
     const claims = await prisma.claim.findMany({
-        where: { batch: { userId: session.user.id } },
+        where: claimFilter,
         include: {
             appeal: { select: { approvedByClinic: true, generatedAt: true } },
             payer: { select: { name: true } },
-            batch: { select: { fileName: true, createdAt: true } },
+            batch: { include: { user: { select: { clinicName: true } } } },
         },
         orderBy: { createdAt: "desc" },
     });
@@ -37,10 +59,10 @@ export default async function MyClaimsPage() {
         <div style={{ maxWidth: "1000px" }}>
             <div style={{ marginBottom: "1.5rem" }}>
                 <h1 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "0.25rem" }}>
-                    My <span className="text-gradient">Claims</span>
+                    {isAdmin ? "Global Pipeline" : isBiller ? "Client Claims" : "My Claims"}
                 </h1>
                 <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
-                    Track the status of all your claims in the recovery pipeline.
+                    {isAdmin ? "Monitoring all claims across the platform." : "Track the status of claims in the recovery pipeline."}
                 </p>
             </div>
 
@@ -82,7 +104,7 @@ export default async function MyClaimsPage() {
                 justifyContent: "space-between",
                 alignItems: "center",
             }}>
-                <span style={{ fontSize: "0.85rem", fontWeight: "600" }}>Total Billed Amount in Pipeline</span>
+                <span style={{ fontSize: "0.85rem", fontWeight: "600" }}>Total Billed {isAdmin ? "Platform-wide" : "Amount"}</span>
                 <span style={{ fontSize: "1.25rem", fontWeight: "800", color: "#3b82f6" }}>
                     ${stats.totalBilled.toLocaleString()}
                 </span>
@@ -117,7 +139,7 @@ export default async function MyClaimsPage() {
                     letterSpacing: "0.04em",
                     minWidth: "600px",
                 }}>
-                    <span>CPT / Denial</span>
+                    <span>Claim Detail / Clinic</span>
                     <span>Payer</span>
                     <span>Billed</span>
                     <span>Status</span>
@@ -126,7 +148,7 @@ export default async function MyClaimsPage() {
 
                 {claims.length === 0 ? (
                     <div style={{ padding: "3rem", textAlign: "center", color: "var(--text-muted)", fontSize: "0.85rem" }}>
-                        No claims yet. Your provider will upload claim files to begin recovery.
+                        No claims yet. Upload ERA/EOB files to begin recovery.
                     </div>
                 ) : (
                     claims.map((claim, i) => {
@@ -142,9 +164,9 @@ export default async function MyClaimsPage() {
                                 minWidth: "600px",
                             }}>
                                 <div>
-                                    <div style={{ fontWeight: "600" }}>{claim.cptCode}</div>
+                                    <div style={{ fontWeight: "600" }}>{isAdmin ? claim.patientId : "HIDDEN (HIPAA)"} ({claim.cptCode})</div>
                                     <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.125rem" }}>
-                                        {claim.denialReason ? claim.denialReason.slice(0, 50) : "—"}
+                                        {claim.batch.user.clinicName} — {claim.denialReason ? claim.denialReason.slice(0, 40) + "..." : "—"}
                                     </div>
                                 </div>
                                 <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
