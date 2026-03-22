@@ -9,7 +9,15 @@ export default function PricingPage() {
     <main style={{ background: "var(--bg-dark)", color: "#fff", minHeight: "100vh" }}>
       {/* Hero */}
       <section style={{ textAlign: "center", padding: "10rem 1.5rem 4rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "50%", left: "50%", width: "800px", height: "800px", transform: "translate(-50%, -50%)", background: "radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 60%)", pointerEvents: "none" }} />
+        <div className="section-bg-image" style={{
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          backgroundImage: "url('/hero-neon-medical.webp')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: 0,
+          filter: "brightness(0.3) contrast(1.15) saturate(1.1)",
+        }} />
+        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", background: "linear-gradient(135deg, var(--bg-primary) 0%, rgba(15,23,42,0.85) 50%, var(--bg-primary) 100%)", zIndex: 1 }} />
         <p style={{ fontSize: "0.75rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "3px", color: "var(--brand-primary)", marginBottom: "1.5rem" }}>Pricing</p>
         <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)", fontWeight: "800", marginBottom: "1.5rem", letterSpacing: "-0.03em", lineHeight: 1.1 }}>
           Performance-Based. <span style={{ color: "var(--brand-primary)" }}>Zero Risk.</span>
