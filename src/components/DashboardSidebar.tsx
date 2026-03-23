@@ -52,6 +52,7 @@ export default function DashboardSidebar() {
         ] : []),
         { name: "Wallet", href: "/dashboard/wallet", icon: "◇" },
         { name: "Invoices", href: "/dashboard/invoices", icon: "▤" },
+        { name: "Settings (2FA)", href: "/dashboard/settings", icon: "⚙" },
     ];
 
     return (

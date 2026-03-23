@@ -20,7 +20,6 @@ export default function SignupPage() {
         if (ref) setRefCode(ref);
     }, [searchParams]);
 
-    // ── LOGIN: just email + password → dashboard ──
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setErrorMessage("");
@@ -32,6 +31,11 @@ export default function SignupPage() {
             form.append("password", formData.password);
 
             const loginError = await authenticate(undefined, form);
+            
+            if (loginError === '2FA_REQUIRED') {
+                window.location.href = `/login?email=${encodeURIComponent(formData.email)}`;
+                return;
+            }
             if (loginError) throw new Error(loginError);
 
             window.location.href = "/dashboard";

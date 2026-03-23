@@ -609,9 +609,9 @@ const DAILY_OPS = {
     tasks: [
       'Check Stripe dashboard: any new $2,500 payments? Any commission payouts?',
       'Check Instantly analytics: open rates, reply rates, bounce rates',
-      'Review AI auto-reply audit log: any responses need manual override?',
+      'Review AI auto-reply audit log: ensure no errors in deal closings',
       'If lead pool running low → load new Apollo leads (5 min)',
-      'If whale opportunity appears in replies → handle personally',
+      'If whale opportunity appears in replies → AI auto-reply handles entirely and closes the deal',
       'Everything else is automated. Live your life.',
     ]
   },

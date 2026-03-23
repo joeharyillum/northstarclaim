@@ -60,11 +60,16 @@ providers.push(Credentials({
         }
 
         // If 2FA enabled, verify code
-        if (user.twoFactorEnabled) {
+        if (user.twoFactorEnabled && user.twoFactorSecret) {
             if (!credentials.code) {
                 throw new Error("2FA_REQUIRED");
             }
-            // TODO: Implement TOTP verification with user.twoFactorSecret
+            const { authenticator } = require('otplib');
+            const isValid = authenticator.check(credentials.code as string, user.twoFactorSecret);
+            if (!isValid) {
+                await recordLoginFailure(ip, email);
+                throw new Error("Invalid 2FA code");
+            }
         }
 
         // Success — clear any login failure records
