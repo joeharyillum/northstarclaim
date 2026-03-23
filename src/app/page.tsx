@@ -28,13 +28,14 @@ export default function Home() {
         perspective: "1200px",
       }}>
 
-        {/* Background Image - 8K Medical Command Center */}
+        {/* Background Image - Neon Future Medical AI */}
         <div className="hero-bg-image" style={{
           position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "url('/hero-command-center.jpg')",
+          backgroundImage: "url('/hero-neon-future.png')",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           zIndex: 0,
+          filter: "brightness(0.45) contrast(1.15) saturate(1.2)",
           transform: "scale(1.05)"
         }} />
 

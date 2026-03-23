@@ -142,14 +142,22 @@ export default function LoginPage() {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
                         <button 
                             type="button" 
-                            onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                            onClick={() => {
+                                signIn('google', { callbackUrl: '/dashboard' }).catch(() => {
+                                    setErrorMessage("Google login is not configured yet. Use email/password.");
+                                });
+                            }}
                             style={{ ...inputStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.1rem", fontSize: "0.85rem", cursor: "pointer" }}
                         >
                              <span>Google</span>
                         </button>
                         <button 
                             type="button" 
-                            onClick={() => signIn('apple', { callbackUrl: '/dashboard' })}
+                            onClick={() => {
+                                signIn('apple', { callbackUrl: '/dashboard' }).catch(() => {
+                                    setErrorMessage("Apple login is not configured yet. Use email/password.");
+                                });
+                            }}
                             style={{ ...inputStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.1rem", fontSize: "0.85rem", cursor: "pointer" }}
                         >
                              <span>Apple</span>
