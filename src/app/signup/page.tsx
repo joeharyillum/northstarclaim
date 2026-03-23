@@ -40,6 +40,9 @@ export default function SignupPage() {
 
             window.location.href = "/dashboard";
         } catch (err: any) {
+            if (err?.message === 'NEXT_REDIRECT' || (err?.digest && err.digest.startsWith('NEXT_REDIRECT'))) {
+                throw err;
+            }
             setErrorMessage(err.message || "Invalid credentials");
             setIsProcessing(false);
         }
@@ -82,15 +85,20 @@ export default function SignupPage() {
             const form = new FormData();
             form.append("email", formData.email);
             form.append("password", formData.password);
+            
+            // Allow NextAuth to natively handle the redirect securely:
+            if (stripeData.success && stripeData.onboardingUrl) {
+                form.append("redirectTo", stripeData.onboardingUrl);
+            } else {
+                form.append("redirectTo", "/dashboard");
+            }
+            
             const loginError = await authenticate(undefined, form);
             if (loginError) throw new Error(loginError);
-
-            if (stripeData.success && stripeData.onboardingUrl) {
-                window.location.href = stripeData.onboardingUrl;
-            } else {
-                window.location.href = "/dashboard";
-            }
         } catch (err: any) {
+            if (err?.message === 'NEXT_REDIRECT' || (err?.digest && err.digest.startsWith('NEXT_REDIRECT'))) {
+                throw err;
+            }
             console.error(err);
             setErrorMessage(err.message || "An unexpected error occurred");
             setIsProcessing(false);
