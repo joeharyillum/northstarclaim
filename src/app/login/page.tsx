@@ -50,7 +50,10 @@ function LoginFormComponent() {
                 // If no error returned, redirect
                 window.location.replace("/dashboard");
             }
-        } catch (err: unknown) {
+        } catch (err: any) {
+            if (err?.message === 'NEXT_REDIRECT' || (err?.digest && err.digest.startsWith('NEXT_REDIRECT'))) {
+                throw err;
+            }
             setErrorMessage("An unexpected error occurred. Please try again.");
             setIsProcessing(false);
         }
@@ -73,7 +76,7 @@ function LoginFormComponent() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "var(--bg-primary)",
+            background: "transparent",
             padding: "2rem",
         }}>
             <div className="glass-panel animate-fade-in" style={{
