@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 import OpenAI from 'openai';
 import { getOwnerSession } from '@/lib/owner-session';
@@ -41,16 +40,13 @@ export async function POST(request: Request) {
             );
         }
 
-        // --- ENTERPRISE SECURITY: TEMP VAULT STORAGE ---
-        // Write to /tmp for serverless compatibility (Vercel/Railway)
-        const tmpDir = path.join('/tmp', 'claims');
-        await mkdir(tmpDir, { recursive: true });
+        // --- ENTERPRISE SECURITY: IN-MEMORY PROCESSING ONLY ---
+        // To maintain strict HIPAA compliance, we do NOT save this PHI to the temporary filesystem (/tmp).
+        // It resides purely in volatile memory until it is securely parsed and discarded.
+        const vaultUrl = 'SECURE-IN-MEMORY-VAULT';
         const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        const vaultPath = path.join(tmpDir, `${Date.now()}-${safeFileName}`);
-        await writeFile(vaultPath, fileBuffer);
-        const vaultUrl = `/tmp/claims/${path.basename(vaultPath)}`;
 
-        console.log("🔒 Document Vaulted Securely:", vaultUrl);
+        console.log("🔒 Document Ingested into Secure Volatile Memory");
 
         // 1. Process File based on type
         // Validate filename length to prevent filesystem issues

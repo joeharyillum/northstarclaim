@@ -24,16 +24,10 @@ export default async function DashboardOverview() {
         claimFilter = {}; // Admins see everything
         userFilter = {};
     } else if (isBiller) {
-        // Billers see their own claims + claims of users they referred
-        const biller = await prisma.user.findUnique({ where: { id: userId }, select: { referralCode: true } });
-        if (biller?.referralCode) {
-            claimFilter = {
-                OR: [
-                    { batch: { userId: userId } },
-                    { batch: { user: { referredBy: biller.referralCode } } }
-                ]
-            };
-        }
+        // HIPAA COMPLIANCE: Billers should ONLY see their own uploaded claims in the pipeline.
+        // Viewing claims uploaded by their referred clients violates HIPAA PHI minimum necessary rules.
+        // Billers can securely view aggregated commissions in their Wallet instead.
+        claimFilter = { batch: { userId: userId } };
     }
 
     const [totalClaims, pendingClaims, recoveredInvoices, recentActivity] = await Promise.all([

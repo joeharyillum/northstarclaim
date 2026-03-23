@@ -17,15 +17,8 @@ export default async function MyClaimsPage() {
     if (isAdmin) {
         claimFilter = {}; // Admins see everything
     } else if (isBiller) {
-        const biller = await prisma.user.findUnique({ where: { id: userId }, select: { referralCode: true } });
-        if (biller?.referralCode) {
-            claimFilter = {
-                OR: [
-                    { batch: { userId: userId } },
-                    { batch: { user: { referredBy: biller.referralCode } } }
-                ]
-            };
-        }
+        // HIPAA COMPLIANCE: Billers should ONLY see their own uploaded claims in the pipeline.
+        claimFilter = { batch: { userId: userId } };
     }
 
     const claims = await prisma.claim.findMany({
