@@ -8,10 +8,19 @@
  */
 
 import sgMail from '@sendgrid/mail';
+import nodemailer from 'nodemailer';
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
-const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'noreply@northstarclaim.com';
-const FROM_NAME = process.env.SENDGRID_FROM_NAME || 'NorthStar Claim';
+// Sanitize Env Variables
+const SENDGRID_API_KEY = (process.env.SENDGRID_API_KEY || '').replace(/['"]/g, '').trim();
+const FROM_EMAIL = (process.env.SENDGRID_FROM_EMAIL || 'noreply@northstarclaim.com').replace(/['"]/g, '').trim();
+const FROM_NAME = (process.env.SENDGRID_FROM_NAME || 'NorthStar Claim').replace(/['"]/g, '').trim();
+
+// Porkbun SMTP Credentials (FREE & UNLIMITED FALLBACK)
+const PORKBUN_USER = 'joehary@northstarmedic.com';
+const PORKBUN_PASS = (process.env.PORKBUN_SMTP_PASSWORD || 'joehary888888881A#a').replace(/['"]/g, '').trim();
+const PORKBUN_HOST = 'fortress.porkbun.com';
+
+// ─── Initialize Providers ───────────────────────────────────
 
 if (SENDGRID_API_KEY) {
   sgMail.setApiKey(SENDGRID_API_KEY);
@@ -19,12 +28,55 @@ if (SENDGRID_API_KEY) {
 
 const from = { email: FROM_EMAIL, name: FROM_NAME };
 
+// Create Nodemailer Transporter
+const transporter = PORKBUN_PASS ? nodemailer.createTransport({
+  host: PORKBUN_HOST,
+  port: 465,
+  secure: true,
+  auth: {
+    user: PORKBUN_USER,
+    pass: PORKBUN_PASS
+  }
+}) : null;
+
+// ─── Unified Send Function ──────────────────────────────────
+
+async function sendEmail(options: { to: string; subject: string; html: string }) {
+  // If we have Porkbun SMTP (Unlimited & Free), use it as primary
+  if (transporter) {
+    try {
+      await transporter.sendMail({
+        from: `"${FROM_NAME}" <${PORKBUN_USER}>`,
+        to: options.to,
+        subject: options.subject,
+        html: options.html
+      });
+      console.log('[EMAIL_CLIENT] Sent via Porkbun SMTP');
+      return;
+    } catch (error: any) {
+      console.error('[EMAIL_CLIENT] Porkbun SMTP failed, falling back to SendGrid:', error.message);
+    }
+  }
+
+  // Fallback to SendGrid
+  if (SENDGRID_API_KEY) {
+    await sgMail.send({
+      to: options.to,
+      from,
+      subject: options.subject,
+      html: options.html
+    });
+    console.log('[EMAIL_CLIENT] Sent via SendGrid');
+  } else {
+    throw new Error('No email provider configured (SendGrid key missing and Porkbun SMTP password missing)');
+  }
+}
+
 // ─── Email Senders ──────────────────────────────────────────
 
 export async function sendWelcomeEmail(to: string, clinicName: string) {
-  await sgMail.send({
+  await sendEmail({
     to,
-    from,
     subject: `Welcome to NorthStar Claim, ${clinicName}`,
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
@@ -45,9 +97,8 @@ export async function sendWelcomeEmail(to: string, clinicName: string) {
 }
 
 export async function sendBaaConfirmationEmail(to: string, userName: string, signedAt: Date, ipAddress: string | null) {
-  await sgMail.send({
+  await sendEmail({
     to,
-    from,
     subject: 'BAA Signed — NorthStar Claim',
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
@@ -79,9 +130,8 @@ export async function sendPaymentReceiptEmail(
   const tierName = tierNames[tier] || tier;
   const dollars = (amount / 100).toFixed(2);
 
-  await sgMail.send({
+  await sendEmail({
     to,
-    from,
     subject: `Payment Received — $${dollars}`,
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
@@ -101,9 +151,8 @@ export async function sendPaymentReceiptEmail(
 }
 
 export async function sendPaymentFailedEmail(to: string, invoiceId: string) {
-  await sgMail.send({
+  await sendEmail({
     to,
-    from,
     subject: 'Payment Failed — Action Required',
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
@@ -148,7 +197,7 @@ export async function sendRecoveryUpdateEmail(
 }
 
 export async function sendPasswordResetEmail(to: string, resetUrl: string) {
-  await sgMail.send({
+  await sendEmail({
     to,
     from,
     subject: 'Reset Your Password — NorthStar Claim',
@@ -173,7 +222,7 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string) {
 export async function sendAdminNotification(subject: string, message: string) {
   const adminEmail = process.env.FOUNDER_ADMIN_EMAIL || 'joehary@northstarmedic.com';
 
-  await sgMail.send({
+  await sendEmail({
     to: adminEmail,
     from,
     subject: `[ADMIN] ${subject}`,

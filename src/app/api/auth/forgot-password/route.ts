@@ -11,6 +11,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Email is required' }, { status: 400 });
         }
 
+        if (!process.env.SENDGRID_API_KEY) {
+            throw new Error('SENDGRID_API_KEY is missing in production environment');
+        }
+
         const user = await prisma.user.findUnique({
             where: { email: email.toLowerCase() }
         });
@@ -24,12 +28,14 @@ export async function POST(req: Request) {
         const token = crypto.randomBytes(32).toString('hex');
         const expires = new Date(Date.now() + 3600000); // 1 hour from now
 
-        // Store the token in VerificationToken table (used by NextAuth)
-        // Adjust model if VerificationToken doesn't support this
-        await prisma.verificationToken.upsert({
-            where: { identifier_token: { identifier: email, token } },
-            update: { token, expires },
-            create: { identifier: email, token, expires }
+        // Clean up any old reset tokens for this email
+        await prisma.verificationToken.deleteMany({
+            where: { identifier: email },
+        });
+
+        // Store the new token
+        await prisma.verificationToken.create({
+            data: { identifier: email, token, expires }
         });
 
         const resetUrl = `${process.env.NEXTAUTH_URL || 'https://www.northstarmedic.com'}/reset-password?token=${token}`;
@@ -39,6 +45,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: 'Reset link sent' });
     } catch (error: any) {
         console.error('[FORGOT_PASSWORD_API] Error:', error.message);
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+        // Exposing error temporarily for debugging
+        return NextResponse.json({ error: 'Internal error: ' + error.message }, { status: 500 });
     }
 }
