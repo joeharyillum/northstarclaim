@@ -11,10 +11,6 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Email is required' }, { status: 400 });
         }
 
-        if (!process.env.SENDGRID_API_KEY) {
-            throw new Error('SENDGRID_API_KEY is missing in production environment');
-        }
-
         const user = await prisma.user.findUnique({
             where: { email: email.toLowerCase() }
         });

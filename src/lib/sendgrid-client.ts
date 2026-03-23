@@ -175,9 +175,8 @@ export async function sendRecoveryUpdateEmail(
 ) {
   const dollars = totalRecovered.toFixed(2);
 
-  await sgMail.send({
+  await sendEmail({
     to,
-    from,
     subject: `Recovery Update — $${dollars} Recovered`,
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
@@ -199,7 +198,6 @@ export async function sendRecoveryUpdateEmail(
 export async function sendPasswordResetEmail(to: string, resetUrl: string) {
   await sendEmail({
     to,
-    from,
     subject: 'Reset Your Password — NorthStar Claim',
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
@@ -224,7 +222,6 @@ export async function sendAdminNotification(subject: string, message: string) {
 
   await sendEmail({
     to: adminEmail,
-    from,
     subject: `[ADMIN] ${subject}`,
     html: `
       <div style="font-family:monospace;max-width:600px;margin:0 auto;padding:20px;background:#1a1a2e;color:#e0e0e0;">

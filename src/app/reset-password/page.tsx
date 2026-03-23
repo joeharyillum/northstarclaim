@@ -34,12 +34,11 @@ function ResetPasswordForm() {
                 body: JSON.stringify({ token, password }),
             });
 
-            const data = await res.ok ? await res.json() : null;
+            const data = await res.json();
             if (res.ok) {
                 setMessage("Password reset successfully. You can now login.");
             } else {
-                const errorData = await res.json();
-                setError(errorData.error || "Failed to reset password.");
+                setError(data.error || "Failed to reset password.");
             }
         } catch (err) {
             setError("An unexpected error occurred. Please try again.");
