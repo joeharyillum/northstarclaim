@@ -97,10 +97,13 @@ export default function Home() {
             
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
                 <Button href="/pricing" size="lg" variant="primary" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
-                    View Pricing
+                    View Plans
                 </Button>
                 <Button href="/signup" size="lg" variant="outline" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
-                    Get Started
+                    Start $0 Down
+                </Button>
+                <Button href="mailto:joehary@northstarmedic.com?subject=Technical Deep-Dive Request" size="lg" variant="glass" style={{ borderRadius: "var(--radius-full)", padding: "1rem 1.5rem", fontSize: "0.9rem" }}>
+                    Book Technical Deep-Dive
                 </Button>
             </div>
 
@@ -327,44 +330,61 @@ export default function Home() {
           {/* Pricing Cards */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem", maxWidth: "1100px", margin: "0 auto" }}>
 
+            {/* Plan 0: Genesis */}
+            <div className="glass-panel card-3d" style={{ padding: "2.5rem 2rem", display: "flex", flexDirection: "column", border: "1px solid rgba(16, 185, 129, 0.2)" }}>
+              <div style={{ background: "rgba(16, 185, 129, 0.1)", color: "#10b981", padding: "0.35rem 0.75rem", borderRadius: "var(--radius-full)", fontSize: "0.65rem", fontWeight: "800", marginBottom: "1rem", width: "fit-content", textTransform: "uppercase" }}>🚀 Performance Only</div>
+              <h3 style={{ fontSize: "1.35rem", fontWeight: "700", marginBottom: "0.5rem" }}>Genesis Tier</h3>
+              <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>$0 Setup — Proof of Concept</p>
+              <div style={{ marginBottom: "0.5rem" }}>
+                <span style={{ fontSize: "2.75rem", fontWeight: "800", color: "#fff" }}>$0</span>
+              </div>
+              <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>No upfront cost + 40% commission</p>
+              <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.2", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
+                <li>✓ 10-Claim Live Alpha Scan</li>
+                <li>✓ Full Response Analysis</li>
+                <li>✓ Automated Denial Log</li>
+                <li>✓ HIPAA Compliant + BAA</li>
+                <li>✓ No Strings Attached</li>
+              </ul>
+               <a href="/signup" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid #fff", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#fff", background: "transparent", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Get Started for $0</a>
+            </div>
+
             {/* Plan 1: Guardian Pilot */}
             <div className="glass-panel card-3d" style={{ padding: "2.5rem 2rem", display: "flex", flexDirection: "column" }}>
               <h3 style={{ fontSize: "1.35rem", fontWeight: "700", marginBottom: "0.5rem" }}>Guardian Pilot</h3>
-              <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Prove the value — risk free</p>
+              <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Recover more, pay less commission</p>
               <div style={{ marginBottom: "0.5rem" }}>
                 <span style={{ fontSize: "2.75rem", fontWeight: "800", color: "var(--brand-primary)" }}>$2,500</span>
               </div>
-              <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>One-time pilot fee + performance commission</p>
-              <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
-                <li>✓ 500-Claim Pilot Scan</li>
-                <li>✓ Full AI Denial Analysis</li>
-                <li>✓ Recovery Report</li>
-                <li>✓ HIPAA Compliant + BAA Included</li>
+              <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>One-time setup + 30% commission</p>
+              <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.2", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
+                <li>✓ 500-Claim Recovery Scan</li>
+                <li>✓ AI Appeal Generation</li>
+                <li>✓ 30% Commission Rate</li>
+                <li>✓ HIPAA Compliant + BAA</li>
                 <li>✓ 48-Hour Processing</li>
               </ul>
-               <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Get Started — $2,500</a>
+               <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Buy Pilot — $2,500</a>
             </div>
 
             {/* Plan 2: Growth Lattice — Featured */}
             <div className="glass-panel card-3d" style={{ padding: "2.5rem 2rem", display: "flex", flexDirection: "column", border: "2px solid var(--brand-primary)", boxShadow: "0 0 40px rgba(56,189,248,0.12)" }}>
-              <div style={{ background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", color: "#000", padding: "0.35rem 1rem", borderRadius: "var(--radius-full)", fontSize: "0.7rem", fontWeight: "800", marginBottom: "1rem", width: "fit-content", textTransform: "uppercase", letterSpacing: "1px" }}>⭐ Recommended</div>
+              <div style={{ background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", color: "#000", padding: "0.35rem 1rem", borderRadius: "var(--radius-full)", fontSize: "0.7rem", fontWeight: "800", marginBottom: "1rem", width: "fit-content", textTransform: "uppercase", letterSpacing: "1px" }}>⭐ High Velocity</div>
               <h3 style={{ fontSize: "1.5rem", fontWeight: "700", marginBottom: "0.5rem", color: "var(--brand-primary)" }}>Growth Lattice</h3>
-              <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Maximum scale, lower commission</p>
+              <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Industrial scale RCM recovery</p>
               <div style={{ marginBottom: "0.5rem" }}>
                 <span style={{ fontSize: "2.75rem", fontWeight: "800", color: "var(--brand-primary)" }}>$7,500</span>
               </div>
-              <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>Setup fee + reduced commission rate</p>
-              <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
+              <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>Advanced setup + 20% commission</p>
+              <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.2", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
                 <li>✓ Unlimited Claim Processing</li>
-                <li>✓ Reduced Commission Rate</li>
+                <li>✓ 20% Commission (Lowest)</li>
                 <li>✓ Full HIPAA/BAA Compliance</li>
                 <li>✓ Multi-Level AI Engine</li>
-                <li>✓ Automated Payer Submission</li>
-                <li>✓ Priority 24-Hour Processing</li>
                 <li>✓ Dedicated Recovery Dashboard</li>
-                <li>✓ Stripe Auto-Payout Integration</li>
+                <li>✓ Stripe Auto-Payouts</li>
               </ul>
-              <a href="https://buy.stripe.com/dRm9AT5EVeIs4793140Ny06" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Get Started — $7,500</a>
+              <a href="https://buy.stripe.com/dRm9AT5EVeIs4793140Ny06" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Buy Growth — $7,500</a>
             </div>
 
             {/* Plan 3: Network Core */}

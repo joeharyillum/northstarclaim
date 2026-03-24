@@ -27,65 +27,79 @@ export default function PricingPage() {
       </section>
 
       {/* Pricing Cards */}
-      <section style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 1.5rem 5rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>
+      <section style={{ maxWidth: "1250px", margin: "0 auto", padding: "0 1.5rem 5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+
+          {/* Card 0: Genesis — The Entry Gate */}
+          <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "rgba(255,255,255,0.02)", backdropFilter: "blur(12px)", transition: "all 0.3s", display: "flex", flexDirection: "column" }}>
+            <div style={{ background: "rgba(16, 185, 129, 0.1)", color: "#10b981", padding: "0.35rem 0.75rem", borderRadius: "var(--radius-full)", fontSize: "0.65rem", fontWeight: "800", marginBottom: "1rem", width: "fit-content", textTransform: "uppercase" }}>🚀 Pure Performance</div>
+            <h3 style={{ fontSize: "1.35rem", fontWeight: "700", marginBottom: "0.5rem" }}>Genesis Plan</h3>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Test our AI with 10 claims for $0</p>
+            <div style={{ marginBottom: "0.5rem" }}>
+              <span style={{ fontSize: "2.75rem", fontWeight: "800", color: "#fff" }}>$0</span>
+            </div>
+            <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>Zero setup fee + 40% recovery commission</p>
+            <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
+              <li>✓ Instant AI Audit</li>
+              <li>✓ Up to 10 Live Claims</li>
+              <li>✓ 40% Commission on Results</li>
+              <li>✓ Full Access to War Room</li>
+              <li>✓ HIPAA Compliant + BAA</li>
+            </ul>
+            <a href="/signup" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid #fff", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#fff", background: "transparent", fontWeight: "600", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Join Free — $0 Down</a>
+          </div>
 
           {/* Card 1: Guardian Pilot */}
           <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "var(--bg-card)", backdropFilter: "blur(12px)", transition: "all 0.3s", display: "flex", flexDirection: "column" }}>
             <h3 style={{ fontSize: "1.35rem", fontWeight: "700", marginBottom: "0.5rem" }}>Guardian Pilot</h3>
-            <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Prove the value — risk free</p>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Professional recovery scale</p>
             <div style={{ marginBottom: "0.5rem" }}>
               <span style={{ fontSize: "2.75rem", fontWeight: "800", color: "var(--brand-primary)" }}>$2,500</span>
             </div>
-            <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>One-time pilot fee + 30% recovery commission</p>
-            <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1 }}>
-              <li>✓ 500-Claim Free Pilot Scan</li>
+            <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>One-time setup + 30% recovery commission</p>
+            <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
+              <li>✓ 500-Claim Strategic Scan</li>
               <li>✓ Full AI Denial Analysis</li>
               <li>✓ Recovery Estimate Report</li>
-              <li>✓ 30% Commission on Recoveries</li>
-              <li>✓ HIPAA Compliant + BAA Included</li>
-              <li>✓ 48-Hour Processing Window</li>
+              <li>✓ 30% Commission</li>
+              <li>✓ Priority Processing (48h)</li>
             </ul>
             <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--brand-primary)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "var(--brand-primary)", background: "transparent", fontWeight: "600", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Start Pilot — $2,500</a>
           </div>
 
           {/* Card 2: Growth Lattice — Featured */}
           <div style={{ border: "2px solid var(--brand-primary)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "rgba(56,189,248,0.04)", boxShadow: "0 0 40px rgba(56,189,248,0.12)", position: "relative", display: "flex", flexDirection: "column" }}>
-            <div style={{ background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", color: "#000", padding: "0.35rem 1rem", borderRadius: "var(--radius-full)", fontSize: "0.7rem", fontWeight: "800", marginBottom: "1rem", width: "fit-content", textTransform: "uppercase", letterSpacing: "1px" }}>⭐ Recommended</div>
+            <div style={{ background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", color: "#000", padding: "0.35rem 1rem", borderRadius: "var(--radius-full)", fontSize: "0.7rem", fontWeight: "800", marginBottom: "1rem", width: "fit-content", textTransform: "uppercase", letterSpacing: "1px" }}>⭐ Best Value</div>
             <h3 style={{ fontSize: "1.5rem", fontWeight: "700", marginBottom: "0.5rem", color: "var(--brand-primary)" }}>Growth Lattice</h3>
-            <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Maximum scale, minimum commission</p>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Enterprise throughput, 20% rate</p>
             <div style={{ marginBottom: "0.5rem" }}>
               <span style={{ fontSize: "2.75rem", fontWeight: "800", color: "var(--brand-primary)" }}>$7,500</span>
             </div>
-            <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>Setup fee + reduced 20% recovery commission</p>
-            <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1 }}>
+            <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>Advanced setup + 20% recovery commission</p>
+            <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
               <li>✓ Unlimited Claim Processing</li>
-              <li>✓ 20% Commission (lower rate)</li>
-              <li>✓ Full HIPAA/BAA Compliance</li>
-              <li>✓ Multi-Level AI Appeal Engine</li>
+              <li>✓ 20% Commission Rate</li>
               <li>✓ Automated Payer Submission</li>
               <li>✓ Priority 24-Hour Processing</li>
               <li>✓ Dedicated Recovery Dashboard</li>
-              <li>✓ Stripe Auto-Payout Integration</li>
+              <li>✓ Stripe Auto-Payouts</li>
             </ul>
-            <a href="https://buy.stripe.com/dRm9AT5EVeIs4793140Ny06" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Start Recovery — $7,500</a>
+            <a href="https://buy.stripe.com/dRm9AT5EVeIs4793140Ny06" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Scale Now — $7,500</a>
           </div>
 
           {/* Card 3: Network Core */}
           <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "var(--bg-card)", backdropFilter: "blur(12px)", transition: "all 0.3s", display: "flex", flexDirection: "column" }}>
             <h3 style={{ fontSize: "1.35rem", fontWeight: "700", marginBottom: "0.5rem" }}>Network Core</h3>
-            <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Enterprise health systems & networks</p>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "2rem", fontSize: "0.9rem" }}>Health systems & networks</p>
             <div style={{ marginBottom: "0.5rem" }}>
               <span style={{ fontSize: "2.75rem", fontWeight: "800", color: "#a855f7" }}>Custom</span>
             </div>
-            <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>Volume pricing for 5,000+ claims/month</p>
-            <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1 }}>
-              <li>✓ Direct EHR Integration (Epic, Cerner)</li>
-              <li>✓ Custom Volume Commission Rate</li>
+            <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.85rem" }}>Volume pricing for 5,000+ claims/mo</p>
+            <ul style={{ textAlign: "left", color: "var(--text-secondary)", lineHeight: "2.4", marginBottom: "2rem", flex: 1, listStyle: "none", paddingLeft: 0 }}>
+              <li>✓ Direct EHR Integration</li>
+              <li>✓ Lowest Commission Rates</li>
               <li>✓ Dedicated Account Manager</li>
-              <li>✓ White-Label Option Available</li>
-              <li>✓ SLA Guarantees (99.9% Uptime)</li>
-              <li>✓ HIPAA Compliant + BAA</li>
+              <li>✓ White-Label Option</li>
               <li>✓ Custom API Access</li>
             </ul>
             <a href="mailto:joehary@northstarmedic.com" style={{ display: "block", padding: "0.85rem", border: "1px solid #a855f7", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#a855f7", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }}>Contact Sales</a>
@@ -101,14 +115,14 @@ export default function PricingPage() {
         </div>
         
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>
-           {/* Tier 25k */}
+            {/* Tier 25k */}
            <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-xl)", padding: "2.5rem 2rem", background: "rgba(255,255,255,0.02)", display: "flex", flexDirection: "column" }}>
             <h3 style={{ fontSize: "1.25rem", fontWeight: "700", marginBottom: "0.5rem" }}>MediClaim AI Pilot</h3>
             <div style={{ marginBottom: "1.5rem" }}>
               <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "var(--brand-primary)" }}>$25,000</span>
             </div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Full-scale deployment for clinical networks. AI-managed recovery with 15% commission fee.</p>
-            <a href="https://buy.stripe.com/5kAcN5gbbdEo7jmcMV0Ny03" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Select $25k Tier</a>
+            <a href="mailto:joehary@northstarmedic.com?subject=25k Tier Interest" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Strategic Inquiry — $25k</a>
           </div>
 
           {/* Tier 50k */}
@@ -118,7 +132,7 @@ export default function PricingPage() {
               <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "var(--brand-primary)" }}>$50,000</span>
             </div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Deep historical recovery scan. Multi-year lookback managed by dedicated legal-AI agents. 10% commission.</p>
-            <a href="https://buy.stripe.com/fZebJ16IZ43O9rqbIT0Ny04" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Select $50k Tier</a>
+            <a href="mailto:joehary@northstarmedic.com?subject=50k Tier Interest" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Strategic Inquiry — $50k</a>
           </div>
 
           {/* Tier 70k */}
@@ -128,7 +142,7 @@ export default function PricingPage() {
               <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "#a855f7" }}>$70,000</span>
             </div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Maximum recovery priority. Complete insurance network bulk settlement negotiation. 5% commission.</p>
-            <a href="https://buy.stripe.com/14k7sz5EV0Ru9rqbIU0Ny05" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, #a855f7, #6366f1)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", fontWeight: "700", textDecoration: "none" }}>Select $70k Tier</a>
+            <a href="mailto:joehary@northstarmedic.com?subject=70k Tier Interest" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, #a855f7, #6366f1)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", fontWeight: "700", textDecoration: "none" }}>Strategic Inquiry — $70k</a>
           </div>
         </div>
       </section>
@@ -164,8 +178,9 @@ export default function PricingPage() {
         <h2 style={{ textAlign: "center", marginBottom: "3rem", fontSize: "2rem", fontWeight: "800" }}>Frequently Asked</h2>
         <div style={{ display: "grid", gap: "1.25rem" }}>
           {[
-            { q: "When do I pay?", a: "You only pay when we successfully recover your denied claims. The pilot fee covers our AI analysis costs. Commission is charged only on money we put back in your pocket." },
-            { q: "What's the difference between Guardian Pilot and Growth Lattice?", a: "Guardian Pilot is a $2,500 one-time entry point with 30% commission — ideal for proving value. Growth Lattice is $7,500 setup with a reduced 20% commission — better economics at scale." },
+            { q: "When do I pay?", a: "You only pay when we successfully recover your denied claims. Our performance tiers (Genesis, Guardian, Growth) ensure our interests are perfectly aligned with yours." },
+            { q: "Tell me about the Genesis Plan?", a: "The Genesis Plan is our pure performance entry point. There is $0 upfront cost. We analyze up to 10 claims to prove our system's value. We take a 40% commission only on what we recover." },
+            { q: "What's the difference between the tiers?", a: "Higher tiers (Guardian at $2,500 and Growth at $7,500) have a one-time setup fee but offer significantly lower commission rates (30% and 20%) — saving you more money as you scale." },
             { q: "Is this HIPAA compliant?", a: "Yes. Full HIPAA compliance with signed BAA before any PHI is processed. All data is encrypted in transit via TLS. We follow healthcare industry security best practices." },
             { q: "How fast do you process claims?", a: "Our AI processes claims within 48 hours of submission. Appeals are generated and submitted to payers automatically." },
             { q: "Can I cancel anytime?", a: "Yes. No long-term contracts. Cancel anytime. You only owe commission on claims already recovered." },

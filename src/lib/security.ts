@@ -220,6 +220,14 @@ export async function validateFinancialConsent(userId: string, action: string, t
 
 export async function logAudit(userId: string, action: string, details: string, ip?: string) {
     try {
+        // --- EDGE COMPATIBILITY CHECK ---
+        // Vercel Edge Runtime (Middleware) does not support Prisma.
+        // We log to console in Edge, and continue database logging in Server context.
+        if (process.env.NEXT_RUNTIME === 'edge') {
+            console.log(`[AUDIT-EDGE] User: ${userId} | Action: ${action} | Details: ${details} | IP: ${ip || 'unknown'}`);
+            return;
+        }
+
         const { prisma } = await import('./prisma');
         await prisma.auditLog.create({
             data: {
