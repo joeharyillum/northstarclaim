@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -266,6 +267,7 @@ model Lead {
   industry    String   @default("Healthcare")
   source      String   @default("csv")          // csv, apollo, manual
   status      String   @default("new")          // new, contacted, replied, converted, failed
+  analysisData Json?                            // NEW: Persist AI-generated scan estimates
   campaignId  String?                            // Instantly.ai campaign ID if pushed
   referredBy  String?                            // Referral code of the biller who provided this lead
   pushedAt    DateTime?                          // When pushed to Instantly
