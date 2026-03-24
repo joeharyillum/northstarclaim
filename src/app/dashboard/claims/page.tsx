@@ -21,23 +21,31 @@ export default async function MyClaimsPage() {
         claimFilter = { batch: { userId: userId } };
     }
 
-    const claims = await prisma.claim.findMany({
-        where: claimFilter,
-        include: {
-            appeal: { select: { approvedByClinic: true, generatedAt: true } },
-            payer: { select: { name: true } },
-            batch: { include: { user: { select: { clinicName: true } } } },
-        },
-        orderBy: { createdAt: "desc" },
-    });
+    const [claims, totalClaims, totalBilledAgg, statusCounts] = await Promise.all([
+        prisma.claim.findMany({
+            where: claimFilter,
+            take: 500,
+            include: {
+                appeal: { select: { approvedByClinic: true, generatedAt: true } },
+                payer: { select: { name: true } },
+                batch: { include: { user: { select: { clinicName: true } } } },
+            },
+            orderBy: { createdAt: "desc" },
+        }),
+        prisma.claim.count({ where: claimFilter }),
+        prisma.claim.aggregate({ where: claimFilter, _sum: { billedAmount: true } }),
+        prisma.claim.groupBy({ by: ['status'], where: claimFilter, _count: true })
+    ]);
+
+    const getStatusCount = (status: string) => statusCounts.find(s => s.status === status)?._count || 0;
 
     const stats = {
-        total: claims.length,
-        pending: claims.filter(c => c.status === "PENDING_ANALYSIS").length,
-        recoverable: claims.filter(c => c.status === "RECOVERABLE").length,
-        appealed: claims.filter(c => c.status === "APPEALED").length,
-        settled: claims.filter(c => c.status === "SETTLED").length,
-        totalBilled: claims.reduce((s, c) => s + (c.billedAmount || 0), 0),
+        total: totalClaims,
+        pending: getStatusCount("PENDING_ANALYSIS"),
+        recoverable: getStatusCount("RECOVERABLE"),
+        appealed: getStatusCount("APPEALED"),
+        settled: getStatusCount("SETTLED"),
+        totalBilled: totalBilledAgg._sum.billedAmount || 0,
     };
 
     const statusConfig: Record<string, { bg: string; text: string; label: string }> = {

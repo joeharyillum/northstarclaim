@@ -14,8 +14,8 @@ export default function DashboardLayout({
             <div style={{
                 display: "flex",
                 minHeight: "100vh",
-                background: "var(--bg-primary)",
                 position: "relative",
+                background: "transparent",
             }}>
 
                 <DashboardSidebar />

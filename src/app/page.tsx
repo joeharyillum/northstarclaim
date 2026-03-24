@@ -24,27 +24,8 @@ export default function Home() {
         display: "flex",
         alignItems: "center",
         padding: "clamp(4rem, 8vw, 8rem) 0",
-        background: "var(--bg-primary)",
         perspective: "1200px",
       }}>
-
-        {/* Background Image - Neon Future Medical AI */}
-        <div className="hero-bg-image" style={{
-          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundImage: "url('/hero-neon-future.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          zIndex: 0,
-          filter: "brightness(0.45) contrast(1.15) saturate(1.2)",
-          transform: "scale(1.05)"
-        }} />
-
-        {/* Dark gradient overlay for text readability */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          background: "linear-gradient(to bottom, rgba(2,6,23,0.3) 0%, rgba(2,6,23,0.55) 50%, var(--bg-primary) 100%)",
-          zIndex: 1
-        }} />
 
         {/* 3D Floating Orbs */}
         <div className="orb orb-1" style={{ top: "10%", left: "-5%", zIndex: 2 }} />
