@@ -99,9 +99,16 @@ export default function Home() {
                 <Button href="/pricing" size="lg" variant="primary" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
                     View Plans
                 </Button>
-                <Button href="/signup" size="lg" variant="outline" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
-                    Start $0 Down
-                </Button>
+                <div 
+                    onClick={() => {
+                        window.dispatchEvent(new CustomEvent('open-chatbot', { detail: { message: "I want to start the Genesis $0 Audit. Can you scan my first 10 claims?" } }));
+                    }}
+                    style={{ cursor: "pointer" }}
+                >
+                    <Button size="lg" variant="outline" style={{ borderRadius: "var(--radius-full)", padding: "1rem 2.5rem", fontSize: "1rem" }}>
+                        Start AI Audit ($0)
+                    </Button>
+                </div>
                 <Button href="mailto:joehary@northstarmedic.com?subject=Technical Deep-Dive Request" size="lg" variant="glass" style={{ borderRadius: "var(--radius-full)", padding: "1rem 1.5rem", fontSize: "0.9rem" }}>
                     Book Technical Deep-Dive
                 </Button>
@@ -346,7 +353,14 @@ export default function Home() {
                 <li>✓ HIPAA Compliant + BAA</li>
                 <li>✓ No Strings Attached</li>
               </ul>
-               <a href="/signup" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid #fff", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#fff", background: "transparent", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Get Started for $0</a>
+               <div 
+                    onClick={() => {
+                        window.dispatchEvent(new CustomEvent('open-chatbot', { detail: { message: "I'm interested in the Genesis $0 Plan. Can you handle my onboarding?" } }));
+                    }}
+                    style={{ cursor: "pointer", display: "block", width: "100%", padding: "0.85rem", border: "1px solid #fff", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#fff", background: "transparent", fontWeight: "700", transition: "all 0.2s", fontSize: "1rem" }}
+                >
+                    Start AI Journey — $0
+                </div>
             </div>
 
             {/* Plan 1: Guardian Pilot */}

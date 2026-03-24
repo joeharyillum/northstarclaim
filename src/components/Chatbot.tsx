@@ -39,6 +39,22 @@ export default function Chatbot() {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
+    // Handle global open-chatbot events (for autonomous sales/onboarding)
+    useEffect(() => {
+        const handleOpen = (e: any) => {
+            setIsOpen(true);
+            if (e.detail?.message) {
+                // Pre-fill input and trigger a slight delay to feel natural
+                setInput(e.detail.message);
+                setTimeout(() => {
+                   // We trust the user to hit send, or we could auto-send
+                }, 500);
+            }
+        };
+        window.addEventListener('open-chatbot', handleOpen);
+        return () => window.removeEventListener('open-chatbot', handleOpen);
+    }, []);
+
     // Hide chatbot on dashboard — dashboard has its own UI
     if (isDashboard) return null;
 

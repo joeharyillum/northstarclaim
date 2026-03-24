@@ -46,7 +46,14 @@ export default function PricingPage() {
               <li>✓ Full Access to War Room</li>
               <li>✓ HIPAA Compliant + BAA</li>
             </ul>
-            <a href="/signup" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid #fff", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#fff", background: "transparent", fontWeight: "600", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Join Free — $0 Down</a>
+            <div 
+                onClick={() => {
+                    window.dispatchEvent(new CustomEvent('open-chatbot', { detail: { message: "I want to start the Genesis $0 Plan. Can you perform my AI Audit?" } }));
+                }}
+                style={{ cursor: "pointer", display: "block", width: "100%", padding: "0.85rem", border: "1px solid #fff", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#fff", background: "transparent", fontWeight: "600", transition: "all 0.2s", fontSize: "1rem" }}
+            >
+                Start AI Audit — $0
+            </div>
           </div>
 
           {/* Card 1: Guardian Pilot */}
