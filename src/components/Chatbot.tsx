@@ -21,6 +21,12 @@ export default function Chatbot() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const isDashboard = pathname.startsWith("/dashboard");
 
+    const getOpeningMessage = () => {
+        if (pathname === '/baa') return "Welcome! This is where we finalize our HIPAA Business Associate Agreement. Any questions before you sign?";
+        if (pathname === '/pricing') return "Ready to start recovering revenue? I recommend starting with our $0 Genesis Audit. Should I show you how?";
+        return "Hi! I'm Dr. Sarah, your AI medical claims specialist. How can I help you recover denied revenue today?";
+    };
+
     const { messages, sendMessage, status } = useChat({
         transport: new DefaultChatTransport({ api: '/api/chat' }),
         messages: [
@@ -28,7 +34,7 @@ export default function Chatbot() {
                 id: "welcome",
                 role: "assistant",
                 content: "",
-                parts: [{ type: 'text' as const, text: "Hi! I'm Dr. Sarah, your medical claims specialist. How can I help you recover denied revenue today?" }],
+                parts: [{ type: 'text' as const, text: getOpeningMessage() }],
             }
         ]
     });
