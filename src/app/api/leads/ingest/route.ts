@@ -22,45 +22,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Upsert leads into the database — skip duplicates by email
-    let inserted = 0;
-    let skipped = 0;
-
+    // Format leads for bulk insert
+    const formattedLeads = [];
     for (const lead of leads) {
       const email = (lead.email || lead.Email || '').trim().toLowerCase();
-      if (!email) { skipped++; continue; }
-
-      try {
-        await prisma.lead.upsert({
-          where: { email },
-          update: {},
-          create: {
-            email,
-            firstName: lead.firstName || lead.FirstName || lead.first_name || '',
-            lastName: lead.lastName || lead.LastName || lead.last_name || '',
-            company: lead.company || lead.CompanyName || lead.Company || lead.company_name || '',
-            title: lead.title || lead.Title || '',
-            city: lead.city || lead.City || '',
-            state: lead.state || lead.State || '',
-            phone: lead.phone || lead.Phone || '',
-            industry: lead.industry || lead.Industry || 'Healthcare',
-            source: lead.source || 'csv',
-            status: 'new',
-            campaignId: lead.campaignId || null,
-          },
-        });
-        inserted++;
-      } catch {
-        skipped++;
-      }
+      if (!email) continue;
+      formattedLeads.push({
+        email,
+        firstName: lead.firstName || lead.FirstName || lead.first_name || '',
+        lastName: lead.lastName || lead.LastName || lead.last_name || '',
+        company: lead.company || lead.CompanyName || lead.Company || lead.company_name || '',
+        title: lead.title || lead.Title || '',
+        city: lead.city || lead.City || '',
+        state: lead.state || lead.State || '',
+        phone: String(lead.phone || lead.Phone || ''),
+        industry: String(lead.industry || lead.Industry || 'Healthcare'),
+        source: lead.source || 'csv',
+        status: 'new',
+        campaignId: lead.campaignId || null,
+      });
     }
+
+    const { count } = await prisma.lead.createMany({
+        data: formattedLeads,
+        skipDuplicates: true,
+    });
 
     return NextResponse.json(
       {
         success: true,
-        message: `Ingested ${inserted} leads. ${skipped} skipped (duplicates or invalid).`,
-        inserted,
-        skipped,
+        message: `Ingested ${count} new leads efficiently in bulk.`,
+        inserted: count,
+        skipped: leads.length - count,
         total: leads.length,
       },
       { status: 200 }
