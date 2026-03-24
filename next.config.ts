@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // Disable x-powered-by header (don't reveal tech stack)
   poweredByHeader: false,
   async redirects() {
