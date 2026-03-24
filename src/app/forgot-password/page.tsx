@@ -25,7 +25,8 @@ export default function ForgotPasswordPage() {
 
             const data = await res.json();
             if (res.ok) {
-                setMessage("If an account exists for that email, we have sent a reset link.");
+                // Redirect to reset password page with email context
+                window.location.href = `/reset-password?email=${encodeURIComponent(email)}`;
             } else {
                 setError(data.error || "Failed to send reset link.");
             }

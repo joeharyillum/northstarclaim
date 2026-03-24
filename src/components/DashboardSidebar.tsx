@@ -39,6 +39,7 @@ export default function DashboardSidebar() {
             { name: "Client Claims", href: "/dashboard/claims", icon: "◈" },
         ] : []),
         ...(isAdmin ? [
+            { name: "Global Pipeline", href: "/dashboard/claims", icon: "◈" },
             { name: "Upload Claims", href: "/dashboard/upload", icon: "⬆" },
             { name: "Review", href: "/dashboard/review", icon: "◉" },
             { name: "Settlements", href: "/dashboard/settlements", icon: "⚖" },

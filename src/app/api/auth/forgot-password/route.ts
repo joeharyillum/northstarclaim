@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { sendPasswordResetEmail } from '@/lib/sendgrid-client';
+import { sendPasswordResetCode } from '@/lib/sendgrid-client';
 import crypto from 'crypto';
 
 export async function POST(req: Request) {
@@ -20,25 +20,22 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'If an account exists, a reset link has been sent.' });
         }
 
-        // Generate a random token
-        const token = crypto.randomBytes(32).toString('hex');
-        const expires = new Date(Date.now() + 3600000); // 1 hour from now
+        // Generate a random 6-digit code
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        const expires = new Date(Date.now() + 15 * 60000); // 15 minutes from now
 
-        // Clean up any old reset tokens for this email
+        // Store the code (we abuse VerificationToken table for this)
         await prisma.verificationToken.deleteMany({
             where: { identifier: email },
         });
 
-        // Store the new token
         await prisma.verificationToken.create({
-            data: { identifier: email, token, expires }
+            data: { identifier: email, token: code, expires }
         });
 
-        const resetUrl = `${process.env.NEXTAUTH_URL || 'https://www.northstarmedic.com'}/reset-password?token=${token}`;
+        await sendPasswordResetCode(email, code);
 
-        await sendPasswordResetEmail(email, resetUrl);
-
-        return NextResponse.json({ message: 'Reset link sent' });
+        return NextResponse.json({ message: 'Security code sent to your email.' });
     } catch (error: any) {
         console.error('[FORGOT_PASSWORD_API] Error:', error.message);
         // Exposing error temporarily for debugging

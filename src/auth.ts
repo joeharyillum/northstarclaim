@@ -14,6 +14,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     providers.push(Google({
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        allowDangerousEmailAccountMerging: true,
     }));
 }
 
@@ -29,7 +30,7 @@ providers.push(Credentials({
     credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
-        code: { label: "2FA Code", type: "text" }
+        code: { label: "Security Code", type: "text" }
     },
     async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
@@ -39,7 +40,7 @@ providers.push(Credentials({
         // Brute-force protection — check if IP is locked out
         const loginCheck = checkLoginAllowed(ip);
         if (!loginCheck.allowed) {
-            throw new Error(`Account locked. Try again in ${loginCheck.remainingLockout} seconds.`);
+            throw new Error(`AUTH_LOCKED:${loginCheck.remainingLockout}`);
         }
 
         const email = (credentials.email as string).toLowerCase().trim();
@@ -59,16 +60,19 @@ providers.push(Credentials({
             return null;
         }
 
-        // If 2FA enabled, verify code
-        if (user.twoFactorEnabled && user.twoFactorSecret) {
+        // 2FA LOGIC (Google Authenticator or Email Code)
+        if (user.twoFactorEnabled) {
             if (!credentials.code) {
+                // Return a specific error that the frontend can catch to show the code input
                 throw new Error("2FA_REQUIRED");
             }
+            
             const { authenticator } = require('otplib');
             const isValid = authenticator.check(credentials.code as string, user.twoFactorSecret);
+            
             if (!isValid) {
                 await recordLoginFailure(ip, email);
-                throw new Error("Invalid 2FA code");
+                throw new Error("INVALID_2FA_CODE");
             }
         }
 
@@ -78,7 +82,7 @@ providers.push(Credentials({
         return {
             id: user.id,
             email: user.email,
-            name: user.clinicName,
+            name: user.clinicName || user.name,
             stripeAccountId: user.stripeAccountId,
             role: user.role || 'client',
             baaSignedAt: user.baaSignedAt?.toISOString() || null,

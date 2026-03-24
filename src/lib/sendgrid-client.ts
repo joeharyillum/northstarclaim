@@ -217,6 +217,32 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string) {
   });
 }
 
+export async function sendPasswordResetCode(to: string, code: string) {
+  await sendEmail({
+    to,
+    subject: `Password Reset Code: ${code} — NorthStar`,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:40px;background:#f8fafc;">
+        <div style="max-width:500px;margin:0 auto;background:#ffffff;padding:40px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <h2 style="color:#1e293b;margin-bottom:16px;text-align:center;">Password Reset Code</h2>
+          <p style="color:#475569;font-size:16px;line-height:1.6;text-align:center;margin-bottom:32px;">
+            Copy the code below into the reset form to change your password.
+          </p>
+          <div style="background:#f1f5f9;padding:24px;border-radius:12px;text-align:center;margin-bottom:32px;">
+             <span style="font-family:monospace;font-size:36px;font-weight:800;letter-spacing:10px;color:#38bdf8;">${code}</span>
+          </div>
+          <p style="color:#64748b;font-size:14px;text-align:center;">
+             Verification code expires in 15 minutes.
+          </p>
+        </div>
+        <p style="text-align:center;color:#94a3b8;font-size:12px;margin-top:24px;">
+           NorthStar Medic AI · HIPAA Compliant · © 2026
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function sendAdminNotification(subject: string, message: string) {
   const adminEmail = process.env.FOUNDER_ADMIN_EMAIL || 'joehary@northstarmedic.com';
 

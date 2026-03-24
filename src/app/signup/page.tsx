@@ -18,6 +18,11 @@ export default function SignupPage() {
     useEffect(() => {
         const ref = searchParams.get("ref");
         if (ref) setRefCode(ref);
+
+        const payment = searchParams.get("payment");
+        if (payment === "success") {
+            setMode("register");
+        }
     }, [searchParams]);
 
     const handleLogin = async (e: React.FormEvent) => {

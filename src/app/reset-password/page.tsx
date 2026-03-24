@@ -7,8 +7,10 @@ import Link from "next/link";
 
 function ResetPasswordForm() {
     const searchParams = useSearchParams();
-    const token = searchParams.get("token");
+    const tokenFromUrl = searchParams.get("token");
+    const emailFromUrl = searchParams.get("email") || "";
 
+    const [code, setCode] = useState(tokenFromUrl || "");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
@@ -19,6 +21,11 @@ function ResetPasswordForm() {
         e.preventDefault();
         setMessage("");
         setError("");
+
+        if (password.length < 8) {
+            setError("Password must be at least 8 characters.");
+            return;
+        }
 
         if (password !== confirmPassword) {
             setError("Passwords do not match.");
@@ -31,14 +38,14 @@ function ResetPasswordForm() {
             const res = await fetch("/api/auth/reset-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token, password }),
+                body: JSON.stringify({ token: code, password }),
             });
 
             const data = await res.json();
             if (res.ok) {
-                setMessage("Password reset successfully. You can now login.");
+                setMessage("Password updated successfully. You can now login.");
             } else {
-                setError(data.error || "Failed to reset password.");
+                setError(data.error || "Failed to reset password. Check if code is correct.");
             }
         } catch (err) {
             setError("An unexpected error occurred. Please try again.");
@@ -57,17 +64,6 @@ function ResetPasswordForm() {
         fontSize: "1rem",
         outline: "none",
     };
-
-    if (!token) {
-        return (
-            <div style={{ textAlign: "center" }}>
-                <p style={{ color: "red", marginBottom: "1rem" }}>Invalid or missing token.</p>
-                <Link href="/forgot-password" style={{ color: "var(--brand-primary)", textDecoration: "underline" }}>
-                    Request a new reset link
-                </Link>
-            </div>
-        );
-    }
 
     return (
         <div className="glass-panel animate-fade-in" style={{
@@ -91,14 +87,29 @@ function ResetPasswordForm() {
                 }}>
                     ↻
                 </div>
-                <h1 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>Reset Password</h1>
+                <h1 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>Update Password</h1>
                 <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
-                    Create a new secure password for your account.
+                    {emailFromUrl ? `Enter the code sent to ${emailFromUrl}` : "Enter your recovery code and new password."}
                 </p>
             </div>
 
             {!message ? (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                    <div>
+                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: "600", marginBottom: "0.5rem" }}>
+                            6-Digit Security Code
+                        </label>
+                        <input
+                            required
+                            type="text"
+                            placeholder="123456"
+                            maxLength={6}
+                            value={code}
+                            onChange={(e) => setCode(e.target.value.replace(/[^0-9]/g, ""))}
+                            style={{...inputStyle, textAlign: "center", letterSpacing: "8px", fontSize: "1.25rem", fontWeight: "700"}}
+                            autoFocus={!tokenFromUrl}
+                        />
+                    </div>
                     <div>
                         <label style={{ display: "block", fontSize: "0.85rem", fontWeight: "600", marginBottom: "0.5rem" }}>
                             New Password
@@ -110,7 +121,6 @@ function ResetPasswordForm() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             style={inputStyle}
-                            autoFocus
                         />
                     </div>
                     <div>

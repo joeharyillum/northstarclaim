@@ -1,9 +1,32 @@
-import Link from "next/link";
+"use client";
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import Link from "next/link";
+import { useState } from "react";
 
 export default function PricingPage() {
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const handleCheckout = async (tier: string) => {
+    setLoading(tier);
+    try {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tier }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Failed to initiate checkout. Please contact enterprise support.");
+      }
+    } catch (err) {
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(null);
+    }
+  };
+
   return (
     <main style={{ background: "var(--bg-dark)", color: "#fff", minHeight: "100vh" }}>
       {/* Hero */}
@@ -71,7 +94,13 @@ export default function PricingPage() {
               <li>✓ 30% Commission</li>
               <li>✓ Priority Processing (48h)</li>
             </ul>
-            <a href="https://buy.stripe.com/28E3cv9Vb57SavxfNQ0Ny00" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--brand-primary)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "var(--brand-primary)", background: "transparent", fontWeight: "600", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Start Pilot — $2,500</a>
+            <button 
+              onClick={() => handleCheckout('guardian-pilot')}
+              disabled={loading === 'guardian-pilot'}
+              style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--brand-primary)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "var(--brand-primary)", background: "transparent", fontWeight: "600", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}
+            >
+                {loading === 'guardian-pilot' ? 'Connecting...' : 'Start Pilot — $2,500'}
+            </button>
           </div>
 
           {/* Card 2: Growth Lattice — Featured */}
@@ -91,7 +120,13 @@ export default function PricingPage() {
               <li>✓ Dedicated Recovery Dashboard</li>
               <li>✓ Stripe Auto-Payouts</li>
             </ul>
-            <a href="https://buy.stripe.com/dRm9AT5EVeIs4793140Ny06" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem", textDecoration: "none" }}>Scale Now — $7,500</a>
+            <button 
+              onClick={() => handleCheckout('growth-lattice')}
+              disabled={loading === 'growth-lattice'}
+              style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, var(--brand-primary), var(--brand-secondary))", borderRadius: "var(--radius-lg)", textAlign: "center", color: "#000", border: "none", fontWeight: "700", cursor: "pointer", transition: "all 0.2s", fontSize: "1rem" }}
+            >
+                {loading === 'growth-lattice' ? 'Connecting...' : 'Scale Now — $7,500'}
+            </button>
           </div>
 
           {/* Card 3: Network Core */}
@@ -129,7 +164,13 @@ export default function PricingPage() {
               <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "var(--brand-primary)" }}>$25,000</span>
             </div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Full-scale deployment for clinical networks. AI-managed recovery with 15% commission fee.</p>
-            <a href="mailto:joehary@northstarmedic.com?subject=25k Tier Interest" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Strategic Inquiry — $25k</a>
+            <button 
+              onClick={() => handleCheckout('enterprise-pilot')}
+              disabled={loading === 'enterprise-pilot'}
+              style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", cursor: "pointer" }}
+            >
+                {loading === 'enterprise-pilot' ? 'Initiating...' : 'Strategic Onboarding — $25k'}
+            </button>
           </div>
 
           {/* Tier 50k */}
@@ -139,7 +180,13 @@ export default function PricingPage() {
               <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "var(--brand-primary)" }}>$50,000</span>
             </div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Deep historical recovery scan. Multi-year lookback managed by dedicated legal-AI agents. 10% commission.</p>
-            <a href="mailto:joehary@northstarmedic.com?subject=50k Tier Interest" style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", textDecoration: "none" }}>Strategic Inquiry — $50k</a>
+            <button 
+              onClick={() => handleCheckout('recovery-retainer')}
+              disabled={loading === 'recovery-retainer'}
+              style={{ display: "block", width: "100%", padding: "0.85rem", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", background: "rgba(255,255,255,0.05)", fontWeight: "600", cursor: "pointer" }}
+            >
+                {loading === 'recovery-retainer' ? 'Initiating...' : 'Deploy Retainer — $50k'}
+            </button>
           </div>
 
           {/* Tier 70k */}
@@ -149,7 +196,13 @@ export default function PricingPage() {
               <span style={{ fontSize: "2.25rem", fontWeight: "800", color: "#a855f7" }}>$70,000</span>
             </div>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "2rem", flex: 1 }}>Maximum recovery priority. Complete insurance network bulk settlement negotiation. 5% commission.</p>
-            <a href="mailto:joehary@northstarmedic.com?subject=70k Tier Interest" style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, #a855f7, #6366f1)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", fontWeight: "700", textDecoration: "none" }}>Strategic Inquiry — $70k</a>
+            <button 
+              onClick={() => handleCheckout('final-settlement')}
+              disabled={loading === 'final-settlement'}
+              style={{ display: "block", width: "100%", padding: "0.85rem", background: "linear-gradient(135deg, #a855f7, #6366f1)", borderRadius: "var(--radius-lg)", textAlign: "center", color: "white", fontWeight: "700", border: "none", cursor: "pointer" }}
+            >
+                {loading === 'final-settlement' ? 'Initiating...' : 'Unlock Settlement — $70k'}
+            </button>
           </div>
         </div>
       </section>
@@ -158,18 +211,18 @@ export default function PricingPage() {
         <div style={{ border: "1px solid rgba(56,189,248,0.2)", borderRadius: "var(--radius-2xl)", padding: "3rem 2.5rem", background: "rgba(56,189,248,0.02)", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: "-50%", right: "-20%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
           <p style={{ fontSize: "0.7rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "3px", color: "var(--brand-primary)", marginBottom: "1rem" }}>For Medical Billers & RCM Agencies</p>
-          <h2 style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "1rem" }}>50/50 Biller Partner Program</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "1rem" }}>40/60 <span className="text-gradient">Biller Partner Program</span></h2>
           <p style={{ color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "2rem", maxWidth: "700px" }}>
-            You already manage provider relationships. Our AI recovers their denied claims. We split the performance fee 50/50 — you earn on every recovery without lifting a finger.
+            You already manage provider relationships. Our AI recovers their denied claims. We split our performance fee 40/60 — you earn 40% of all revenue generated by your referrals, hands-free.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-subtle)" }}>
-              <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>50/50 Split</h4>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>Fair revenue share on every successful recovery.</p>
+              <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>40% Revenue Share</h4>
+              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>A high-margin passive split on every successful recovery.</p>
             </div>
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-subtle)" }}>
               <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>Zero Cost</h4>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>No setup fees. No software cost. Pure performance.</p>
+              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>No setup fees for you or your clients (Genesis Tier).</p>
             </div>
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-subtle)" }}>
               <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem" }}>Instant Payouts</h4>
@@ -191,7 +244,7 @@ export default function PricingPage() {
             { q: "Is this HIPAA compliant?", a: "Yes. Full HIPAA compliance with signed BAA before any PHI is processed. All data is encrypted in transit via TLS. We follow healthcare industry security best practices." },
             { q: "How fast do you process claims?", a: "Our AI processes claims within 48 hours of submission. Appeals are generated and submitted to payers automatically." },
             { q: "Can I cancel anytime?", a: "Yes. No long-term contracts. Cancel anytime. You only owe commission on claims already recovered." },
-            { q: "How does the Biller Partner Program work?", a: "You connect your existing provider clients to our platform. When we recover their denied claims, the 30% fee is split 50/50 between you and us. You earn 15% on every recovery — automatically via Stripe." },
+            { q: "How does the Biller Partner Program work?", a: "You connect your provider clients to our platform. When we recover their denied claims, our commission fee is split 40/60 between you and us. You earn 40% of the revenue — automatically via Stripe." },
           ].map((faq, i) => (
             <div key={i} style={{ borderBottom: "1px solid var(--border-subtle)", paddingBottom: "1.25rem" }}>
               <h4 style={{ color: "var(--brand-primary)", marginBottom: "0.5rem", fontSize: "1rem", fontWeight: "600" }}>{faq.q}</h4>

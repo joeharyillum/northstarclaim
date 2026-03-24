@@ -25,6 +25,15 @@ export async function POST(req: Request) {
         } else if (tier === 'growth-lattice') {
             amount = 750000; // $7,500.00
             name = 'Growth Lattice - NorthStar Medic';
+        } else if (tier === 'enterprise-pilot') {
+            amount = 2500000; // $25,000.00
+            name = 'MediClaim AI Pilot - Enterprise';
+        } else if (tier === 'recovery-retainer') {
+            amount = 5000000; // $50,000.00
+            name = 'Historical Recovery Retainer';
+        } else if (tier === 'final-settlement') {
+            amount = 7000000; // $70,000.00
+            name = 'Final Network Settlement Pack';
         } else {
             return new NextResponse('Invalid tier', { status: 400 });
         }
