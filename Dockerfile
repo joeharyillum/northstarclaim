@@ -2,10 +2,10 @@ FROM node:22-slim AS base
 RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
-# Install dependencies (isolated layer for caching)
+# Install dependencies with legacy-peer-deps to ignore strict conflicts
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
-RUN npm ci --ignore-scripts=false
+RUN npm install --legacy-peer-deps && npx prisma generate
 
 # Build-time env vars (injected by Railway — NOT baked into image layers)
 ARG STRIPE_SECRET_KEY
@@ -18,7 +18,6 @@ ARG NEXTAUTH_URL
 
 # Copy source and build
 COPY . .
-RUN npx prisma generate
 RUN npm run build
 
 # ═══════════════════════════════════════════════════════════════

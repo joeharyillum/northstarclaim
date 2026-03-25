@@ -17,15 +17,16 @@ async function inspectRailway() {
                 node {
                     id
                     name
-                    services {
+                    deployments(first: 20) {
                         edges {
                             node {
                                 id
-                                name
-                                config {
-                                    buildCommand
-                                    installCommand
-                                    startCommand
+                                status
+                                staticUrl
+                                createdAt
+                                buildLogs(limit: 50) {
+                                    message
+                                    severity
                                 }
                             }
                         }
@@ -42,7 +43,21 @@ async function inspectRailway() {
             body: JSON.stringify({ query })
         });
         const data = await res.json();
-        console.log(JSON.stringify(data, null, 2));
+        
+        if (data.data?.projects?.edges) {
+            data.data.projects.edges.forEach(proj => {
+                console.log(`\n### Project: ${proj.node.name}`);
+                proj.node.deployments.edges.forEach(dep => {
+                    console.log(`- ${dep.node.id} [${dep.node.status}] ${dep.node.createdAt}`);
+                    if (dep.node.status === 'FAILED') {
+                        console.log('  LATEST LOGS:');
+                        dep.node.buildLogs.slice(-5).forEach(log => console.log(`    [${log.severity}] ${log.message}`));
+                    }
+                });
+            });
+        } else {
+            console.log(JSON.stringify(data, null, 2));
+        }
     } catch (e) {
         console.error('Error:', e.message);
     }
