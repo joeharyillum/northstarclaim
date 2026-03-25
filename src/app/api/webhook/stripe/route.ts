@@ -23,45 +23,44 @@ async function processCommissionSplit(customerEmail: string, amount: number, ses
             return;
         }
 
-        // Find the user by email to check if they have a biller/partner referrer
-        const user = await prisma.user.findUnique({
+        // 1. Find the Clinic User and their referrer
+        const clinicUser = await prisma.user.findUnique({
             where: { email: customerEmail },
-            select: { id: true, stripeAccountId: true, role: true },
+            select: { id: true, referredBy: true },
         });
 
-        if (!user) return;
+        if (!clinicUser || !clinicUser.referredBy) return;
 
-        // Find invoices linked to this user's claims that have a biller commission
+        // 2. Find the Biller (Referrer)
+        const billerPartner = await prisma.user.findUnique({
+            where: { referralCode: clinicUser.referredBy },
+            select: { id: true, email: true, stripeAccountId: true, role: true },
+        });
+
+        if (!billerPartner || !billerPartner.stripeAccountId || billerPartner.role !== 'biller') {
+            console.log(`[COMMISSION] No valid biller partner found for referral code: ${clinicUser.referredBy}`);
+            return;
+        }
+
+        // 3. Find invoices linked to this clinic's claims that have a biller commission
         const pendingInvoices = await prisma.invoice.findMany({
             where: {
                 status: 'PENDING',
-                claim: { batch: { userId: user.id } },
+                claim: { batch: { userId: clinicUser.id } },
                 billerCommission: { gt: 0 },
-            },
-            include: {
-                claim: {
-                    include: {
-                        batch: {
-                            include: { user: true },
-                        },
-                    },
-                },
             },
         });
 
         for (const invoice of pendingInvoices) {
-            const billerUser = invoice.claim.batch.user;
-            if (!billerUser.stripeAccountId) continue;
-
             const commissionCents = Math.round(invoice.billerCommission * 100);
             if (commissionCents < 100) continue; // Minimum $1 transfer
 
             try {
-                // Transfer biller's commission to their Connect account
+                // 4. Transfer biller's commission to their Connect account
                 const transfer = await stripe.transfers.create({
                     amount: commissionCents,
                     currency: 'usd',
-                    destination: billerUser.stripeAccountId,
+                    destination: billerPartner.stripeAccountId,
                     description: `Commission for claim ${invoice.claimId}`,
                     metadata: { sessionId, invoiceId: invoice.id },
                 },
@@ -77,18 +76,18 @@ async function processCommissionSplit(customerEmail: string, amount: number, ses
                     data: {
                         userId: 'STRIPE_COMMISSION',
                         action: 'COMMISSION_TRANSFERRED',
-                        details: `$${(commissionCents / 100).toFixed(2)} transferred to ${billerUser.email} (${billerUser.stripeAccountId}) for claim ${invoice.claimId}`,
+                        details: `$${(commissionCents / 100).toFixed(2)} transferred to ${billerPartner.email} (${billerPartner.stripeAccountId}) for claim ${invoice.claimId}`,
                     },
                 });
 
-                console.log(`[COMMISSION] $${(commissionCents / 100).toFixed(2)} → ${billerUser.email}`);
+                console.log(`[COMMISSION] $${(commissionCents / 100).toFixed(2)} → ${billerPartner.email}`);
             } catch (transferErr: any) {
                 console.error(`[COMMISSION] Transfer failed for invoice ${invoice.id}:`, transferErr.message);
                 await prisma.auditLog.create({
                     data: {
                         userId: 'STRIPE_COMMISSION',
                         action: 'COMMISSION_TRANSFER_FAILED',
-                        details: `Failed to transfer $${(commissionCents / 100).toFixed(2)} to ${billerUser.stripeAccountId}: ${transferErr.message}`,
+                        details: `Failed to transfer $${(commissionCents / 100).toFixed(2)} to ${billerPartner.stripeAccountId}: ${transferErr.message}`,
                     },
                 });
             }

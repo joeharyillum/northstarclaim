@@ -74,7 +74,8 @@ export default function SignupPage() {
                     email: formData.email,
                     password: formData.password,
                     clinicName: formData.clinicName,
-                    baaAccepted: true
+                    baaAccepted: true,
+                    referralCode: refCode
                 })
             });
             const regData = await regRes.json();

@@ -36,7 +36,8 @@ export default function DashboardSidebar() {
             { name: "My Claims", href: "/dashboard/claims", icon: "◈" },
         ] : []),
         ...(isBiller ? [
-            { name: "Client Claims", href: "/dashboard/claims", icon: "◈" },
+            { name: "Partner Dashboard", href: "/dashboard/partner", icon: "◈" },
+            { name: "Client Claims", href: "/dashboard/claims", icon: "◎" },
         ] : []),
         ...(isAdmin ? [
             { name: "Global Pipeline", href: "/dashboard/claims", icon: "◈" },

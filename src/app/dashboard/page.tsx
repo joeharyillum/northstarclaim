@@ -126,6 +126,7 @@ export default async function DashboardOverview() {
                 </div>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                     {isAdmin && <Button href="/dashboard/war-room" size="sm">War Room</Button>}
+                    {isBiller && <Button href="/dashboard/partner" size="sm">Partner Dashboard</Button>}
                     <Button href="/dashboard/upload" variant="outline" size="sm">Upload ERA/EOB</Button>
                 </div>
             </div>
