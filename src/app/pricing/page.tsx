@@ -14,14 +14,22 @@ export default function PricingPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tier }),
       });
-      const data = await res.json();
+      const contentType = res.headers.get("content-type");
+      let data;
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        throw new Error(text || "Server returned non-JSON response");
+      }
+
       if (data.url) {
         window.location.href = data.url;
       } else {
         alert("Checkout Error: " + (data.error || "Unknown response from server"));
       }
     } catch (err: any) {
-      alert("Network Error: " + (err.message || "Failed to reach the payment gateway. Check your connection."));
+      alert("Error: " + (err.message || "Failed to reach the payment gateway."));
     } finally {
       setLoading(null);
     }

@@ -35,7 +35,7 @@ export async function POST(req: Request) {
             amount = 7000000; // $70,000.00
             name = 'Final Network Settlement Pack';
         } else {
-            return new NextResponse('Invalid tier', { status: 400 });
+            return NextResponse.json({ error: 'Invalid plan tier selected' }, { status: 400 });
         }
 
         if (!process.env.STRIPE_SECRET_KEY) {
