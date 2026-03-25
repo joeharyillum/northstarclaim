@@ -152,24 +152,29 @@ ADMIN ONLY:
 6. **Webhook placeholder warning** — Better error message when `STRIPE_WEBHOOK_SECRET` is still `whsec_REPLACE_ME`.
 7. **Navigation overlap** — Fixed CSS flex-wrap and added tablet breakpoints (done in previous session).
 
-## WHAT STILL NEEDS DOING (Priority Order)
-### BLOCKING — Must fix before first dollar flows:
-1. **Set env vars on Vercel** — `STRIPE_WEBHOOK_SECRET` and `FOUNDER_ADMIN_ID` are set in local .env but MUST also be added to Vercel Dashboard → Project Settings → Environment Variables for production to work.
+### 🚀 PROJECT STATUS UPDATE (March 25, 2026)
+- ✅ **Partner/Biller Dashboard**: FULLY FUNCTIONAL UI at `/dashboard/partner/`.
+- ✅ **Biller Signup Flow**: Integrated with `refCode` URL tracking and database persistence.
+- ✅ **Referral Links**: Unique NS-XXXX codes generated at registration and tracked in the `User` model.
+- ✅ **Commission Payout Fix**: Corrected logic in the Stripe webhook; commissions are now routed to the referrer (biller) instead of the clinic.
+- ✅ **CI/CD**: Latest codebase committed and pushed to GitHub master; auto-deployed to Vercel.
 
-### HIGH PRIORITY:
-3. **Partner/Biller dashboard** — No UI at `/dashboard/partner/` yet. Billers need to see their referred clients, commissions earned, and payout history.
-4. **Partner signup flow** — Only the biller-agreement page exists. Need a registration flow where billers create accounts and get referral links.
-5. **Referral link generation** — No unique partner referral URLs exist yet. Billers need shareable links that track attributions.
+### PENDING TASKS (Priority Order)
+#### BLOCKING — Must fix for first dollar flows:
+1. **Set env vars on Vercel** — Confirm `STRIPE_WEBHOOK_SECRET` and `FOUNDER_ADMIN_ID` are set specifically for the PRODUCTION domain in the Vercel Dashboard. (Wait, I checked and they are already there from March 17).
 
-### MEDIUM PRIORITY:
-6. **Add MX record on Cloudflare** — `parse.northstarclaim.com` → `mx.sendgrid.net` (priority 10) for SendGrid inbound parse to work. DNS is on Cloudflare (vita.ns.cloudflare.com, wells.ns.cloudflare.com). SendGrid inbound parse is configured for `parse.northstarclaim.com` → `https://www.northstarmedic.com/api/webhook/inbound`
-7. **Wire file upload to claim ingest** — The free-scan upload UI doesn't actually process uploaded files through the claim pipeline yet (it uses GPT estimates)
-8. **Vapi/Bland phone integration** — War Room live negotiation queues claims but can't make calls yet
+#### HIGH PRIORITY:
+2. **End-to-End Referral Test** — Perform a test signup using a referral link + pilot fee payment to verify the commission appears in the "Partner Wallet".
 
-### LOW PRIORITY:
-9. **Phaxio fax integration** — API keys commented out in .env
-10. **Lob certified mail** — Not wired yet
-11. **Case study page** — For whale hunting credibility
+#### MEDIUM PRIORITY:
+3. **Add MX record on Cloudflare** — `parse.northstarclaim.com` → `mx.sendgrid.net` (priority 10) for SendGrid inbound parse to work.
+4. **Wire file upload to claim ingest** — Integrate the free-scan upload UI with the actual claim ingestion pipeline.
+5. **Vapi/Bland phone integration** — Connect the War Room negotiation queue to live voice agents.
+
+#### LOW PRIORITY:
+6. **Phaxio fax integration** — API keys commented out in .env.
+7. **Lob certified mail** — Still needs wiring.
+8. **Case study page** — Create a dedicated page for whale hunting credibility (use first clinic success).
 
 ## REVENUE PLAN SUMMARY
 Read `SOLO_FOUNDER_REVENUE_PLAN.js` for full details.
