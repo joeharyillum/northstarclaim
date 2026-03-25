@@ -18,10 +18,10 @@ export default function PricingPage() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert("Failed to initiate checkout. Please contact enterprise support.");
+        alert("Checkout Error: " + (data.error || "Unknown response from server"));
       }
-    } catch (err) {
-      alert("Something went wrong. Please try again later.");
+    } catch (err: any) {
+      alert("Network Error: " + (err.message || "Failed to reach the payment gateway. Check your connection."));
     } finally {
       setLoading(null);
     }
